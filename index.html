@@ -17,40 +17,32 @@
     <div class="canvas" id="canvas">
       <div class="wrap-tab" >test</div>
       <div class="canvas-wrap" id="canvas-wrap" >
-    <div class="wrap" id="wrap" >
-      <!-- <child-node
-        v-for="(item, index) in childNodes"
-        :key="index"
-        :child-item="{ ...item, index }"
-        @click.native="handleClick(item, index)"
-      /> -->
-      <!-- <div class="commonModule" draggable="false" >
-        <div class="moduleShape"
-          @mouseout="handleOut()"
-          @mousedown="handleDown(childItem, $event)"
-          @click.stop="handleClick"
-        >
-          {{childItem.name}}
-        </div>
-      </div> -->
-    </div> 
-  
-  
+        <div class="wrap" id="wrap" >
+      <!-- 此处遍历生成画布元素 -->
+        </div> 
       </div>
     </div>
     <div class="details">
       <!-- 属性栏固定组 -->
-      <div class="common-group">
-        <div class="r-item" >检视: {{attrsGroup.title}}</div>
-        <input type="text" class="r-input" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.name" />
+      <div class="common-group" id="common-group">
+        <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
+        <input type="text" class="r-input" @blur="handleblur(attrsGroup.index)" value="MainCanvas" />
         <div class="r-btns">
-          <div :class="{ active: !isActive }" @click="isActive = true" >属 性</div>
+          <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
           <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
         </div>
       </div>
       <!-- 属性栏变化组 -->
-      <div class="change-group">
+      <div class="change-group" id="change-group">
         <div class="pos-group" >
+          <div class="r-pos"><span>尺寸</span> </div>
+          <div class="r-pos r-pos-detail">
+            <div><span>W：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.width" >
+            </div>
+            <div><span> H：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.height"></div>
+          </div>
+        </div>
+        <!-- <div class="pos-group" >
           <div class="r-pos">位置，<span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
             <div><span>W：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.width" >
@@ -61,8 +53,8 @@
             <div><span>X：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.left" ></div>
             <div><span>Y：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.top"></div>
           </div>
-        </div>
-      </div  >
+        </div> -->
+      </div>
     </div>
   </div>
   <script type="text/javascript">
@@ -125,6 +117,14 @@
         pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
       }
     ]
+    var attrsGroup = {
+      title: '444',
+      Name: '',
+      width: null,
+      height: null,
+      top: null,
+      left: null
+    }
     window.addEventListener("load",handler,false);
     function handler () {
       // 左侧部分拖拽源对象
@@ -172,6 +172,7 @@
          // 获取dragstart事件传递的参数
         let id = JSON.parse(event.dataTransfer.getData('data'))
         let item = btns[id]
+        rightCommon(item.title, item.ControlType + childNodes.length)
         // 清除dragstart事件传递的参数
         event.dataTransfer.clearData()
         childNodes.push({
@@ -190,7 +191,6 @@
         childElement()
         }, false)
     }
-
     // 创建生成画布元素
     function childElement () {
         let html = ''
@@ -212,9 +212,22 @@
         wrap.innerHTML = html
     }
 
+    function rightCommon (title, name) {
+      let commonGroup = document.getElementById('common-group')
+      let commonStr = `<div class="r-item" >检视: <span id="r-item-title">${title}</span></div>
+        <input type="text" class="r-input" @blur="handleblur(attrsGroup.index)" value="${name}" />
+        <div class="r-btns">
+          <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
+          <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
+        </div>`
+        commonGroup.innerHTML = commonStr
+    }
+
     function handleDown (e) {
       let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
       let childItem = childNodes[index]
+      rightCommon(childItem.title, childItem.Name)
+      let changeGroup = document.getElementById('change-group')
       const { PropertyList: pos } = childItem
       let startY = e.clientY
       let startX = e.clientX
@@ -223,7 +236,6 @@
       let firstTime = ''
       let lastTime = ''
       let move = moveEvent => {
-        
         // !#zh 移动的时候，不需要向后代元素传递事件，只需要单纯的移动就OK
         moveEvent.stopPropagation()
         moveEvent.preventDefault()
