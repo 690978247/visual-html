@@ -1,0 +1,172 @@
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  background: #383838;
+  color: #ccc;
+}
+
+/* 顶部样式 */
+.page-tools {
+  width: 100;
+  height: 85px;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.page-wrap {
+  width: 100%;
+  height: calc( 100% -  90px);
+  display: flex;
+}
+/* 导航栏样式 */
+.btn-groups {
+  width: 180px;
+  min-width: 180px;
+  height: 100%;
+  background: #3d3d3d;
+  text-align: center;
+}
+.l-title {
+  font-size: 12px;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
+  padding-left: 20px;
+}
+.l-subtitle {
+  background: #555555;
+}
+.btn-groups .btn {
+  color: #ccc;
+  padding: 8px;
+  cursor: pointer;
+  /*  border-bottom: 1px solid #404040; */
+  border: 1px solid #404040;
+  transition: All 0.3s ease-in-out;
+}
+
+.btn-groups .btn:hover {
+  background: #fff;
+  border: 1px solid #1ab399;
+  color: #1ab399;
+}
+/* 中间画布样式 */
+.canvas {
+  width: 100%;
+  height: 100%;
+}
+.wrap-tab {
+  height: 30px;
+  font-size: 12px;
+  padding-left: 3px;
+  line-height: 30px;
+}
+.canvas-wrap {
+  height: calc(100% - 30px - 2px);  /* 画布高度需要减去顶部wrap-tabs高度减去上边框线的高度 */
+  overflow: auto;
+  color: #000;
+  background: #fff;
+  text-align: center;
+  position: relative;
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+}
+.canvas-wrap  .wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.commonModule {
+  position: absolute;
+  border: 1px solid #000;
+}
+
+.commonModule:hover {
+  border: 1px dashed #1AB399;
+}
+
+.moduleShape {
+  width: 100%;
+  height: 100%;
+}
+/* 右侧属性样式 */
+.details {
+  font-size: 13px;
+  width: 200px;
+  min-width: 200px;
+  line-height: 40px;
+  background: #545454;
+}
+.active {
+  background: #464646;
+}
+.r-item {
+  height: 38px;
+  line-height: 38px;
+  padding: 0 10px;
+  background: #464646;
+  border-bottom: 1px solid #404040;
+}
+.r-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+.r-btns {
+  height: 40px;
+  display: flex;
+  font-size: 15px;
+}
+.r-btns div {
+  flex: 1;
+  text-align: center;
+  margin-left: -1px;
+  cursor: pointer;
+  border: 1px solid #404040;
+}
+.pos-group {
+  border-bottom: 1px solid #404040;
+}
+.r-pos {
+  padding: 0 10px;
+}
+.r-pos-input {
+  width: 48px;
+  height: 28px;
+  background: #434343;
+  box-sizing: border-box;
+  outline: none;
+  color: #fff;
+  padding: 0 5px;
+  border: none;
+}
+.r-pos-detail {
+  display: flex;
+}
+.r-pos-detail span {
+  display: inline-block;
+  width: 25px;
+}
+.r-pos-detail div:first-child {
+  flex: 1
+}
+.r-pos-detail div:last-child {
+  flex: 0.8
+}
