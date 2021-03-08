@@ -110,7 +110,21 @@
         zIndex: 10,
       }
     ]
-    var childNodes = []
+    var childNodes = [
+      {
+        title: '矩形',
+        ControlType: 'rectangle',
+        Name: 'rectangle0',
+        PropertyList: {
+          Left: 100,
+          Top: 500,
+          width: 200,
+          height: 140,
+          zIndex: 10
+       },
+        pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+      }
+    ]
     window.addEventListener("load",handler,false);
     function handler () {
       // 左侧部分拖拽源对象
@@ -162,7 +176,7 @@
           title: item.title,
           ControlType: item.ControlType,
           Name: item.ControlType + childNodes.length,
-          commonStyle: {
+          PropertyList: {
             Left: targetX - fatherX,
             Top: targetY - fatherY,
             Width: item.width,
@@ -181,11 +195,11 @@
               onmouseout="handleOut()"
               onmousedown="handleDown(item, $event)"
             style="
-              left: ${item.commonStyle.Left}px;
-              top: ${item.commonStyle.Top}px;
-              width: ${item.commonStyle.Width}px;
-              height: ${item.commonStyle.Height}px;
-              zIndex: ${item.commonStyle.ZIndex};
+              left: ${item.PropertyList.Left}px;
+              top: ${item.PropertyList.Top}px;
+              width: ${item.PropertyList.Width}px;
+              height: ${item.PropertyList.Height}px;
+              zIndex: ${item.PropertyList.ZIndex};
             ">
               <div class="moduleShape">
                 ${item.Name}
