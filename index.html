@@ -177,7 +177,7 @@
         })
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + childNodes.length, index)
+        rightCommon(item.title, item.ControlType + (childNodes.length - 1), index)
         changeCommon(item, index)
         childElement()
         }, false)
@@ -191,7 +191,7 @@
             html += `<div class="commonModule" draggable="false" data-id="${index}"
               onmousedown="handleDown(event)"
             style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
-            height: ${item.PropertyList.Height}px;zIndex: ${item.PropertyList.ZIndex};
+            height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
             ">
               <div class="moduleShape">
                 ${item.Name}
