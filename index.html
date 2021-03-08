@@ -197,28 +197,58 @@
         let wrap = document.getElementById('wrap')
         if (childNodes.length !== 0) {
           childNodes.forEach((item, index) => {
-            html += `<div class="commonModule" draggable="false" data-wrap-id="${index}"
-              onmouseout="handleOut()"
-              onmousedown="handleDown(item, $event)"
-            style="
-              left: ${item.PropertyList.Left}px;
-              top: ${item.PropertyList.Top}px;
-              width: ${item.PropertyList.Width}px;
-              height: ${item.PropertyList.Height}px;
-              zIndex: ${item.PropertyList.ZIndex};
+            html += `<div class="commonModule" draggable="false" data-id="${index}"
+              onmousedown="handleDown(event)"
+            style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
+            height: ${item.PropertyList.Height}px;zIndex: ${item.PropertyList.ZIndex};
             ">
               <div class="moduleShape">
                 ${item.Name}
               </div>
-            </div>`
+            </div>
+            `
           })
         }
         wrap.innerHTML = html
     }
     
-    function handleOut () {}
-
-    function handleDown () {
+    function handleDown (e) {
+      let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
+      let childItem = childNodes[index]
+      const { PropertyList: pos } = childItem
+      let startY = e.clientY
+      let startX = e.clientX
+      let startTop = pos.Top
+      let startLeft = pos.Left
+      let firstTime = ''
+      let lastTime = ''
+      let move = moveEvent => {
+        
+        // !#zh 移动的时候，不需要向后代元素传递事件，只需要单纯的移动就OK
+        moveEvent.stopPropagation()
+        moveEvent.preventDefault()
+        childElement()
+        let currX = moveEvent.clientX
+        let currY = moveEvent.clientY
+        pos.Top = currY - startY + startTop
+        pos.Left = currX - startX + startLeft
+        // this.styleObj.top = pos.Top + 'px'
+        // this.styleObj.left = pos.Left + 'px'
+        childItem.PropertyList.zIndex = 20
+        childItem.PropertyList.top = pos.Top
+        childItem.PropertyList.left = pos.Left
+      }
+      let up = () => {
+        lastTime = new Date().getTime()
+        if ((lastTime - firstTime) > 200) {
+          childItem.PropertyList.zIndex = 10
+        }
+        document.removeEventListener('mousemove', move, true)
+        document.removeEventListener('mouseup', up, true)
+      }
+      document.addEventListener('mousemove', move, true)
+      document.addEventListener('mouseup', up, true)
+      return true
     }
 
     function handleClick() {
