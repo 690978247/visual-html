@@ -179,17 +179,18 @@
         item.Top = targetY - fatherY
         rightCommon(item.title, item.ControlType + (childNodes.length - 1), index)
         changeCommon(item, index)
-        childElement()
+        childElement(childNodes.length - 1)
         }, false)
     }
     // 创建生成画布元素
-    function childElement () {
+    function childElement (index) {
+      console.log(index)
         let html = ''
         let wrap = document.getElementById('wrap')
         if (childNodes.length !== 0) {
           childNodes.forEach((item, index) => {
             html += `<div class="commonModule" draggable="false" data-id="${index}"
-              onmousedown="handleDown(event)"
+              onmousedown="handleDown(event)" onclick="setClass(${index})"
             style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
             height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
             ">
@@ -201,6 +202,9 @@
           })
         }
         wrap.innerHTML = html
+        if (index) {
+          setClass(index)
+        }
     }
     // 右侧属性栏公共样式
     function rightCommon (title, name, index) {
@@ -228,6 +232,16 @@
             <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
           </div>`
       changeGroup.innerHTML = changeStr
+    }
+    function setClass (i) {
+      var list = [...document.getElementsByClassName('commonModule')]
+      list.forEach((item) => {
+        if (item.dataset.id == i) { // 注意：此处用== 不用===
+          item.className += ' activeItem'
+        } else {
+          item.classList.remove("activeItem")
+        }
+      })
     }
 
     function handleDown (e) {
@@ -262,6 +276,7 @@
         lastTime = new Date().getTime()
         if ((lastTime - firstTime) > 200) {
           childItem.PropertyList.ZIndex = 10
+          setClass(index)
         }
         document.removeEventListener('mousemove', move, true)
         document.removeEventListener('mouseup', up, true)

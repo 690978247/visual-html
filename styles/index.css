@@ -70,10 +70,10 @@ html {
   height: 100%;
 }
 .activeItem {
-  border: 2px solid red !important;
+  border: 2px solid #1ab399 !important;
 }
 .activeItem:hover {
-  border: 2px solid red !important;
+  border: 2px solid #1ab399 !important;
 }
 .wrap-tab {
   height: 30px;
