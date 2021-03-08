@@ -148,6 +148,8 @@
       }, false)
       // 中间画布部分拖拽目标对象
       var canvasWrap = document.getElementById('canvas-wrap')
+      // 初始化画布，此方法用于差看画布使用
+      childElement ()
       // dragovers事件
       canvasWrap.addEventListener('dragover', function (event) {
         // event.preventDefault()
@@ -185,10 +187,14 @@
           },
           pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
         })
+        childElement()
+        }, false)
+    }
 
-        // 推拽后生成元素部分
-        let wrap = document.getElementById('wrap')
+    // 创建生成画布元素， 用与判断画布上面是否有元素
+    function childElement () {
         let html = ''
+        let wrap = document.getElementById('wrap')
         if (childNodes.length !== 0) {
           childNodes.forEach((item, index) => {
             html += `<div class="commonModule" draggable="false" data-wrap-id="${index}"
@@ -208,9 +214,8 @@
           })
         }
         wrap.innerHTML = html
-        }, false)
     }
-
+    
     function handleOut () {}
 
     function handleDown () {
