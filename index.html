@@ -124,7 +124,6 @@
       // dragStart事件
       btnGroups.addEventListener("dragstart",function(e){
         if(e.target.className == "btn"){
-          console.log('you drag!!!')
           e.dataTransfer.setData("data", JSON.stringify(e.target.dataset.id));
           e.dataTransfer.effectAllowed = 'copyMove'
         }
@@ -138,7 +137,6 @@
       // dragovers事件
       canvasWrap.addEventListener('dragover', function (event) {
         // event.preventDefault()
-        console.log('dragover')
         if (event.target.classList.contains('allowed')) {
           event.dataTransfer.dropEffect = 'move'
         } else {
@@ -148,11 +146,9 @@
       }, false)
       // drop事件
       canvasWrap.addEventListener('drop', function (event) {
-        console.log('drop')
-        let canvas = document.getElementById('canvas')
-        // 父级元素id = canvas的网页可见区域上、左的距离
-        let fatherY = canvas.offsetTop
-        let fatherX = canvas.offsetLeft
+        // 父级元素id = canvasWrap的网页可见区域上、左的距离
+        let fatherY = canvasWrap.offsetTop
+        let fatherX = canvasWrap.offsetLeft
   
         // 拖动元素距离网页可见区域上、左的距离
         let targetX =  event.clientX
@@ -204,7 +200,6 @@
     function handleOut () {}
 
     function handleDown () {
-      console.log('down')
     }
 
     function handleClick() {
