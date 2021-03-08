@@ -26,7 +26,7 @@
       <!-- 属性栏固定组 -->
       <div class="common-group" id="common-group">
         <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
-        <input type="text" class="r-input" @blur="handleblur(attrsGroup.index)" value="MainCanvas" />
+        <input type="text" class="r-input" value="MainCanvas" />
         <div class="r-btns">
           <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
           <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
@@ -37,23 +37,11 @@
         <div class="pos-group" >
           <div class="r-pos"><span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
-            <div><span>W：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="0" >
+            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur()" value="0" >
             </div>
-            <div><span> H：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="0"></div>
+            <div><span> H：</span><input class="r-pos-input" type="text" onblur="handleblur()" value="0"></div>
           </div>
         </div>
-        <!-- <div class="pos-group" >
-          <div class="r-pos">位置，<span>尺寸</span> </div>
-          <div class="r-pos r-pos-detail">
-            <div><span>W：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.Width" >
-            </div>
-            <div><span> H：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.Height"></div>
-          </div>
-          <div class="r-pos r-pos-detail">
-            <div><span>X：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.left" ></div>
-            <div><span>Y：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" v-model="attrsGroup.top"></div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -170,8 +158,8 @@
         let targetX =  event.clientX
         let targetY =  event.clientY
          // 获取dragstart事件传递的参数
-        let id = JSON.parse(event.dataTransfer.getData('data'))
-        let item = btns[id]
+        let index = JSON.parse(event.dataTransfer.getData('data'))
+        let item = btns[index]
         // 清除dragstart事件传递的参数
         event.dataTransfer.clearData()
         childNodes.push({
@@ -189,8 +177,8 @@
         })
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + childNodes.length)
-        changeCommon(item)
+        rightCommon(item.title, item.ControlType + childNodes.length, index)
+        changeCommon(item, index)
         childElement()
         }, false)
     }
@@ -215,10 +203,10 @@
         wrap.innerHTML = html
     }
     // 右侧属性栏公共样式
-    function rightCommon (title, name) {
+    function rightCommon (title, name, index) {
       let commonGroup = document.getElementById('common-group')
       let commonStr = `<div class="r-item" >检视: <span id="r-item-title">${title}</span></div>
-        <input type="text" class="r-input" @blur="handleblur(attrsGroup.index)" value="${name}" />
+        <input type="text" class="r-input" onblur="handleblur(event, ${index}, 'Name')" value="${name}" />
         <div class="r-btns">
           <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
           <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
@@ -226,18 +214,18 @@
         commonGroup.innerHTML = commonStr
     }
     // 右侧属性栏变化样式
-    function changeCommon (data) {
+    function changeCommon (data, index) {
       let changeGroup = document.getElementById('change-group')
       let changeStr = ` <div class="pos-group" >
           <div class="r-pos"><span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
-            <div><span>W：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="${data.Width}" >
+            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" >
             </div>
-            <div><span> H：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="${data.Height}"></div>
+            <div><span> H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
           </div>
           <div class="r-pos r-pos-detail">
-            <div><span>X：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="${data.Top}" ></div>
-            <div><span>Y：</span><input class="r-pos-input" type="text" @blur="handleblur(attrsGroup.index)" value="${data.Left}"></div>
+            <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+            <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
           </div>`
       changeGroup.innerHTML = changeStr
     }
@@ -245,8 +233,8 @@
     function handleDown (e) {
       let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
       let childItem = childNodes[index]
-      rightCommon(childItem.title, childItem.Name)
-      changeCommon(childItem.PropertyList)
+      rightCommon(childItem.title, childItem.Name, index)
+      changeCommon(childItem.PropertyList, index)
       const { PropertyList: pos } = childItem
       let startY = e.clientY
       let startX = e.clientX
@@ -266,9 +254,9 @@
         // this.styleObj.top = pos.Top + 'px'
         // this.styleObj.left = pos.Left + 'px'
         childItem.PropertyList.ZIndex = 20
-        childItem.PropertyList.top = pos.Top
-        childItem.PropertyList.left = pos.Left
-        changeCommon(childItem.PropertyList)
+        childItem.PropertyList.Top = pos.Top
+        childItem.PropertyList.Left = pos.Left
+        changeCommon(childItem.PropertyList, index)
       }
       let up = () => {
         lastTime = new Date().getTime()
@@ -283,9 +271,14 @@
       return true
     }
 
-    function handleClick() {
-      //  alert('you click !!')
-     }
+    function handleblur (e, index, prop) {
+      if (prop !== 'Name') {
+        childNodes[index].PropertyList[prop] = e.target.value
+      } else {
+        childNodes[index].Name = e.target.value
+      }
+      childElement()
+    }
   
   </script>
 </body>
