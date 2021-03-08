@@ -28,8 +28,8 @@
         <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
         <input type="text" class="r-input" value="MainCanvas" />
         <div class="r-btns">
-          <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
-          <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
+          <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
+          <div id="r-btns-event" onclick="choice('event')">事 件</div>
         </div>
       </div>
       <!-- 属性栏变化组 -->
@@ -100,6 +100,19 @@
           Top: 500,
           Width: 200,
           Height: 140,
+          ZIndex: 10
+       },
+        pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+      },
+      {
+        title: '按钮',
+        ControlType: 'btn',
+        Name: 'btn1',
+        PropertyList: {
+          Left: 400,
+          Top: 200,
+          Width: 100,
+          Height: 40,
           ZIndex: 10
        },
         pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
@@ -184,7 +197,6 @@
     }
     // 创建生成画布元素
     function childElement (index) {
-      console.log(index)
         let html = ''
         let wrap = document.getElementById('wrap')
         if (childNodes.length !== 0) {
@@ -212,8 +224,8 @@
       let commonStr = `<div class="r-item" >检视: <span id="r-item-title">${title}</span></div>
         <input type="text" class="r-input" onblur="handleblur(event, ${index}, 'Name')" value="${name}" />
         <div class="r-btns">
-          <div :class="{ active: !isActive }" @click="isActive = true" >样 式</div>
-          <div :class="{ active: isActive }" @click="isActive = false">事 件</div>
+          <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
+          <div id="r-btns-event" onclick="choice('event')">事 件</div>
         </div>`
         commonGroup.innerHTML = commonStr
     }
@@ -233,6 +245,18 @@
           </div>`
       changeGroup.innerHTML = changeStr
     }
+    function choice (type) {
+      var style = document.getElementById('r-btns-style')
+      var event = document.getElementById('r-btns-event')
+      if (type === 'style') {
+        style.className += ' active'
+        event.classList.remove("active")
+      } else {
+        event.className += ' active'
+        style.classList.remove("active")
+      }
+    }
+
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]
       list.forEach((item) => {
