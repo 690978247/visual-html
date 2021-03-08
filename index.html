@@ -191,7 +191,7 @@
         }, false)
     }
 
-    // 创建生成画布元素， 用与判断画布上面是否有元素
+    // 创建生成画布元素
     function childElement () {
         let html = ''
         let wrap = document.getElementById('wrap')
@@ -211,7 +211,7 @@
         }
         wrap.innerHTML = html
     }
-    
+
     function handleDown (e) {
       let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
       let childItem = childNodes[index]
