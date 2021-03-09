@@ -43,6 +43,10 @@
           </div>
         </div>
         <!-- <div class="pos-others">
+          <span>填充</span>
+          <span class="pos-back-color"></span>
+        </div>
+        <div class="pos-others">
           <span class="pos-border">边框</span>
           <input type="text" class="r-pos-input" value="2" />
           <span class="pos-border-color"></span>
@@ -99,7 +103,12 @@
         icon: '',
         title: '矩形',
         ControlType: 'solidrectangle',
+        BackColor: '#fff',
+        BorderWidth: 2,
+        Style: 'solid',
+        Color: '#000',
         Width: 100,
+        Opacity: 100,
         Height: 30,
         ZIndex: 10,
       },
@@ -130,6 +139,11 @@
           Top: 500,
           Width: 200,
           Height: 140,
+          BackColor: '#fff',
+          BorderWidth: 2,
+          Style: 'solid',
+          Color: '#000',
+          Opacity: 100,
           ZIndex: 10
        },
         pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
@@ -244,8 +258,9 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
-              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
-              ">
+              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.BorderWidth}px;
+              background-color: ${item.PropertyList.BackColor}; height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
+              opacity: ${Number(item.PropertyList.Opacity) / 100};">
                 <div class="moduleShape">
                 </div>
               </div>
@@ -255,8 +270,7 @@
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px; z-index: ${item.PropertyList.ZIndex};
               border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.BorderWidth}px;
-              opacity: ${Number(item.PropertyList.Opacity) / 100};
-              ">
+              opacity: ${Number(item.PropertyList.Opacity) / 100};">
               <div class="moduleShape">
                 </div>
               </div>
@@ -295,6 +309,21 @@
           <div class="r-pos r-pos-detail">
             <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
             <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+          </div>
+          </div>
+          <div class="pos-others">
+          <span>填充</span>
+          <span class="pos-back-color"></span>
+          </div>
+          <div class="pos-others">
+            <span class="pos-border">边框</span>
+            <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderWidth')" value="${data.BorderWidth}" />
+            <span class="pos-border-color"></span>
+            <span class="pos-border-style" onclick="changeColor(event, ${index}, 'Style')"></span>
+          </div>
+          <div class="pos-others">
+            <span>不透明度(%)</span>
+            <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
           </div>`
       } else if (data.ControlType === 'line') { //直线样式
         changeStr = `<div class="pos-group" >

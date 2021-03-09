@@ -193,7 +193,7 @@ html {
   display: inline-block;
   width: 40px;
 }
-.pos-border-color {
+.pos-border-color, .pos-back-color {
   display: inline-block;
   width: 26px;
   height: 26px;
@@ -201,6 +201,10 @@ html {
   border: 1px solid #fff;
   background: #000;
   cursor: pointer;
+}
+.pos-back-color {
+  margin: 0;
+  background: #fff;
 }
 .pos-border-style {
   display: inline-block;
