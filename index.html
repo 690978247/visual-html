@@ -51,10 +51,18 @@
           <input type="text" class="r-pos-input" value="2" />
           <span class="pos-border-color"></span>
           <span class="pos-border-style"></span>
-        </div>
-        <div class="pos-others">
+        </div> -->
+        <!-- <div class="pos-others">
           <span>不透明度(%)</span>
           <input type="text" class="r-pos-input" value="100" />
+        </div>
+        <div class="pos-others">
+          <span>图片</span>
+          <select id="group" class="pos-select" value="1">
+            <option value="1">img1</option>
+            <option value="2">img2</option>
+          </select>
+          <span class="pos-selectImg">...</span>
         </div> -->
       </div>
     </div>
@@ -69,6 +77,8 @@
         ControlType: 'staticimage',
         Width: 100,
         Height: 30,
+        Img: '',
+        Opacity: 100,
         ZIndex: 10,
       },
       {
@@ -237,6 +247,7 @@
             Width: item.Width,
             BorderWidth: item.BorderWidth,
             Height: item.Height,
+            Img: item.Img,
             ZIndex: item.ZIndex
           },
           pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
@@ -275,6 +286,15 @@
                 </div>
               </div>
               `
+            } else if (item.ControlType === 'staticimage') {  //静态图片
+              html += `<div class="commonModule" draggable="false" data-id="${index}"
+                onmousedown="handleDown(event)" onclick="setClass(${index})"
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
+              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100};">
+                <div class="moduleShape"  >
+                </div>
+              </div>
+              `
             }
           })
         }
@@ -299,12 +319,11 @@
       let changeGroup = document.getElementById('change-group')
       let changeStr = ''
       if (data.ControlType === 'solidrectangle'){  //矩形样式
-        changeStr = ` <div class="pos-group" >
+        changeStr = `<div class="pos-group" >
           <div class="r-pos"><span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
-            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" >
-            </div>
-            <div><span> H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+            <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
           </div>
           <div class="r-pos r-pos-detail">
             <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
@@ -329,8 +348,7 @@
         changeStr = `<div class="pos-group" >
           <div class="r-pos">位置，<span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
-            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" >
-            </div>
+            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
           </div>
           <div class="r-pos r-pos-detail">
             <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
@@ -347,6 +365,31 @@
           <span>不透明度(%)</span>
           <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
         </div>`
+      } else if (data.ControlType === 'staticimage') {  //静态图片
+        changeStr =`<div class="pos-group" >
+          <div class="r-pos">位置，<span>尺寸</span> </div>
+          <div class="r-pos r-pos-detail">
+            <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+            <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+          </div>
+          <div class="r-pos r-pos-detail">
+            <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+            <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+          </div>
+          </div>
+          <div class="pos-others">
+          <span>不透明度(%)</span>
+          <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
+          </div>
+          <div class="pos-others">
+            <span>图片</span>
+            <select id="group" class="pos-select" value="1">
+              <option value="1">img1</option>
+              <option value="2">img2</option>
+            </select>
+            <span class="pos-selectImg">...</span>
+          </div>
+        `
       }
       changeGroup.innerHTML = changeStr
     }
