@@ -77,7 +77,7 @@
         ControlType: 'staticimage',
         Width: 100,
         Height: 30,
-        Img: '',
+        Img: './imgs/01.jpg',
         Opacity: 100,
         ZIndex: 10,
       },
@@ -87,6 +87,8 @@
         ControlType: 'image',
         Width: 100,
         Height: 30,
+        Img: './imgs/01.jpg',
+        Opacity: 100,
         ZIndex: 10,
       },
       {
@@ -286,12 +288,12 @@
                 </div>
               </div>
               `
-            } else if (item.ControlType === 'staticimage') {  //静态图片
+            } else if (item.ControlType === 'staticimage' || item.ControlType === 'image') {  //静态图片和动态图片
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
               height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100};">
-                <img class="moduleShape" src="./imgs/01.jpg" alt="图片" />
+                <img class="moduleShape" src="${item.PropertyList.Img}" alt="图片" />
               </div>
               `
             }
@@ -364,7 +366,7 @@
           <span>不透明度(%)</span>
           <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
         </div>`
-      } else if (data.ControlType === 'staticimage') {  //静态图片
+      } else if (data.ControlType === 'staticimage' || data.ControlType === 'image') {  //静态图片和动态图片
         changeStr =`<div class="pos-group" >
           <div class="r-pos">位置，<span>尺寸</span> </div>
           <div class="r-pos r-pos-detail">
@@ -379,16 +381,17 @@
           <div class="pos-others">
           <span>不透明度(%)</span>
           <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
-          </div>
-          <div class="pos-others">
+          </div>`
+          if (data.ControlType === 'staticimage') {
+            changeStr +=`<div class="pos-others">
             <span>图片</span>
             <select id="group" class="pos-select" value="1">
               <option value="1">img1</option>
               <option value="2">img2</option>
             </select>
             <span class="pos-selectImg">...</span>
-          </div>
-        `
+          </div>`
+        }
       }
       changeGroup.innerHTML = changeStr
     }
