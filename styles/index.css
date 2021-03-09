@@ -101,6 +101,7 @@ html {
 .commonModule {
   position: absolute;
   border: 1px solid #000;
+  box-sizing: border-box;
 }
 
 .commonModule:hover {
