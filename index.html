@@ -207,7 +207,7 @@
             height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
             ">
               <div class="moduleShape">
-                ${item.Name}
+                ${item.Name} 
               </div>
             </div>
             `
@@ -284,7 +284,6 @@
         // !#zh 移动的时候，不需要向后代元素传递事件，只需要单纯的移动就OK
         moveEvent.stopPropagation()
         moveEvent.preventDefault()
-        childElement()
         let currX = moveEvent.clientX
         let currY = moveEvent.clientY
         pos.Top = currY - startY + startTop
@@ -295,6 +294,7 @@
         childItem.PropertyList.Top = pos.Top
         childItem.PropertyList.Left = pos.Left
         changeCommon(childItem.PropertyList, index)
+        childElement()
       }
       let up = () => {
         lastTime = new Date().getTime()
