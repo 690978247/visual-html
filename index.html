@@ -207,6 +207,7 @@
         let item = btns[index]
         // 清除dragstart事件传递的参数
         event.dataTransfer.clearData()
+        // 需在这边添加增加的样式
         childNodes.push({
           title: item.title,
           ControlType: item.ControlType,
@@ -214,6 +215,9 @@
           PropertyList: {
             Left: targetX - fatherX,
             Top: targetY - fatherY,
+            Opacity: item.Opacity,
+            Style: item.Style,
+            Color: item.Color,
             Width: item.Width,
             Height: item.Height,
             ZIndex: item.ZIndex
