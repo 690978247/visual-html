@@ -102,6 +102,7 @@ html {
   position: absolute;
   border: 1px solid #000;
   box-sizing: border-box;
+  overflow: hidden;
 }
 /* .commonModule:hover {
   border: 1px dashed #1AB399;
@@ -154,6 +155,28 @@ html {
 .r-pos {
   padding: 0 10px;
 }
+.r-pos-font {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 18px; 
+}
+.r-font-prop {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.f-font-underline {
+  margin-left: 10px;
+  margin: 0 18px;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.f-font-blod {
+  font-weight: bold;
+  cursor: pointer;
+}
 .r-pos-input {
   width: 48px;
   height: 28px;
@@ -163,6 +186,30 @@ html {
   color: #fff;
   padding: 0 5px;
   border: none;
+}
+.font-border {
+  display: flex;
+  align-items: center;
+}
+.font-border-color {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  margin-left: 10px;
+  border: 1px solid #fff;
+  background: #000;
+  cursor: pointer;
+}
+.r-font-color {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  margin-top: -2px;
+  margin-right: 8px;
+  margin-left: 10px;
+  border: 1px solid #fff;
+  background: #000;
+  cursor: pointer;
 }
 .pos-select {
   width: 90px;
