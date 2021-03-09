@@ -97,6 +97,13 @@
         ControlType: 'datatextblock',
         Width: 100,
         Height: 30,
+        // FontFamily: '微软雅黑',
+        // FontWeight: 'normal',
+        // FontSize: 12,
+        // TextDecoration: 'underline',
+        // Color: '#000',
+        // BackColor: '#fff',
+        // BorderWidth: 2,
         ZIndex: 10,
       },
       {
@@ -107,7 +114,7 @@
         Height: 2,
         BorderWidth: 2,
         Style: 'solid',
-        Color: '#000',
+        BorderColor: '#000',
         Opacity: 100,
         ZIndex: 10,
       },
@@ -118,7 +125,7 @@
         BackColor: '#fff',
         BorderWidth: 2,
         Style: 'solid',
-        Color: '#000',
+        BorderColor: '#000',
         Width: 100,
         Opacity: 100,
         Height: 30,
@@ -154,7 +161,7 @@
           BackColor: '#fff',
           BorderWidth: 2,
           Style: 'solid',
-          Color: '#000',
+          BorderColor: '#000',
           Opacity: 100,
           ZIndex: 10
        },
@@ -172,7 +179,7 @@
           height: 5,
           Style: 'solid',
           Opacity: 100,
-          Color: '#000',
+          BorderColor: '#000',
           ZIndex: 10
        },
         pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
@@ -248,6 +255,7 @@
             Color: item.Color,
             Width: item.Width,
             BorderWidth: item.BorderWidth,
+            BorderColor: item.BorderColor,
             BackColor: item.BackColor,
             Height: item.Height,
             Img: item.Img,
@@ -272,7 +280,7 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
-              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.BorderWidth}px;
+              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px;
               background-color: ${item.PropertyList.BackColor}; height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
               opacity: ${Number(item.PropertyList.Opacity) / 100};">
                 <div class="moduleShape">
@@ -283,7 +291,7 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px; z-index: ${item.PropertyList.ZIndex};
-              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.BorderWidth}px;
+              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px;
               opacity: ${Number(item.PropertyList.Opacity) / 100};">
               <div class="moduleShape">
                 </div>
