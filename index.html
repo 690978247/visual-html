@@ -88,7 +88,8 @@
         title: '直线',
         ControlType: 'line',
         Width: 100,
-        Height: 5,
+        Height: 2,
+        BorderWidth: 2,
         Style: 'solid',
         Color: '#000',
         Opacity: 100,
@@ -141,7 +142,8 @@
           Left: 400,
           Top: 200,
           Width: 100,
-          Height: 5,
+          BorderWidth: 5,
+          height: 5,
           Style: 'solid',
           Opacity: 100,
           Color: '#000',
@@ -202,7 +204,7 @@
         // 拖动元素距离网页可见区域上、左的距离
         let targetX =  event.clientX
         let targetY =  event.clientY
-         // 获取dragstart事件传递的参数
+         // 获取dragstart事件传递的参数 注意：index为左侧属性栏的下标
         let index = JSON.parse(event.dataTransfer.getData('data'))
         let item = btns[index]
         // 清除dragstart事件传递的参数
@@ -219,6 +221,7 @@
             Style: item.Style,
             Color: item.Color,
             Width: item.Width,
+            BorderWidth: item.BorderWidth,
             Height: item.Height,
             ZIndex: item.ZIndex
           },
@@ -227,7 +230,7 @@
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
         rightCommon(item.title, item.ControlType + (childNodes.length - 1), index)
-        changeCommon(item, index)
+        changeCommon(item, childNodes.length - 1)
         childElement(childNodes.length - 1)
         }, false)
     }
@@ -251,7 +254,7 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px; z-index: ${item.PropertyList.ZIndex};
-              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.Height}px;
+              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.Color}; border-width: ${item.PropertyList.BorderWidth}px;
               opacity: ${Number(item.PropertyList.Opacity) / 100};
               ">
               <div class="moduleShape">
@@ -307,7 +310,7 @@
           </div>
           <div class="pos-others">
           <span class="pos-border">边框</span>
-          <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}" />
+          <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderWidth')" value="${data.BorderWidth}" />
           <span class="pos-border-color"></span>
           <span class="pos-border-style" onclick="changeColor(event, ${index}, 'Style')"></span>
         </div>
