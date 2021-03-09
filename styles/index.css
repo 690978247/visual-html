@@ -70,10 +70,10 @@ html {
   height: 100%;
 }
 .activeItem {
-  border: 2px solid #1ab399 !important;
+  border-color:#1ab399 !important;
 }
 .activeItem:hover {
-  border: 2px solid #1ab399 !important;
+  border-color:#1ab399 !important;
 }
 .wrap-tab {
   height: 30px;
@@ -104,9 +104,9 @@ html {
   box-sizing: border-box;
 }
 
-.commonModule:hover {
+/* .commonModule:hover {
   border: 1px dashed #1AB399;
-}
+} */
 
 .moduleShape {
   width: 100%;
@@ -177,4 +177,35 @@ html {
 }
 .r-pos-detail div:last-child {
   flex: 0.8
+}
+
+.pos-others {
+  height: 50px;
+  line-height: 50px;
+  padding-left: 10px;
+  padding-right: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #404040;
+}
+.pos-border {
+  display: inline-block;
+  width: 40px;
+}
+.pos-border-color {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  margin: 0 15px;
+  border: 1px solid #fff;
+  background: #000;
+  cursor: pointer;
+}
+.pos-border-style {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-style: dashed;
+  cursor: pointer;
 }
