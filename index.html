@@ -276,8 +276,8 @@
       const { PropertyList: pos } = childItem
       let startY = e.clientY
       let startX = e.clientX
-      let startTop = pos.Top
-      let startLeft = pos.Left
+      let startTop = Number(pos.Top)
+      let startLeft = Number(pos.Left)
       let firstTime = ''
       let lastTime = ''
       let move = moveEvent => {
