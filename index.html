@@ -23,7 +23,7 @@
       </div>
       <div class="canvas" id="canvas">
         <div class="wrap-tab" >test</div>
-        <div class="canvas-wrap" id="canvas-wrap"  onclick="clickWrap(event)" >
+        <div class="canvas-wrap" id="canvas-wrap"  onclick="clickWrap(event)" oncontextmenu="forbidMouse(event)" >
           <div class="wrap" id="wrap" >
         <!-- 此处遍历生成画布元素 -->
           </div>
@@ -380,7 +380,6 @@
         // childNodes.length - 1 从源对象拖放到画布上的生成的元素永远是childNodes数组的最后一位
         changeCommon(item, childNodes.length - 1)
         childElement(childNodes.length - 1)
-        console.log(childNodes)
         }, false)
     }
     function clickWrap (e) {
@@ -388,6 +387,10 @@
       if (e.target.id && e.target.id === 'wrap') {
         initCommon()
       }
+    }
+    // 画布禁止鼠标右键点击
+    function forbidMouse(e) {
+      e.preventDefault()
     }
     // 创建生成画布元素
     function childElement (index) {
@@ -816,7 +819,6 @@
 
     function handleDown (e) {
       // let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
-      console.log(e.currentTarget)
       let index = e.currentTarget.dataset.id
       let childItem = childNodes[index]
       rightCommon(childItem.title, childItem.Name, index)
