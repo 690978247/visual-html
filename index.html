@@ -800,7 +800,9 @@
     }
 
     function handleDown (e) {
-      let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
+      // let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
+      console.log(e.currentTarget)
+      let index = e.currentTarget.dataset.id
       let childItem = childNodes[index]
       rightCommon(childItem.title, childItem.Name, index)
       changeCommon({...childItem.PropertyList, ControlType: childItem.ControlType}, index)
