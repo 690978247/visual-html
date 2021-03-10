@@ -144,7 +144,8 @@
         TextDecoration: 'none',
         Color: '#000',
         BackColor: '#fff',
-        BorderWidth: 2,
+        BorderWidth: 0,
+        Style: 'solid',
         BorderColor: '#000',
         Opacity: 100,
         ZIndex: 10,
@@ -438,11 +439,11 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
-              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100};
-              border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px; font-family: ${item.PropertyList.FontFamily};
-              font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration}"
+              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100}; 
+              border-style: ${item.PropertyList.Style};border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px; 
+              font-family: ${item.PropertyList.FontFamily};font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration}"
               >
-              <span class="moduleShape" style="font-family: ${item.PropertyList.FontFamily};font-size: ${item.PropertyList.FontSize}px" >
+              <span class="moduleShape numShow" style="font-family: ${item.PropertyList.FontFamily};font-size: ${item.PropertyList.FontSize}px" >
                 数值显示
               </span>
               </div>
@@ -753,7 +754,7 @@
               `
         } else if (data.ControlType ===  'solidellipse') { //圆形
           changeStr = `<div class="pos-group" >
-            <div class="r-pos"><span>尺寸</span> </div>
+            <div class="r-pos">位置，<span>尺寸</span> </div>
             <div class="r-pos r-pos-detail">
               <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
               <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
@@ -809,7 +810,7 @@
               </div>`
         } else if (data.ControlType === 'commonlamp') {  //矩形状态灯
           changeStr = `<div class="pos-group" >
-              <div class="r-pos"><span>尺寸</span> </div>
+              <div class="r-pos">位置，<span>尺寸</span> </div>
               <div class="r-pos r-pos-detail">
                 <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
                 <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
