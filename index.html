@@ -222,6 +222,7 @@
         ControlType: 'solidrectangle',
         Name: 'solidrectangle0',
         PropertyList: {
+          id: 0,
           Left: 100,
           Top: 500,
           Width: 200,
@@ -240,6 +241,7 @@
         ControlType: 'line',
         Name: 'line1',
         PropertyList: {
+          id: 1,
           Left: 400,
           Top: 200,
           Width: 100,
@@ -260,6 +262,16 @@
       Height: null,
       top: null,
       left: null
+    }
+    // var leg = childNodes.length === 0  ? 0 : childNodes[childNodes.length - 1].PropertyList.id
+    if (childNodes.length !== 0) {
+      let ids = []
+      childNodes.forEach((item, index) => {
+        ids.push(item.PropertyList.id)
+      })
+      leg = Math.max(...ids)
+    } else {
+      leg = 0
     }
     window.addEventListener("load",handler,false);
     var menu = document.querySelector("#rightMenu");  //获取自定义的右键菜单
@@ -301,6 +313,8 @@
       }, false)
       // drop事件
       canvasWrap.addEventListener('drop', function (event) {
+        // leg初始化之后没拖动一个元素下来就+1,此值会一直++, 防止元素名称重复
+        leg ++
         // 父级元素id = canvasWrap的网页可见区域上、左的距离
         let fatherY = canvasWrap.offsetTop
         let fatherX = canvasWrap.offsetLeft
@@ -317,8 +331,9 @@
         childNodes.push({
           title: item.title,
           ControlType: item.ControlType,
-          Name: item.ControlType + childNodes.length,
+          Name: item.ControlType + leg,
           PropertyList: {
+            id: leg,
             Left: targetX - fatherX,
             Top: targetY - fatherY,
             Opacity: item.Opacity,
@@ -342,9 +357,11 @@
         })
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + (childNodes.length - 1), index)
+        rightCommon(item.title, item.ControlType + leg, index)
+        // childNodes.length - 1 从源对象拖放到画布上的生成的元素永远是childNodes数组的最后一位
         changeCommon(item, childNodes.length - 1)
         childElement(childNodes.length - 1)
+        console.log(childNodes)
         }, false)
     }
     // 创建生成画布元素
