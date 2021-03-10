@@ -144,8 +144,30 @@
         Style: 'solid',
         BorderColor: '#000',
         Width: 100,
-        Opacity: 100,
         Height: 30,
+        Opacity: 100,
+        ZIndex: 10,
+      },
+      {
+        icon: '',
+        title: '圆形',
+        ControlType: 'solidellipse',
+        BackColor: '#fff',
+        BorderWidth: 2,
+        Style: 'solid',
+        BorderColor: '#000',
+        Width: 100,
+        Height: 30,
+        Opacity: 100,
+        ZIndex: 10,
+      },
+      {
+        icon: '',
+        title: '圆形状态灯',
+        ControlType: 'ellipselamp',
+        Width: 30,
+        Height: 30,
+        Opacity: 100,
         ZIndex: 10,
       },
       {
@@ -384,6 +406,27 @@
               />
               </div>
               `
+            } else if (item.ControlType ===  'solidellipse') { //圆形
+              html += `<div class="commonModule" draggable="false" data-id="${index}"
+                onmousedown="handleDown(event)" onclick="setClass(${index})"
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;border-radius: 50%;
+              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px;
+              background-color: ${item.PropertyList.BackColor}; height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
+              opacity: ${Number(item.PropertyList.Opacity) / 100};">
+                <div class="moduleShape">
+                </div>
+              </div>
+              `
+            } else if (item.ControlType === 'ellipselamp') {  //圆形状态灯
+              html += `<div class="commonModule" draggable="false" data-id="${index}"
+                onmousedown="handleDown(event)" onclick="setClass(${index})"
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;border-radius: 50%;
+              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};background-color: #DDDDDD;
+              opacity: ${Number(item.PropertyList.Opacity) / 100};">
+                <div class="moduleShape">
+                </div>
+              </div>
+              `
             }
           })
         }
@@ -591,6 +634,48 @@
                 <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
               </div>
               `
+        } else if (data.ControlType ===  'solidellipse') { //圆形
+          changeStr = `<div class="pos-group" >
+            <div class="r-pos"><span>尺寸</span> </div>
+            <div class="r-pos r-pos-detail">
+              <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+              <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+            </div>
+            <div class="r-pos r-pos-detail">
+              <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+              <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+            </div>
+            </div>
+            <div class="pos-others">
+            <span>填充</span>
+            <span class="pos-back-color"></span>
+            </div>
+            <div class="pos-others">
+              <span class="pos-border">边框</span>
+              <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderWidth')" value="${data.BorderWidth}" />
+              <span class="pos-border-color"></span>
+              <span class="pos-border-style" onclick="changeColor(event, ${index}, 'Style')"></span>
+            </div>
+            <div class="pos-others">
+              <span>不透明度(%)</span>
+              <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
+            </div>`
+        } else if (data.ControlType === 'ellipselamp') {
+          changeStr = `<div class="pos-group" >
+              <div class="r-pos"><span>尺寸</span> </div>
+              <div class="r-pos r-pos-detail">
+                <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+                <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+              </div>
+              <div class="r-pos r-pos-detail">
+                <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+                <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+              </div>
+              </div>
+              <div class="pos-others">
+                <span>不透明度(%)</span>
+                <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
+              </div>`
         }
       changeGroup.innerHTML = changeStr
     }
