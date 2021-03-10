@@ -16,7 +16,7 @@
       </div>
       <div class="canvas" id="canvas">
         <div class="wrap-tab" >test</div>
-        <div class="canvas-wrap" id="canvas-wrap" >
+        <div class="canvas-wrap" id="canvas-wrap"  onclick="clickWrap(event)" >
           <div class="wrap" id="wrap" >
         <!-- 此处遍历生成画布元素 -->
           </div>
@@ -25,23 +25,27 @@
       <div class="details">
         <!-- 属性栏固定组 -->
         <div class="common-group" id="common-group">
-          <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
+          <!-- <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
           <input type="text" class="r-input" value="MainCanvas" />
           <div class="r-btns">
             <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
             <div id="r-btns-event" onclick="choice('event')">事 件</div>
-          </div>
+          </div> -->
         </div>
         <!-- 属性栏变化组 -->
         <div class="change-group" id="change-group">
-          <div class="pos-group" >
+          <!-- <div class="pos-group" >
             <div class="r-pos"><span>尺寸</span> </div>
             <div class="r-pos r-pos-detail">
               <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur()" value="0" >
               </div>
               <div><span> H：</span><input class="r-pos-input" type="text" onblur="handleblur()" value="0"></div>
             </div>
-          </div>
+          </div> -->
+          <!-- <div class="pos-others">
+            <span>填充</span>
+            <span class="pos-back-color"></span>
+          </div> -->
           <!-- <div class="pos-group" >
             <div class="r-pos r-pos-font">
               <span>字体</span>
@@ -89,6 +93,10 @@
   <script type="text/javascript">
     var Width = 1200
     var Height = 900
+    var commonList = {
+      Title: '画布',
+      Name: 'MainCanvas'
+    }
     var btns = [
       {
         icon: '',
@@ -285,6 +293,7 @@
         str += `<div class="btn" draggable="true" data-id="${index}">${item.title}</div>`
       })
       btnGroups.innerHTML = str
+      initCommon()
       // dragStart事件
       btnGroups.addEventListener("dragstart",function(e){
         menu.style.display = 'none'
@@ -363,6 +372,12 @@
         childElement(childNodes.length - 1)
         console.log(childNodes)
         }, false)
+    }
+    function clickWrap (e) {
+      e.preventDefault()
+      if (e.target.id && e.target.id === 'wrap') {
+        initCommon()
+      }
     }
     // 创建生成画布元素
     function childElement (index) {
@@ -479,6 +494,24 @@
         if (index) {
           setClass(index)
         }
+    }
+    // 右侧属性栏初始化
+    function initCommon () {
+      let commonGroup = document.getElementById('common-group')
+      let changeGroup = document.getElementById('change-group')
+      let commonStr = `<div class="r-item" >检视: <span id="r-item-title">${commonList.Title}</span></div>
+        <input type="text" class="r-input" onblur="setCanvasName(event)" value="${commonList.Name}" />
+        <div class="r-btns">
+          <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
+          <div id="r-btns-event" onclick="choice('event')">事 件</div>
+        </div>`
+        let changeStr = `<div class="pos-others">
+            <span>填充</span>
+            <span class="pos-back-color"></span>
+          </div>
+        `
+        commonGroup.innerHTML = commonStr
+        changeGroup.innerHTML = changeStr
     }
     // 右侧属性栏公共样式
     function rightCommon (title, name, index) {
@@ -755,7 +788,6 @@
         style.classList.remove("active")
       }
     }
-
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]
       list.forEach((item) => {
@@ -808,6 +840,10 @@
       document.addEventListener('mouseup', up, true)
       return true
     }
+    function setCanvasName (e) {
+      commonList.Name = e.target.value
+      initCommon()
+    } 
     function handleblur (e, index, prop) {
       if (prop !== 'Name') {
         childNodes[index].PropertyList[prop] = e.target.value
@@ -863,6 +899,7 @@
     }
     function delElement (event) {
       childNodes.splice(delIndex, 1)
+      initCommon()
       childElement()
     }
   
