@@ -172,6 +172,16 @@
       },
       {
         icon: '',
+        title: '矩形状态灯',
+        ControlType: 'commonlamp',
+        Width: 100,
+        Height: 30,
+        BorderRadius: 10,
+        Opacity: 100,
+        ZIndex: 10,
+      },
+      {
+        icon: '',
         title: '静态文本',
         ControlType: 'statictextblock',
         FontFamily: '微软雅黑',
@@ -308,6 +318,7 @@
             Style: item.Style,
             Color: item.Color,
             Width: item.Width,
+            Height: item.Height,
             BorderWidth: item.BorderWidth,
             BorderColor: item.BorderColor,
             BackColor: item.BackColor,
@@ -315,7 +326,7 @@
             FontWeight: item.FontWeight,
             FontSize: item.FontSize,
             TextDecoration: item.TextDecoration,
-            Height: item.Height,
+            BorderRadius: item.BorderRadius,
             Img: item.Img,
             Text: item.Text,
             ZIndex: item.ZIndex
@@ -421,6 +432,16 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;border-radius: 50%;
+              height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};background-color: #DDDDDD;
+              opacity: ${Number(item.PropertyList.Opacity) / 100};">
+                <div class="moduleShape">
+                </div>
+              </div>
+              `
+            } else if (item.ControlType === 'commonlamp') { //矩形状态灯
+              html += `<div class="commonModule" draggable="false" data-id="${index}"
+                onmousedown="handleDown(event)" onclick="setClass(${index})"
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;border-radius: ${item.PropertyList.BorderRadius}px;
               height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};background-color: #DDDDDD;
               opacity: ${Number(item.PropertyList.Opacity) / 100};">
                 <div class="moduleShape">
@@ -602,7 +623,7 @@
                 <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
               </div>
               `
-        } else if (data.ControlType === 'dynamictext') {
+        } else if (data.ControlType === 'dynamictext') {  //动态文本
           changeStr += `<div class="pos-group" >
             <div class="r-pos">位置，<span>尺寸</span> </div>
             <div class="r-pos r-pos-detail">
@@ -660,7 +681,7 @@
               <span>不透明度(%)</span>
               <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
             </div>`
-        } else if (data.ControlType === 'ellipselamp') {
+        } else if (data.ControlType === 'ellipselamp') {  //圆形状态灯
           changeStr = `<div class="pos-group" >
               <div class="r-pos"><span>尺寸</span> </div>
               <div class="r-pos r-pos-detail">
@@ -671,6 +692,26 @@
                 <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
                 <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
               </div>
+              </div>
+              <div class="pos-others">
+                <span>不透明度(%)</span>
+                <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
+              </div>`
+        } else if (data.ControlType === 'commonlamp') {  //矩形状态灯
+          changeStr = `<div class="pos-group" >
+              <div class="r-pos"><span>尺寸</span> </div>
+              <div class="r-pos r-pos-detail">
+                <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+                <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+              </div>
+              <div class="r-pos r-pos-detail">
+                <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+                <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+              </div>
+              </div>
+              <div class="pos-others">
+                <span>圆角</span>
+                <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderRadius')" value="${data.BorderRadius}" />
               </div>
               <div class="pos-others">
                 <span>不透明度(%)</span>
