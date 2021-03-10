@@ -56,7 +56,7 @@ html {
   height: calc( 100% -  90px);
   display: flex;
 }
-/* 导航栏样式 */
+/* 左侧导航栏样式 */
 .btn-groups {
   width: 180px;
   min-width: 180px;
@@ -76,11 +76,21 @@ html {
 }
 .btn-groups .btn {
   color: #ccc;
-  padding: 8px;
+  height: 43px;
+  line-height: 43px;
+  padding-left: 30px;
+  font-size: 14px;
   cursor: pointer;
   /*  border-bottom: 1px solid #404040; */
   border: 1px solid #404040;
+  text-align: left;
+  display: flex;
   transition: All 0.3s ease-in-out;
+}
+.icon {
+  display: inline-block;
+  width: 35px;
+  font-size: 22px !important;
 }
 
 .btn-groups .btn:hover {

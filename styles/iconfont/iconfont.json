@@ -1,0 +1,58 @@
+{
+  "id": "2411694",
+  "name": "visual-html",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "visual-html项目",
+  "glyphs": [
+    {
+      "icon_id": "14421475",
+      "name": "图形-直线",
+      "font_class": "zhixian_huaban1",
+      "unicode": "e66d",
+      "unicode_decimal": 58989
+    },
+    {
+      "icon_id": "20290928",
+      "name": "静态图片",
+      "font_class": "jingtaitupian-copy",
+      "unicode": "ea6b",
+      "unicode_decimal": 60011
+    },
+    {
+      "icon_id": "755546",
+      "name": "矩形",
+      "font_class": "rect",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "1027689",
+      "name": "数值",
+      "font_class": "shuzhi",
+      "unicode": "e75a",
+      "unicode_decimal": 59226
+    },
+    {
+      "icon_id": "2404491",
+      "name": "文本",
+      "font_class": "wenben",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "16286939",
+      "name": "灯泡",
+      "font_class": "jinggao",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "18175739",
+      "name": "圆形",
+      "font_class": "radio-on-full",
+      "unicode": "ea6a",
+      "unicode_decimal": 60010
+    }
+  ]
+}

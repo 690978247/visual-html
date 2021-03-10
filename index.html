@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BI系统</title>
   <link rel="stylesheet" href="./styles/index.css" type="text/css">
+  <link rel="stylesheet" href="./styles/iconfont/iconfont.css">
 </head>
 <body>
   <div class="page" >
@@ -13,6 +14,12 @@
     <div class="page-wrap">
       <div class="btn-groups" id="btnGroups" >
         <!-- 此处遍历生成左侧内容 -->
+        <!-- <div class="l-title" >组件箱</div>     
+        <div class="l-title l-subtitle">标准组件</div>
+        <div class="btn" draggable="true" data-id="${index}">
+          <i class="icon iconfont iconrect" ></i>
+          <span>测试</span>
+        </div> -->
       </div>
       <div class="canvas" id="canvas">
         <div class="wrap-tab" >test</div>
@@ -99,7 +106,7 @@
     }
     var btns = [
       {
-        icon: '',
+        icon: 'iconjingtaitupian-copy',
         title: '静态图片',
         ControlType: 'staticimage',
         Width: 100,
@@ -109,7 +116,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconjingtaitupian-copy',
         title: '动态图片',
         ControlType: 'image',
         Width: 100,
@@ -119,7 +126,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconwenben',
         title: '数值显示',
         ControlType: 'datatextblock',
         Width: 100,
@@ -136,7 +143,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconzhixian_huaban1',
         title: '直线',
         ControlType: 'line',
         Width: 100,
@@ -148,7 +155,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconrect',
         title: '矩形',
         ControlType: 'solidrectangle',
         BackColor: '#fff',
@@ -161,7 +168,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconradio-on-full',
         title: '圆形',
         ControlType: 'solidellipse',
         BackColor: '#fff',
@@ -174,7 +181,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconjinggao',
         title: '圆形状态灯',
         ControlType: 'ellipselamp',
         Width: 30,
@@ -183,7 +190,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconrect',
         title: '矩形状态灯',
         ControlType: 'commonlamp',
         Width: 100,
@@ -193,7 +200,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconwenben',
         title: '静态文本',
         ControlType: 'statictextblock',
         FontFamily: '微软雅黑',
@@ -209,7 +216,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconwenben',
         title: '动态文本',
         ControlType: 'dynamictext',
         Width: 100,
@@ -290,7 +297,10 @@
       var str = `<div class="l-title" >组件箱</div>     
         <div class="l-title l-subtitle">标准组件</div>`  //拼接字符串
       btns.forEach((item, index) => {
-        str += `<div class="btn" draggable="true" data-id="${index}">${item.title}</div>`
+        str += `<div class="btn" draggable="true" data-id="${index}">
+          <i class="icon iconfont ${item.icon}" ></i>
+          <span>${item.title}</span>
+        </div>`
       })
       btnGroups.innerHTML = str
       initCommon()
