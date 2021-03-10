@@ -538,6 +538,10 @@
         `
         commonGroup.innerHTML = commonStr
         changeGroup.innerHTML = changeStr
+        var list = [...document.getElementsByClassName('commonModule')]
+        list.forEach((item) => {
+          item.classList.remove("activeItem")
+        })
     }
     // 右侧属性栏公共样式
     function rightCommon (title, name, index) {
