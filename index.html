@@ -428,32 +428,37 @@
               </div>
               `
             } else if (item.ControlType === 'statictextblock') {  //静态文本
-              // <span class="moduleShape" style="font-family: ${item.PropertyList.FontFamily};font-size: ${item.PropertyList.FontSize}px" >
-              //   静态文本
-              // </span>
+              // <input class="moduleShape common-input" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
+              //   font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" 
+              //   value="${item.PropertyList.Text}"
+              // />
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
-              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;line-height: ${item.PropertyList.Height}px;
               height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100};
               border: none"
               >
-              <input class="moduleShape common-input" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
-                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" 
-                value="${item.PropertyList.Text}"
-              />
+              <div class="moduleShape common-input" contenteditable="true" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
+                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" >
+                <span>${item.PropertyList.Text}</span>
+              </div>
               </div>
               `
             } else if(item.ControlType ===  'dynamictext') {  //动态文本
+              // <input class="moduleShape common-input" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
+              //   font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" 
+              //   value="${item.PropertyList.Text}"
+              // />
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
-              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;line-height: ${item.PropertyList.Height}px;
               height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};opacity: ${Number(item.PropertyList.Opacity) / 100};
               border: none"
               >
-              <input class="moduleShape common-input" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
-                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" 
-                value="${item.PropertyList.Text}"
-              />
+              <div class="moduleShape common-input" contenteditable="true" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
+                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" >
+                <span>${item.PropertyList.Text}</span>
+              </div>
               </div>
               `
             } else if (item.ControlType ===  'solidellipse') { //圆形
@@ -847,10 +852,18 @@
       initCommon()
     } 
     function handleblur (e, index, prop) {
-      if (prop !== 'Name') {
-        childNodes[index].PropertyList[prop] = e.target.value
-      } else {
+      // if (prop !== 'Name') {
+      //   childNodes[index].PropertyList[prop] = e.target.value
+      // } else {
+      //   childNodes[index].Name = e.target.value
+      // }
+
+      if (prop === 'Name') {
         childNodes[index].Name = e.target.value
+      } else if (prop === 'Text') {
+        childNodes[index].PropertyList[prop] = e.target.innerText
+      } else {
+        childNodes[index].PropertyList[prop] = e.target.value
       }
       childElement()
       setClass(index)
