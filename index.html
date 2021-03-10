@@ -38,6 +38,13 @@
             <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
             <div id="r-btns-event" onclick="choice('event')">事 件</div>
           </div> -->
+          <!-- <div class="pos-others">
+            <span class="pos-border">阴影</span>
+            <div class="font-border">
+              <span class="font-border-color" title="内阴影" ></span>
+              <span class="font-border-color" title="内阴影"></span>
+            </div>
+          </div> -->
         </div>
         <!-- 属性栏变化组 -->
         <div class="change-group" id="change-group">
@@ -563,6 +570,13 @@
           <span class="pos-back-color"></span>
           </div>
           <div class="pos-others">
+            <span class="pos-border">阴影</span>
+            <div class="font-border">
+              <span class="font-border-color" title="内阴影" ></span>
+              <span class="font-border-color" title="内阴影"></span>
+            </div>
+          </div>
+          <div class="pos-others">
             <span class="pos-border">边框</span>
             <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderWidth')" value="${data.BorderWidth}" />
             <span class="pos-border-color"></span>
@@ -649,6 +663,13 @@
             <div class="pos-others">
               <span>填充</span>
               <span class="pos-back-color"></span>
+            </div>
+            <div class="pos-others">
+              <span class="pos-border">阴影</span>
+              <div class="font-border">
+                <span class="font-border-color" title="内阴影" ></span>
+                <span class="font-border-color" title="内阴影"></span>
+              </div>
             </div>
             <div class="pos-others">
               <span class="pos-border">边框</span>
@@ -743,8 +764,15 @@
             </div>
             </div>
             <div class="pos-others">
-            <span>填充</span>
-            <span class="pos-back-color"></span>
+              <span>填充</span>
+              <span class="pos-back-color"></span>
+            </div>
+            <div class="pos-others">
+              <span class="pos-border">阴影</span>
+              <div class="font-border">
+                <span class="font-border-color" title="内阴影" ></span>
+                <span class="font-border-color" title="内阴影"></span>
+              </div>
             </div>
             <div class="pos-others">
               <span class="pos-border">边框</span>
@@ -758,7 +786,7 @@
             </div>`
         } else if (data.ControlType === 'ellipselamp') {  //圆形状态灯
           changeStr = `<div class="pos-group" >
-              <div class="r-pos"><span>尺寸</span> </div>
+              <div class="r-pos">位置，<span>尺寸</span> </div>
               <div class="r-pos r-pos-detail">
                 <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
                 <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
@@ -767,6 +795,13 @@
                 <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
                 <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
               </div>
+              </div>
+              <div class="pos-others">
+                <span class="pos-border">阴影</span>
+                <div class="font-border">
+                  <span class="font-border-color" title="内阴影" ></span>
+                  <span class="font-border-color" title="内阴影"></span>
+                </div>
               </div>
               <div class="pos-others">
                 <span>不透明度(%)</span>
@@ -787,6 +822,13 @@
               <div class="pos-others">
                 <span>圆角</span>
                 <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderRadius')" value="${data.BorderRadius}" />
+              </div>
+              <div class="pos-others">
+                <span class="pos-border">阴影</span>
+                <div class="font-border">
+                  <span class="font-border-color" title="内阴影" ></span>
+                  <span class="font-border-color" title="内阴影"></span>
+                </div>
               </div>
               <div class="pos-others">
                 <span>不透明度(%)</span>
