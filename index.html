@@ -408,16 +408,16 @@
 
     }
       // 鼠标点击可以的按钮resize事件
-    function handleMouseDownOnPoint (point, event, type) {
+    function handleMouseDownOnPoint (point, event, type, index) {
       let downEvent = event
       // 抛出事件让父组件设置当前元素选中状态
       downEvent.stopPropagation()
       downEvent.preventDefault() // Let's stop this event.
-      const pos = {...this.childItem.PropertyList}
-      let height = pos.height
-      let width = pos.width
-      let top = pos.Top
-      let left = pos.Left
+      const pos = {...childNodes[index].PropertyList}
+      let Height = pos.Height
+      let Width = pos.Width
+      let Top = pos.Top
+      let Left = pos.Left
       let startX = downEvent.clientX
       let startY = downEvent.clientY
       // 当前模块的最小宽度值
@@ -435,41 +435,46 @@
         let currY = moveEvent.clientY
         let disY = currY - startY
         let disX = currX - startX
-        console.log(disX)
         let hasT = /t/.test(point)
         let hasB = /b/.test(point)
         let hasL = /l/.test(point)
         let hasR = /r/.test(point)
-        let newHeight = +height + (hasT ? -disY : hasB ? disY : 0)
-        let newWidth = +width + (hasL ? -disX : hasR ? disX : 0)
-        console.log(newHeight)
-        console.log(newWidth)
-        pos.width = newWidth > 0 ? newWidth : 0
-        pos.left = +left + (hasL ? disX : 0)
-        pos.top = +top + (hasT ? disY : 0)
+        let newHeight = + Height + (hasT ? -disY : hasB ? disY : 0)
+        let newWidth = + Width + (hasL ? -disX : hasR ? disX : 0)
+        pos.Width = newWidth > 0 ? newWidth : 0
+        pos.Left = + Left + (hasL ? disX : 0)
+        pos.Top = + Top + (hasT ? disY : 0)
         // console.log(pos.left)
         // console.log(pos.top)
         // 拖动类型为文本则不可改变高度
         if (type !== 'text') {
-          pos.height = newHeight > 0 ? newHeight : 0
+          pos.Height = newHeight > 0 ? newHeight : 0
         }
         // 如果宽度小于最小宽度就直接返回
-        if (pos.width < minWidth) return
+        if (pos.Width < minWidth) return
         // 如果高度小于最小高度就直接返回
-        if (pos.height < minHeight) return
+        if (pos.Height < minHeight) return
         // 行高需要随着高度变化
-        if (this.childItem.options && this.childItem.options.lineHeightChange && type !== 'text') {
-          pos.lineHeight = pos.height
-        }
-        this.$emit('resize', pos, this.childItem.index)
+        // if (this.childItem.options && this.childItem.options.lineHeightChange && type !== 'text') {
+        //   pos.lineHeight = pos.height
+        // }
+        resize(pos, index)
+        // this.$emit('resize', pos, index)
       }
       let up = () => {
-        this.$emit('resize')
+        setClass(index)
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
       }
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)
+    }
+    function resize (pos, index) {
+      if (childNodes[index]) {
+        childNodes[index].PropertyList = pos
+        childElement(index)
+        changeCommon({...pos, ControlType: childNodes[index].ControlType} , index)
+      }
     }
     // 画布禁止鼠标右键点击
     function forbidMouse(e) {
@@ -590,6 +595,7 @@
             }
           })
         }
+        // wrap.insertAdjacentHTML('afterend',html)   insertAdjacentHTML方法往html中插入模板字符串
         wrap.innerHTML = html
         if (index) {
           setClass(index)
@@ -929,15 +935,64 @@
     }
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]
+      var str = ``
       list.forEach((item) => {
         if (item.dataset.id == i) { // 注意：此处用== 不用===
           item.className += ' activeItem'
+          if (childNodes[i].pointList && childNodes[i].pointList.length !== 0) {
+            childNodes[i].pointList.forEach((p) => {
+              // str += `<div class="edit-shape-point"> </div>`
+              let style = getPointStyle(p, i)
+              str += `<div class="edit-shape-point" onmousedown="handleMouseDownOnPoint('${p}',event, 'div', ${i})" style="left: ${style.left};top: ${style.top};margin-left: ${style.marginLeft};margin-top: ${style.marginTop};
+               cursor: ${style.cursor}"> </div>`
+            })
+          }
+          item.insertAdjacentHTML('beforeend', str) 
+          // item.innerHTML = str
         } else {
           item.classList.remove("activeItem")
+          item.classList.remove("edit-shape-point")
         }
       })
     }
-
+    function getPointStyle (point, index) {
+      return this.convertPointStyle(point, childNodes[index].PropertyList)
+    }
+    // 绘制8个小圆点
+    function convertPointStyle (point, defaultStyle, directionKey = {t: 'n', b: 's', l: 'w', r: 'e'}) {
+      const pos = defaultStyle
+      const height = pos.Height
+      const width = pos.Width
+      let hasT = /t/.test(point)
+      let hasB = /b/.test(point)
+      let hasL = /l/.test(point)
+      let hasR = /r/.test(point)
+      let newLeft = 0
+      let newTop = 0
+      if (point.length === 2) {
+        newLeft = hasL ? 0 : width
+        newTop = hasT ? 0 : height
+      } else {
+        // !#zh 上下点，宽度固定在中间
+        if (hasT || hasB) {
+          newLeft = width / 2
+          newTop = hasT ? 0 : height
+        }
+        // !#zh 左右点，高度固定在中间
+        if (hasL || hasR) {
+          newLeft = hasL ? 0 : width
+          newTop = height / 2
+        }
+      }
+      const style = {
+        marginLeft: (hasL || hasR) ? '-5px' : 0,
+        marginTop: (hasT || hasB) ? '-4px' : 0,
+        left: `${newLeft}px`,
+        top: `${newTop}px`,
+        cursor: point.split('').reverse().map(m => directionKey[m]).join('') + '-resize'
+      }
+      return style
+    }
     function handleDown (e) {
       // let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
       let index = e.currentTarget.dataset.id
