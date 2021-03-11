@@ -938,7 +938,7 @@
           if (childNodes[i].pointList && childNodes[i].pointList.length !== 0) {
             childNodes[i].pointList.forEach((p) => {
               // str += `<div class="edit-shape-point"> </div>`
-              let style = getPointStyle(p, i, item)
+              let style = getPointStyle(p, i)
               str += `<div class="edit-shape-point" onmousedown="handleMouseDownOnPoint('${p}',event, 'div', ${i})" style="left: ${style.left};top: ${style.top};margin-left: ${style.marginLeft};margin-top: ${style.marginTop};
                cursor: ${style.cursor}"> </div>`
             })
@@ -957,11 +957,11 @@
         }
       })
     }
-    function getPointStyle (point, index, item) {
-      return this.convertPointStyle(point, childNodes[index].PropertyList, item)
+    function getPointStyle (point, index) {
+      return this.convertPointStyle(point, childNodes[index].PropertyList, index)
     }
     // 绘制8个小圆点
-    function convertPointStyle (point, defaultStyle, item, directionKey = {t: 'n', b: 's', l: 'w', r: 'e'}, ) {
+    function convertPointStyle (point, defaultStyle, index, directionKey = {t: 'n', b: 's', l: 'w', r: 'e'}, ) {
       const pos = defaultStyle
       const height = pos.Height
       const width = pos.Width
@@ -972,33 +972,66 @@
       let hasR = /r/.test(point)
       let newLeft = 0
       let newTop = 0
-      if (point.length === 2) {
-        newLeft = hasL ? 0 : width
-        newTop = hasT ? 0 : height
-        // 当有border-Width时需要减去borderWidth的大小
-        if (borderWidth && borderWidth !== 0) {
-          newLeft = newLeft - borderWidth
-          newTop = newTop - borderWidth
+      if (childNodes[index].ControlType === 'line') { // 当元素为直线时特殊处理
+        if (point.length === 2) {
+          newLeft = hasL ? 0 : width
+          newTop = hasT ? 0 : borderWidth * 2
+          // 当有border-Width时需要减去borderWidth的大小
+          if (borderWidth && borderWidth !== 0) {
+            newLeft = newLeft - borderWidth
+            newTop = newTop - borderWidth
+          }
+        } else {
+          // !#zh 上下点，宽度固定在中间
+          if (hasT || hasB) {
+            newLeft = width / 2
+            newTop = hasT ? 0 : borderWidth * 2
+            // 当有border-Width时需要减去borderWidth的大小
+            if (borderWidth && borderWidth !== 0) {
+              newLeft = newLeft - borderWidth
+              newTop = newTop - borderWidth
+            }
+          }
+          // !#zh 左右点，高度固定在中间
+          if (hasL || hasR) {
+            newLeft = hasL ? 0 : width
+            newTop = borderWidth
+            // 当有border-Width时需要减去borderWidth的大小
+            if (borderWidth && borderWidth !== 0) {
+              newLeft = newLeft - borderWidth
+              newTop = newTop - borderWidth
+            }
+          }
         }
-      } else {
-        // !#zh 上下点，宽度固定在中间
-        if (hasT || hasB) {
-          newLeft = width / 2
+      }else {
+        if (point.length === 2) {
+          newLeft = hasL ? 0 : width
           newTop = hasT ? 0 : height
           // 当有border-Width时需要减去borderWidth的大小
           if (borderWidth && borderWidth !== 0) {
             newLeft = newLeft - borderWidth
             newTop = newTop - borderWidth
           }
-        }
-        // !#zh 左右点，高度固定在中间
-        if (hasL || hasR) {
-          newLeft = hasL ? 0 : width
-          newTop = height / 2
-          // 当有border-Width时需要减去borderWidth的大小
-          if (borderWidth && borderWidth !== 0) {
-            newLeft = newLeft - borderWidth
-            newTop = newTop - borderWidth
+        } else {
+          // !#zh 上下点，宽度固定在中间
+          if (hasT || hasB) {
+            newLeft = width / 2
+            newTop = hasT ? 0 : height
+            // 当有border-Width时需要减去borderWidth的大小
+            if (borderWidth && borderWidth !== 0) {
+              newLeft = newLeft - borderWidth
+              newTop = newTop - borderWidth
+            }
+          }
+          // !#zh 左右点，高度固定在中间
+          if (hasL || hasR) {
+            newLeft = hasL ? 0 : width
+            newTop = height / 2
+            // 当有border-Width时需要减去borderWidth的大小
+            if (borderWidth && borderWidth !== 0) {
+              newLeft = newLeft - borderWidth
+              newTop = newTop - borderWidth
+            }
           }
         }
       }
@@ -1068,6 +1101,9 @@
         childNodes[index].Name = e.target.value
       } else if (prop === 'Text') {
         childNodes[index].PropertyList[prop] = e.target.innerText
+      } else if (prop === 'BorderWidth') {
+        childNodes[index].PropertyList[prop] = e.target.value
+        setClass(index)
       } else {
         childNodes[index].PropertyList[prop] = e.target.value
       }
