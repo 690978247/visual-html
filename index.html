@@ -103,6 +103,13 @@
       <ul id="rightMenu">
         <li class="menu" onclick="delElement()">删 除</li>
     </ul>
+    <!--拖动容器盒子的小圆点-->
+    <!-- <div class="edit-shape-point"
+      v-for="item in (childItem.index === activeIndex ? childItem.pointList : [])"
+      :key="item"
+      onmousedown="handleMouseDownOnPoint(item, $event)"
+      :style="getPointStyle(item)"
+    /> -->
   </div>
   <script type="text/javascript">
     var Width = 1200
@@ -396,6 +403,74 @@
         initCommon()
       }
     }
+    // 创建小圆点
+    function createPoint () {
+
+    }
+      // 鼠标点击可以的按钮resize事件
+    function handleMouseDownOnPoint (point, event, type) {
+      let downEvent = event
+      // 抛出事件让父组件设置当前元素选中状态
+      downEvent.stopPropagation()
+      downEvent.preventDefault() // Let's stop this event.
+      const pos = {...this.childItem.PropertyList}
+      let height = pos.height
+      let width = pos.width
+      let top = pos.Top
+      let left = pos.Left
+      let startX = downEvent.clientX
+      let startY = downEvent.clientY
+      // 当前模块的最小宽度值
+      let minWidth = 0
+      if (pos.minWidth) {
+        minWidth = pos.minWidth
+      }
+      // 当前模块的最小高度值
+      let minHeight = 0
+      if (pos.minHeight) {
+        minHeight = pos.minHeight
+      }
+      let move = moveEvent => {
+        let currX = moveEvent.clientX
+        let currY = moveEvent.clientY
+        let disY = currY - startY
+        let disX = currX - startX
+        console.log(disX)
+        let hasT = /t/.test(point)
+        let hasB = /b/.test(point)
+        let hasL = /l/.test(point)
+        let hasR = /r/.test(point)
+        let newHeight = +height + (hasT ? -disY : hasB ? disY : 0)
+        let newWidth = +width + (hasL ? -disX : hasR ? disX : 0)
+        console.log(newHeight)
+        console.log(newWidth)
+        pos.width = newWidth > 0 ? newWidth : 0
+        pos.left = +left + (hasL ? disX : 0)
+        pos.top = +top + (hasT ? disY : 0)
+        // console.log(pos.left)
+        // console.log(pos.top)
+        // 拖动类型为文本则不可改变高度
+        if (type !== 'text') {
+          pos.height = newHeight > 0 ? newHeight : 0
+        }
+        // 如果宽度小于最小宽度就直接返回
+        if (pos.width < minWidth) return
+        // 如果高度小于最小高度就直接返回
+        if (pos.height < minHeight) return
+        // 行高需要随着高度变化
+        if (this.childItem.options && this.childItem.options.lineHeightChange && type !== 'text') {
+          pos.lineHeight = pos.height
+        }
+        this.$emit('resize', pos, this.childItem.index)
+      }
+      let up = () => {
+        this.$emit('resize')
+        document.removeEventListener('mousemove', move)
+        document.removeEventListener('mouseup', up)
+      }
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', up)
+    }
     // 画布禁止鼠标右键点击
     function forbidMouse(e) {
       e.preventDefault()
@@ -413,8 +488,7 @@
               border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px;
               background-color: ${item.PropertyList.BackColor}; height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};
               opacity: ${Number(item.PropertyList.Opacity) / 100};">
-                <div class="moduleShape">
-                </div>
+                <div class="moduleShape"></div>
               </div>
               `
             } else if (item.ControlType === 'line') {  //直线样式

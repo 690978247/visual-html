@@ -34,6 +34,16 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #ccc;
 }
+ /* 拖动的圆点 */
+.edit-shape-point {
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border: 1px solid #59c7f9;
+  border-radius: 8px;
+  position: absolute;
+  z-index: 1001;
+}
 /* 鼠标右键菜单样式 */
 #rightMenu{
   margin: 0;
@@ -154,7 +164,7 @@ html {
   position: absolute;
   /* border: 1px solid #000; */
   box-sizing: border-box;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 /* .commonModule:hover {
   border: 1px dashed #1AB399;
