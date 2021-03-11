@@ -403,10 +403,6 @@
         initCommon()
       }
     }
-    // 创建小圆点
-    function createPoint () {
-
-    }
       // 鼠标点击可以的按钮resize事件
     function handleMouseDownOnPoint (point, event, type, index) {
       let downEvent = event
@@ -454,10 +450,6 @@
         if (pos.Width < minWidth) return
         // 如果高度小于最小高度就直接返回
         if (pos.Height < minHeight) return
-        // 行高需要随着高度变化
-        // if (this.childItem.options && this.childItem.options.lineHeightChange && type !== 'text') {
-        //   pos.lineHeight = pos.height
-        // }
         resize(pos, index)
         // this.$emit('resize', pos, index)
       }
@@ -621,6 +613,10 @@
         var list = [...document.getElementsByClassName('commonModule')]
         list.forEach((item) => {
           item.classList.remove("activeItem")
+        })
+        var childs = [...document.getElementsByClassName('edit-shape-point')]
+        childs.forEach(item => {
+          item.parentNode.removeChild(item)
         })
     }
     // 右侧属性栏公共样式
@@ -952,6 +948,12 @@
         } else {
           item.classList.remove("activeItem")
           item.classList.remove("edit-shape-point")
+          let child = [...item.children]
+          child.forEach(item => {
+            if (item.className === 'edit-shape-point') {
+              item.parentNode.removeChild(item)
+            }
+          })
         }
       })
     }
