@@ -282,7 +282,7 @@
           BorderColor: '#000',
           ZIndex: 10
        },
-        pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+        pointList: ['l', 'r'],
       }
     ]
     var attrsGroup = {
@@ -361,34 +361,64 @@
         let item = btns[index]
         // 清除dragstart事件传递的参数
         event.dataTransfer.clearData()
-        // 需在这边添加增加的样式
-        childNodes.push({
-          title: item.title,
-          ControlType: item.ControlType,
-          Name: item.ControlType + leg,
-          PropertyList: {
-            id: leg,
-            Left: targetX - fatherX,
-            Top: targetY - fatherY,
-            Opacity: item.Opacity,
-            Style: item.Style,
-            Color: item.Color,
-            Width: item.Width,
-            Height: item.Height,
-            BorderWidth: item.BorderWidth,
-            BorderColor: item.BorderColor,
-            BackColor: item.BackColor,
-            FontFamily: item.FontFamily,
-            FontWeight: item.FontWeight,
-            FontSize: item.FontSize,
-            TextDecoration: item.TextDecoration,
-            BorderRadius: item.BorderRadius,
-            Img: item.Img,
-            Text: item.Text,
-            ZIndex: item.ZIndex
-          },
-          pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
-        })
+          // 需在这边添加增加的样式
+        if (item.ControlType === 'line') { //line单独添加样式
+          childNodes.push({
+            title: item.title,
+            ControlType: item.ControlType,
+            Name: item.ControlType + leg,
+            PropertyList: {
+              id: leg,
+              Left: targetX - fatherX,
+              Top: targetY - fatherY,
+              Opacity: item.Opacity,
+              Style: item.Style,
+              Color: item.Color,
+              Width: item.Width,
+              Height: item.Height,
+              BorderWidth: item.BorderWidth,
+              BorderColor: item.BorderColor,
+              BackColor: item.BackColor,
+              FontFamily: item.FontFamily,
+              FontWeight: item.FontWeight,
+              FontSize: item.FontSize,
+              TextDecoration: item.TextDecoration,
+              BorderRadius: item.BorderRadius,
+              Img: item.Img,
+              Text: item.Text,
+              ZIndex: item.ZIndex
+            },
+            pointList: [ 'l', 'r'],
+          })
+        }else {
+          childNodes.push({
+            title: item.title,
+            ControlType: item.ControlType,
+            Name: item.ControlType + leg,
+            PropertyList: {
+              id: leg,
+              Left: targetX - fatherX,
+              Top: targetY - fatherY,
+              Opacity: item.Opacity,
+              Style: item.Style,
+              Color: item.Color,
+              Width: item.Width,
+              Height: item.Height,
+              BorderWidth: item.BorderWidth,
+              BorderColor: item.BorderColor,
+              BackColor: item.BackColor,
+              FontFamily: item.FontFamily,
+              FontWeight: item.FontWeight,
+              FontSize: item.FontSize,
+              TextDecoration: item.TextDecoration,
+              BorderRadius: item.BorderRadius,
+              Img: item.Img,
+              Text: item.Text,
+              ZIndex: item.ZIndex
+            },
+            pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+          })
+        }
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
         rightCommon(item.title, item.ControlType + leg, index)
