@@ -18,6 +18,22 @@ html {
   background: #383838;
   color: #ccc;
 }
+/*  */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ccc;
+}
 /* 鼠标右键菜单样式 */
 #rightMenu{
   margin: 0;
@@ -124,7 +140,6 @@ html {
   color: #000;
   background: #fff;
   text-align: center;
-  margin: auto;
   position: relative;
   border-top: 2px solid #000;
   border-left: 2px solid #000;
