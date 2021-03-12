@@ -125,7 +125,7 @@
         ControlType: 'staticimage',
         Width: 100,
         Height: 30,
-        Img: './imgs/01.jpg',
+        Img: './imgs/img1.jpg',
         Opacity: 100,
         ZIndex: 10,
       },
@@ -135,7 +135,7 @@
         ControlType: 'image',
         Width: 100,
         Height: 30,
-        Img: './imgs/01.jpg',
+        Img: './imgs/img1.jpg',
         Opacity: 100,
         ZIndex: 10,
       },
@@ -737,9 +737,9 @@
           if (data.ControlType === 'staticimage') {
             changeStr +=`<div class="pos-others">
             <span>图片</span>
-            <select id="group" class="pos-select" value="1">
-              <option value="1">img1</option>
-              <option value="2">img2</option>
+            <select id="group" class="pos-select" onchange="changeImg(this[selectedIndex].value, ${index})" value="img1">
+              <option value="img1">img1</option>
+              <option value="img2">img2</option>
             </select>
             <span class="pos-selectImg">...</span>
           </div>`
@@ -1163,6 +1163,11 @@
           childNodes[index].PropertyList[prop] = 'none'
         }
       }
+      childElement()
+      setClass(index)
+    }
+    function changeImg (value, index) {
+      childNodes[index].PropertyList.Img = `./imgs/${value}.jpg`
       childElement()
       setClass(index)
     }
