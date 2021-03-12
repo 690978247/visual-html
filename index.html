@@ -38,6 +38,16 @@
             <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
             <div id="r-btns-event" onclick="choice('event')">事 件</div>
           </div> -->
+          <!-- <div class="pos-group" >
+            <div class="r-pos aligin-style-span">
+              <span>对齐方式</span>
+              <div class="r-pos r-align-style">
+                <i class="iconfont iconzuoduiqi" title="左对齐"></i>
+                <i class="iconfont iconjuzhongduiqi" title="居中对齐"></i>
+                <i class="iconfont iconyouduiqi" title="右对齐"></i>
+              </div>
+            </div>
+          </div> -->
           <!-- <div class="pos-others">
             <span class="pos-border">阴影</span>
             <div class="font-border">
@@ -242,6 +252,7 @@
         TextDecoration: 'none',
         Color: '#000',
         Opacity: 100,
+        TextAlign: 'center',
         Text: '动态文本',
         ZIndex: 10,
       }
@@ -412,6 +423,7 @@
               FontSize: item.FontSize,
               TextDecoration: item.TextDecoration,
               BorderRadius: item.BorderRadius,
+              TextAlign: item.TextAlign,
               Img: item.Img,
               Text: item.Text,
               ZIndex: item.ZIndex
@@ -580,7 +592,7 @@
               border: none"
               >
               <div class="moduleShape common-input" contenteditable="true" style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
-                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" onblur="handleblur(event, ${index}, 'Text')" >
+                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily}; text-align:${item.PropertyList.TextAlign}" onblur="handleblur(event, ${index}, 'Text')" >
                 <span>${item.PropertyList.Text}</span>
               </div>
               </div>
@@ -857,6 +869,16 @@
                   <span class="f-font-underline" onClick="changeFont(event, ${index}, 'TextDecoration')">U</span>
                   <span><input class="r-pos-input r-font-input" style="margin-top: -2px;" type="text" onblur="handleblur(event, ${index}, 'FontSize')" value="${data.FontSize}"></span>
                   <span class="r-font-color"></span>
+                </div>
+              </div>
+              <div class="pos-group" >
+                <div class="r-pos aligin-style-span">
+                  <span>对齐方式</span>
+                  <div class="r-pos r-align-style">
+                    <i class="iconfont iconzuoduiqi" onClick="changeTextAlign(event, ${index}, 'left')" title="左对齐"></i>
+                    <i class="iconfont iconjuzhongduiqi" onClick="changeTextAlign(event, ${index}, 'center')" title="居中对齐"></i>
+                    <i class="iconfont iconyouduiqi" onClick="changeTextAlign(event, ${index}, 'right')" title="右对齐"></i>
+                  </div>
                 </div>
               </div>
               <div class="pos-others">
@@ -1165,6 +1187,11 @@
           childNodes[index].PropertyList[prop] = 'none'
         }
       }
+      childElement()
+      setClass(index)
+    }
+    function changeTextAlign (e, index, align) {
+      childNodes[index].PropertyList.TextAlign = align
       childElement()
       setClass(index)
     }

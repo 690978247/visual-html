@@ -6,6 +6,27 @@
   "description": "visual-html项目",
   "glyphs": [
     {
+      "icon_id": "2278039",
+      "name": "左对齐",
+      "font_class": "zuoduiqi",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "2278040",
+      "name": "右对齐",
+      "font_class": "youduiqi",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "6337460",
+      "name": "居中对齐",
+      "font_class": "juzhongduiqi",
+      "unicode": "ec80",
+      "unicode_decimal": 60544
+    },
+    {
       "icon_id": "14421475",
       "name": "图形-直线",
       "font_class": "zhixian_huaban1",

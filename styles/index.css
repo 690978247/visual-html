@@ -194,6 +194,22 @@ html {
 .active {
   background: #464646;
 }
+.aligin-style-span {
+  display: flex;
+}
+.aligin-style-span span {
+  display: inline-block;
+  width: 60px;
+}
+.r-align-style {
+  width: calc(100% - 60px);
+  display: flex;
+  justify-content: space-around;
+}
+.r-align-style i {
+  font-size: 19px;
+  cursor: pointer;
+}
 .r-item {
   height: 38px;
   line-height: 38px;
