@@ -196,6 +196,9 @@ html {
 }
 .aligin-style-span {
   display: flex;
+  align-items: center;
+  height: 50px;
+  box-sizing: border-box;
 }
 .aligin-style-span span {
   display: inline-block;
@@ -207,8 +210,14 @@ html {
   justify-content: space-around;
 }
 .r-align-style i {
-  font-size: 19px;
+  font-size: 20px;
   cursor: pointer;
+  height: 24px;
+  line-height: 24px;
+  padding: 1px 3px;
+}
+.r-align-style i:hover {
+  background: #404040;
 }
 .r-item {
   height: 38px;
@@ -339,6 +348,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
   border-bottom: 1px solid #404040;
 }
 .pos-border {
