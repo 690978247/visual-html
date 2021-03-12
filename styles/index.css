@@ -216,6 +216,10 @@ html {
   line-height: 24px;
   padding: 1px 3px;
 }
+.right-choice {
+  background: #404040;
+  border: 1px solid #fff;
+}
 .r-align-style i:hover {
   background: #404040;
 }

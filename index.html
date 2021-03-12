@@ -875,9 +875,9 @@
                 <div class="r-pos aligin-style-span">
                   <span>对齐方式</span>
                   <div class="r-pos r-align-style">
-                    <i class="iconfont iconzuoduiqi" onClick="changeTextAlign(event, ${index}, 'left')" title="左对齐"></i>
-                    <i class="iconfont iconjuzhongduiqi" onClick="changeTextAlign(event, ${index}, 'center')" title="居中对齐"></i>
-                    <i class="iconfont iconyouduiqi" onClick="changeTextAlign(event, ${index}, 'right')" title="右对齐"></i>
+                    <i class="iconfont iconzuoduiqi" style=" ${data.TextAlign ==='left'? 'border: 1px solid #fff; background: #404040' : '' }" onClick="changeTextAlign(event, ${index}, 'left')" title="左对齐"></i>
+                    <i class="iconfont iconjuzhongduiqi" style=" ${data.TextAlign ==='center'? 'border: 1px solid #fff; background: #404040' : '' }" onClick="changeTextAlign(event, ${index}, 'center')" title="居中对齐"></i>
+                    <i class="iconfont iconyouduiqi" style=" ${data.TextAlign ==='right'? 'border: 1px solid #fff; background: #404040' : '' }" onClick="changeTextAlign(event, ${index}, 'right')" title="右对齐"></i>
                   </div>
                 </div>
               </div>
@@ -1193,6 +1193,7 @@
     function changeTextAlign (e, index, align) {
       childNodes[index].PropertyList.TextAlign = align
       childElement()
+      changeCommon({...childNodes[index].PropertyList,ControlType: childNodes[index].ControlType}, index)
       setClass(index)
     }
     function changeImg (value, index) {
