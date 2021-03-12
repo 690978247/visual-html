@@ -470,6 +470,7 @@
         pos.Width = newWidth > 0 ? newWidth : 0
         pos.Left = + Left + (hasL ? disX : 0)
         pos.Top = + Top + (hasT ? disY : 0)
+        pos.ZIndex = 20
         // console.log(pos.left)
         // console.log(pos.top)
         // 拖动类型为文本则不可改变高度
@@ -484,6 +485,7 @@
         // this.$emit('resize', pos, index)
       }
       let up = () => {
+        childNodes[index].PropertyList.ZIndex = 10
         setClass(index)
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
