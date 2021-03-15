@@ -489,6 +489,10 @@
         if (type !== 'text') {
           pos.Height = newHeight > 0 ? newHeight : 0
         }
+        if (childNodes[index].ControlType === 'line' && pos.Width < 10 ) {
+          pos.Width = 10
+          return
+        } 
         // 如果宽度小于最小宽度就直接返回
         if (pos.Width < minWidth) return
         // 如果高度小于最小高度就直接返回
@@ -536,7 +540,7 @@
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
               style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px; z-index: ${item.PropertyList.ZIndex};
-              border-style: ${item.PropertyList.Style}; border-color: ${item.PropertyList.BorderColor}; border-width: ${item.PropertyList.BorderWidth}px;
+              border-top-style: ${item.PropertyList.Style}; border-top-color: ${item.PropertyList.BorderColor}; border-top-width: ${item.PropertyList.BorderWidth}px;
               opacity: ${Number(item.PropertyList.Opacity) / 100};">
               <div class="moduleShape">
                 </div>
@@ -1049,12 +1053,12 @@
           // !#zh 左右点，高度固定在中间
           if (hasL || hasR) {
             newLeft = hasL ? 0 : width
-            newTop = borderWidth
+            newTop = -borderWidth/2 - 5
             // 当有border-Width时需要减去borderWidth的大小
-            if (borderWidth && borderWidth !== 0) {
-              newLeft = newLeft - borderWidth
-              newTop = newTop - borderWidth
-            }
+            // if (borderWidth && borderWidth !== 0) {
+            //   newLeft = newLeft - borderWidth
+            //   newTop = newTop - borderWidth
+            // }
           }
         }
       }else {
