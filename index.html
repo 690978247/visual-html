@@ -32,12 +32,12 @@
       <div class="details">
         <!-- 属性栏固定组 -->
         <div class="common-group" id="common-group">
-          <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
+          <!-- <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
           <input type="text" class="r-input" value="MainCanvas" />
           <div class="r-btns">
             <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
             <div id="r-btns-event" onclick="choice('event')">事 件</div>
-          </div>
+          </div> -->
           <!-- <div class="pos-group" >
             <div class="r-pos aligin-style-span">
               <span>对齐方式</span>
@@ -323,6 +323,21 @@
         Opacity: 100,
         ZIndex: 10,
       },
+      {
+        icon: '',
+        title: '跳转链接',
+        ControlType: 'jumplink',
+        Width: 100,
+        Height: 30,
+        FontFamily: '微软雅黑',
+        FontWeight: 'normal',
+        FontSize: 12,
+        BackColor: '#fff',
+        Color: '#000',
+        Text: '盛原成',
+        Opacity: 100,
+        ZIndex: 10,
+      }
     ]
     var childNodes = [
       {
@@ -717,6 +732,15 @@
                 <span>${item.PropertyList.Text}</span>
               </div>
               </div>`
+            } else if (item.ControlType === 'jumplink') { //跳转链接
+              html += `<div class="commonModule div-text" draggable="false" data-id="${index}"
+                onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
+              style="left: ${item.PropertyList.Left}px;top: ${item.PropertyList.Top}px; width: ${item.PropertyList.Width}px;line-height: ${item.PropertyList.Height}px;height: ${item.PropertyList.Height}px;z-index: ${item.PropertyList.ZIndex};background: ${item.PropertyList.BackColor};  opacity: ${Number(item.PropertyList.Opacity) / 100};">
+              <div class="moduleShape common-input"  style="font-weight: ${item.PropertyList.FontWeight};text-decoration: ${item.PropertyList.TextDecoration};
+                font-size: ${item.PropertyList.FontSize}px;font-family: ${item.PropertyList.FontFamily};" >
+                <span>跳转链接 ></span>
+              </div>
+              </div>`
             }
           })
         }
@@ -741,8 +765,8 @@
             <span class="pos-back-color"></span>
           </div>
         `
-        // commonGroup.innerHTML = commonStr
-        // changeGroup.innerHTML = changeStr
+        commonGroup.innerHTML = commonStr
+        changeGroup.innerHTML = changeStr
         var list = [...document.getElementsByClassName('commonModule')]
         list.forEach((item) => {
           item.classList.remove("activeItem")
@@ -1190,6 +1214,44 @@
             <span>不透明度(%)</span>
             <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'Opacity')" value="${data.Opacity}" />
           </div>`
+        } else if (data.ControlType === 'jumplink') {
+          changeStr = `<div class="pos-group" >
+            <div class="r-pos">位置，<span>尺寸</span> </div>
+            <div class="r-pos r-pos-detail">
+              <div><span>W：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Width')" value="${data.Width}" ></div>
+              <div><span>H：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Height')" value="${data.Height}"></div>
+            </div>
+            <div class="r-pos r-pos-detail">
+              <div><span>X：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Top')" value="${data.Top}" ></div>
+                <div><span>Y：</span><input class="r-pos-input" type="text" onblur="handleblur(event, ${index}, 'Left')" value="${data.Left}"></div>
+            </div>
+          </div>
+          <div class="pos-group" >
+            <div class="r-pos r-pos-font">
+              <span>字体</span>
+              <input class="pos-select pos-input" onblur="changeText(event, ${index}, 'Text')" value=${data.Text} />
+            </div>
+          </div>
+          <div class="pos-group" >
+            <div class="r-pos r-pos-font">
+              <span>字体</span>
+              <select id="group" class="pos-select" onchange="changeFamily(this[selectedIndex].value, ${index})" value="${data.FontFamily}">
+                <option value="微软雅黑">微软雅黑</option>
+                <option value="宋体">宋体</option>
+              </select>
+            </div>
+            <div class="r-pos r-font-prop">
+              <span class="f-font-blod" onClick="changeFont(event, ${index}, 'FontWeight')">B</span>
+              <span class="f-font-underline" onClick="changeFont(event, ${index}, 'TextDecoration')">U</span>
+              <span><input class="r-pos-input r-font-input" style="margin-top: -2px;" type="text" onblur="handleblur(event, ${index}, 'FontSize')" value="${data.FontSize}"></span>
+              <span class="r-font-color"></span>
+            </div>
+          </div>
+          <div class="pos-others">
+            <span>填充</span>
+            <span class="pos-back-color"></span>
+          </div>
+          `
         }
       changeGroup.innerHTML = changeStr
     }
