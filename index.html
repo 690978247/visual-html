@@ -1319,6 +1319,13 @@
             <span>填充</span>
             <span class="pos-back-color"></span>
           </div>
+          <div class="pos-others">
+            <span class="pos-border">边框</span>
+            <div class="font-border">
+              <input type="text" class="r-pos-input" onblur="handleblur(event, ${index}, 'BorderWidth')" value="${data.BorderWidth}" />
+              <span class="font-border-color"></span>
+            </div>
+          </div>
           <div class="pos-group" >
             <div class="r-pos aligin-style-span">
               <span>对齐方式</span>
@@ -1445,6 +1452,22 @@
             //   newLeft = newLeft - borderWidth
             //   newTop = newTop - borderWidth
             // }
+          }
+        }
+      }else if (childNodes[index].ControlType === 'textsearch') {
+        if (point.length === 2) {
+          newLeft = hasL ? 0 : width
+          newTop = hasT ? 0 : height
+        } else {
+          // !#zh 上下点，宽度固定在中间
+          if (hasT || hasB) {
+            newLeft = width / 2
+            newTop = hasT ? 0 : height
+          }
+          // !#zh 左右点，高度固定在中间
+          if (hasL || hasR) {
+            newLeft = hasL ? 0 : width
+            newTop = height / 2
           }
         }
       }else {
