@@ -170,6 +170,9 @@ html {
    background: #BEE6FD !important;
    border-color: #3C7FB1 !important;
 }
+.div-text:hover {
+  border-color: #7EB4EA !important;
+}
 /* .commonModule:hover {
   border: 1px dashed #1AB399;
 } */
