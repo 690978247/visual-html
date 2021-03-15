@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BI系统</title>
   <link rel="stylesheet" href="./styles/index.css" type="text/css">
+  <link rel="stylesheet" href="./styles//data.css">
   <link rel="stylesheet" href="./styles/iconfont/iconfont.css">
 </head>
 <body>
@@ -36,7 +37,27 @@
           <input type="text" class="r-input" value="MainCanvas" />
           <div class="r-btns">
             <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
-            <div id="r-btns-event" onclick="choice('event')">事 件</div>
+            <div id="r-btns-event" onclick="choice('event')">数 据</div>
+          </div> -->
+          <!-- <div class="data" >
+            <div class="data-func" >
+              <span>功能设置</span>
+                  <div class="func-variable">
+                    <span class="func-wrap-title" >变量</span>
+                    <div class="func-wrap-center">
+                      <input type="text" class="func-wrap-input"  />
+                      <span class="func-wrap-choice" >选择</span>
+                    </div>
+                    <span class="func-wrap-last" >1/1</span>
+                  </div>
+                  <div class="func-others" ><input type="checkbox" id="label1" ><label for="label1">双击时弹出历史曲线窗口</label></div>
+                  <div class="func-others" ><input type="checkbox" id="label2" ><label for="label2">数值字体颜色按条件变化</label> </div>
+              <div class="func-format">
+                <span class="func-format-title" >显示格式</span>
+                <input type="text" class="func-format-input" placeholder="整数位数" />
+                <input type="text" class="func-format-input" placeholder="小数位数" />
+            </div>
+            </div>
           </div> -->
           <!-- <div class="pos-group" >
             <div class="r-pos aligin-style-span">
@@ -1385,11 +1406,35 @@
       } else {  // 此处为选中元素之后赋予样式
         event.className += ' active'
         style.classList.remove("active")
-        changeGroup.innerHTML = ''
+        let html = ``
+        // changeGroup.innerHTML = ''
         if (childNodes[index].ControlType === 'datatextblock') {//数值显示
-
+            html += `<div class="data" >
+            <div class="data-func" >
+              <span>功能设置</span>
+                  <div class="func-variable">
+                    <span class="func-wrap-title" >变量</span>
+                    <div class="func-wrap-center">
+                      <input type="text" class="func-wrap-input"  />
+                      <span class="func-wrap-choice" onclick="openPop()" >选择</span>
+                    </div>
+                    <span class="func-wrap-last" >1/1</span>
+                  </div>
+                  <div class="func-others" ><input type="checkbox" id="label1" ><label for="label1">双击时弹出历史曲线窗口</label></div>
+                  <div class="func-others" ><input type="checkbox" id="label2" ><label for="label2">数值字体颜色按条件变化</label> </div>
+              <div class="func-format">
+                <span class="func-format-title" >显示格式</span>
+                <input type="text" class="func-format-input" placeholder="整数位数" />
+                <input type="text" class="func-format-input" placeholder="小数位数" />
+            </div>
+            </div>
+          </div>`
         }
+        changeGroup.innerHTML = html
       }
+    }
+    function openPop () {
+      alert('open')
     }
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]

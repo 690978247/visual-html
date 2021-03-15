@@ -1,0 +1,57 @@
+/* index 右侧数据部分样式 */
+.data-func {
+  padding: 0 10px;
+  border-bottom: 1px solid #404040;
+}
+.func-variable  {
+  display: flex;
+}
+.func-wrap-title {
+  display: inline-block;
+  width: 35px;
+}
+.func-wrap-center {
+  display: flex;
+  width: 130px;
+  justify-content: flex-start;
+  align-items: center;
+}
+.func-wrap-input, .func-format-input {
+  width: 80px;
+  height: 28px;
+  background: #434343;
+  box-sizing: border-box;
+  outline: none;
+  color: #fff;
+  padding: 0 5px;
+  border: none;
+}
+.func-wrap-choice {
+  width: 40px;
+  height: 28px;
+  line-height: 28px;
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1px solid #404040;
+  cursor: pointer;
+  text-align: center;
+}
+.func-others {
+  font-size: 12px;
+  padding-left: 33px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+.func-format {
+  display: flex;
+  align-items: center;
+}
+.func-wrap-format {
+  width: 100px;
+}
+.func-format-input {
+  width: 55px;
+  margin: 0 8px;
+  box-sizing: border-box;
+}
