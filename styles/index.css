@@ -173,6 +173,10 @@ html {
 .div-text:hover {
   border-color: #7EB4EA !important;
 }
+.search-input {
+  box-sizing: border-box;
+  outline: none;
+}
 /* .commonModule:hover {
   border: 1px dashed #1AB399;
 } */
