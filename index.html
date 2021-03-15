@@ -537,7 +537,7 @@
         }
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + leg, index)
+        rightCommon(item.title, item.ControlType + leg, childNodes.length - 1)
         // childNodes.length - 1 从源对象拖放到画布上的生成的元素永远是childNodes数组的最后一位
         changeCommon(item, childNodes.length - 1)
         childElement(childNodes.length - 1)
@@ -787,7 +787,7 @@
         <input type="text" class="r-input" onblur="setCanvasName(event)" value="${commonList.Name}" />
         <div class="r-btns">
           <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
-          <div id="r-btns-event" onclick="choice('event')">事 件</div>
+          <div id="r-btns-event" onclick="choice('event')">数 据</div>
         </div>`
         let changeStr = `<div class="pos-others">
             <span>填充</span>
@@ -811,8 +811,8 @@
       let commonStr = `<div class="r-item" >检视: <span id="r-item-title">${title}</span></div>
         <input type="text" class="r-input" onblur="handleblur(event, ${index}, 'Name')" value="${name}" />
         <div class="r-btns">
-          <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
-          <div id="r-btns-event" onclick="choice('event')">事 件</div>
+          <div id="r-btns-style" class="active" onclick="choice('style', ${index})" >样 式</div>
+          <div id="r-btns-event" onclick="choice('event', ${index})">数 据</div>
         </div>`
         commonGroup.innerHTML = commonStr
     }
@@ -1369,15 +1369,26 @@
         }
       changeGroup.innerHTML = changeStr
     }
-    function choice (type) {
-      var style = document.getElementById('r-btns-style')
-      var event = document.getElementById('r-btns-event')
+    function choice (type, index) {
+      let style = document.getElementById('r-btns-style')
+      let event = document.getElementById('r-btns-event')
+      let changeGroup = document.getElementById('change-group')
       if (type === 'style') {
-        style.className += ' active'
-        event.classList.remove("active")
-      } else {
+        if (index !== undefined) { //判断是否为画布， 若为画布则直接initCommon
+          changeCommon({...childNodes[index].PropertyList, ControlType: childNodes[index].ControlType}, index)
+          setClass(index)
+          style.className += ' active'
+          event.classList.remove("active")
+        } else {
+          initCommon()
+        }
+      } else {  // 此处为选中元素之后赋予样式
         event.className += ' active'
         style.classList.remove("active")
+        changeGroup.innerHTML = ''
+        if (childNodes[index].ControlType === 'datatextblock') {//数值显示
+
+        }
       }
     }
     function setClass (i) {
