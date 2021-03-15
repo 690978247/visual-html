@@ -166,6 +166,10 @@ html {
   box-sizing: border-box;
   /* overflow: hidden; */
 }
+.div-btn:hover {
+   background: #BEE6FD !important;
+   border-color: #3C7FB1 !important;
+}
 /* .commonModule:hover {
   border: 1px dashed #1AB399;
 } */
@@ -314,6 +318,10 @@ html {
   box-sizing: border-box;
   color: #fff;
   outline: none;
+  border: none;
+}
+.pos-input {
+  padding: 0 5px;
 }
 .pos-selectImg {
   display: inline-block;
