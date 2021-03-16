@@ -169,7 +169,7 @@
       onmousedown="handleMouseDownOnPoint(item, $event)"
       :style="getPointStyle(item)"
     /> -->
-    <div class="popup" >
+    <div class="popup" id="popup" >
       <div class="popup-wrap" >
         <div class="popup-head">
           <span>选择关联变量</span>
@@ -190,8 +190,8 @@
               <input class="popup-input" placeholder="描述" type="text">
             </div>
             <div>
-              <button type="button" class="popup-btn popup-cancel" >取 消</button>
-              <button type="button" class="popup-btn popup-confirm">确 认</button>
+              <button type="button" class="popup-btn popup-confirm" style="margin-right: 10px">查 询</button>
+              <button type="button" class="popup-btn popup-cancel" >重 置</button>
             </div>
           </div>
           <div class="popup-table" >
@@ -227,11 +227,11 @@
             </table>
           </div>
           <div class="popup-pagination">
-            
+
           </div>
         </div>
         <div class="popup-footer">
-          <button type="button" class="popup-btn popup-cancel" >取 消</button>
+          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" >取 消</button>
           <button type="button" class="popup-btn popup-confirm">确 认</button>
         </div>
       </div>
@@ -1502,7 +1502,8 @@
       }
     }
     function openPop () {
-      alert('open')
+      let popup = document.getElementById('popup')
+      popup.style.display = 'block'
     }
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]
