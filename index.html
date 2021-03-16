@@ -1523,7 +1523,7 @@
                       <input type="text" class="func-wrap-input" disabled value="${childNodes[index].Variate}"  />
                       <span class="func-wrap-choice" onclick="openPop(${index})" >选择</span>
                     </div>
-                    <span class="func-wrap-last" >1/1</span>
+                    <span class="func-wrap-last" >${childNodes[index].Variate ? 1 : 0}/1</span>
                   </div>
                   <div class="func-others" ><input type="checkbox" id="label1" ><label for="label1">双击时弹出历史曲线窗口</label></div>
                   <div class="func-others" ><input type="checkbox" id="label2" ><label for="label2">数值字体颜色按条件变化</label> </div>
@@ -1566,11 +1566,15 @@
     }
     function choiceRow (event, i, index) {
       var list = document.getElementsByName("pop-check");
-      list.forEach(item => {
-        item.checked = false
-      })
-      event.target.checked = true
-      childNodes[index].Variate = tableData[i].data2
+      if (event.target.checked === true) {
+          list.forEach(item => {
+            item.checked = false
+          })
+          event.target.checked = true
+          childNodes[index].Variate = tableData[i].data2
+        } else {
+          childNodes[index].Variate = ''
+        }
     }
     // 打开添加条件弹窗
     function openAddition () {
