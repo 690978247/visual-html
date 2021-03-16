@@ -169,11 +169,12 @@
       onmousedown="handleMouseDownOnPoint(item, $event)"
       :style="getPointStyle(item)"
     /> -->
+    <!-- 弹窗部分 -->
     <div class="popup" id="popup" >
       <div class="popup-wrap" >
         <div class="popup-head">
           <span>选择关联变量</span>
-          <i class="iconfont iconguanbi popup-close" ></i>
+          <i class="iconfont iconguanbi popup-close" onclick="closePopup(event)" ></i>
         </div>
         <div class="popup-body">
           <div class="popup-search" >
@@ -227,11 +228,13 @@
             </table>
           </div>
           <div class="popup-pagination">
-
+            <div>
+              
+            </div>
           </div>
         </div>
         <div class="popup-footer">
-          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" >取 消</button>
+          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closePopup(event)" >取 消</button>
           <button type="button" class="popup-btn popup-confirm">确 认</button>
         </div>
       </div>
@@ -1501,9 +1504,15 @@
         changeGroup.innerHTML = html
       }
     }
+    // 打开弹窗
     function openPop () {
       let popup = document.getElementById('popup')
       popup.style.display = 'block'
+    }
+    // 关闭弹窗
+    function closePopup (e) {
+      let popup = document.getElementById('popup')
+      popup.style.display = 'none'
     }
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]
