@@ -390,3 +390,15 @@ html {
   border-style: dashed;
   cursor: pointer;
 }
+.func-table {
+  color: #000;
+}
+.func-condition {
+  display: flex;
+  align-items: center;
+}
+.func-condition i {
+  cursor: pointer;
+  font-size: 13px;
+  margin-left: 6px;
+}

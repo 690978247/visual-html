@@ -8,6 +8,7 @@
   margin: 0;
   color: #fff;
   z-index: 9999;
+  background: rgba(0,0,0,0.6);
   display: none;
 }
 .popup-wrap {
@@ -94,6 +95,7 @@
   padding: 9px 15px;
   font-size: 14px;
   border-radius: 4px;
+  user-select: none;
 }
 .popup-cancel:hover {
   color: #409eff;
@@ -131,7 +133,7 @@ table td, table th {
   vertical-align: middle;
   position: relative;
   text-align: left;
-  border-bottom: 1px solid #ebeef5;
+  /* border-bottom: 1px solid #ebeef5; */
 }
 table tr {
   background-color: #fff;

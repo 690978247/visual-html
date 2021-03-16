@@ -6,6 +6,13 @@
   "description": "visual-html项目",
   "glyphs": [
     {
+      "icon_id": "12911871",
+      "name": "添加 加号 无边框",
+      "font_class": "tianjiajiahaowubiankuang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
       "icon_id": "9430532",
       "name": "关  闭",
       "font_class": "guanbi",
