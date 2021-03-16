@@ -173,9 +173,37 @@
       <div class="popup-wrap" >
         <div class="popup-head">
           <span>选择关联变量</span>
-          <i></i>
+          <i class="iconfont iconguanbi popup-close" ></i>
         </div>
-        <div class="popup-body" ></div>
+        <div class="popup-body">
+          <div class="popup-search" >
+            <div>
+              <select class="popup-select">
+                <option value="1">请选择变量来源</option>
+                <option value="2">请选择变量来源1</option>
+              </select>
+              <select class="popup-select">
+                <option value="1">请选择所属设备</option>
+                <option value="2">请选择所属设备1</option>
+              </select>
+              <input class="popup-input" placeholder="变量名" type="text">
+              <input class="popup-input" placeholder="描述" type="text">
+            </div>
+            <div>
+              <button type="button" class="popup-btn popup-cancel" >取 消</button>
+              <button type="button" class="popup-btn popup-confirm">确 认</button>
+            </div>
+          </div>
+          <div>
+            表格
+            <el-button>Button</el-button>
+          </div>
+          <div>分页部分</div>
+        </div>
+        <div class="popup-footer">
+          <button type="button" class="popup-btn popup-cancel" >取 消</button>
+          <button type="button" class="popup-btn popup-confirm">确 认</button>
+        </div>
       </div>
     </div>
   </div>
