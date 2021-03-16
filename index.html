@@ -7,6 +7,7 @@
   <title>BI系统</title>
   <link rel="stylesheet" href="./styles/index.css" type="text/css">
   <link rel="stylesheet" href="./styles//data.css">
+  <link rel="stylesheet" href="./styles//popup.css">
   <link rel="stylesheet" href="./styles/iconfont/iconfont.css">
 </head>
 <body>
@@ -168,6 +169,15 @@
       onmousedown="handleMouseDownOnPoint(item, $event)"
       :style="getPointStyle(item)"
     /> -->
+    <div class="popup" >
+      <div class="popup-wrap" >
+        <div class="popup-head">
+          <span>选择关联变量</span>
+          <i></i>
+        </div>
+        <div class="popup-body" ></div>
+      </div>
+    </div>
   </div>
   <script type="text/javascript">
     var Width = 1200
@@ -305,7 +315,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconanniu',
         title: '控制按钮',
         ControlType: 'cornerbutton',
         Width: 100,
@@ -325,7 +335,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconShapecopy',
         title: '读写框',
         ControlType: 'rwtextbox',
         Width: 100,
@@ -345,7 +355,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconlianjie',
         title: '跳转链接',
         ControlType: 'jumplink',
         Width: 100,
@@ -360,7 +370,7 @@
         ZIndex: 10,
       },
       {
-        icon: '',
+        icon: 'iconchaxun',
         title: '文本查询',
         ControlType: 'textsearch',
         Width: 100,

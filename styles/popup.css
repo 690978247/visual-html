@@ -1,0 +1,30 @@
+.popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  margin: 0;
+  z-index: 2000;
+  text-align: center;
+  margin-top: 24vh;
+  color: #fff;
+  display: none;
+}
+.popup-wrap {
+    position: relative;
+    margin: 0 auto 50px;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    width: 50%;
+}
+.popup-head {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  padding: 20px 20px 10px;
+  background: #409EFF;
+}
