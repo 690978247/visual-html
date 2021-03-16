@@ -211,19 +211,8 @@
                   <th rowspan="1" colspan="1"><div>设备编号</div></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td rowspan="1" colspan="1"><div><input type="checkbox"></div></td>
-                  <td rowspan="1" colspan="1"><div>基础采集点</div></td>
-                  <td rowspan="1" colspan="1"><div>channeng1</div></td>
-                  <td rowspan="1" colspan="1"><div>产能1</div></td>
-                  <td rowspan="1" colspan="1"><div>KW/h</div></td>
-                  <td rowspan="1" colspan="1"><div>int</div></td>
-                  <td rowspan="1" colspan="1"><div>计算累计</div></td>
-                  <td rowspan="1" colspan="1"><div>力源</div></td>
-                  <td rowspan="1" colspan="1"><div>Q102</div></td>
-                  <td rowspan="1" colspan="1"><div>SYC20200305</div></td>
-                </tr>
+              <tbody id="popup-tbody">
+                <!-- 此处遍历生成tr元素 -->
               </tbody>
             </table>
           </div>
@@ -235,7 +224,7 @@
         </div>
         <div class="popup-footer">
           <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closePopup(event)" >取 消</button>
-          <button type="button" class="popup-btn popup-confirm">确 认</button>
+          <button type="button" class="popup-btn popup-confirm" onclick="confirmPop(event)" >确 认</button>
         </div>
       </div>
     </div>
@@ -535,6 +524,8 @@
       top: null,
       left: null
     }
+    // 数值显示变量表格数据
+    var tableData = []
     // var leg = childNodes.length === 0  ? 0 : childNodes[childNodes.length - 1].PropertyList.id
     if (childNodes.length !== 0) {
       let ids = []
@@ -662,6 +653,13 @@
             },
             pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
           })
+        }
+        // 此处添加数据
+        if (item.ControlType === 'datatextblock') { // 数值显示数据
+          let data = {
+            Variate: '',
+          } 
+          Object.assign(childNodes[childNodes.length - 1],data) 
         }
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
@@ -1522,8 +1520,8 @@
                   <div class="func-variable">
                     <span class="func-wrap-title" >变量</span>
                     <div class="func-wrap-center">
-                      <input type="text" class="func-wrap-input"  />
-                      <span class="func-wrap-choice" onclick="openPop()" >选择</span>
+                      <input type="text" class="func-wrap-input" disabled value="${childNodes[index].Variate}"  />
+                      <span class="func-wrap-choice" onclick="openPop(${index})" >选择</span>
                     </div>
                     <span class="func-wrap-last" >1/1</span>
                   </div>
@@ -1566,6 +1564,14 @@
         changeGroup.innerHTML = html
       }
     }
+    function choiceRow (event, i, index) {
+      var list = document.getElementsByName("pop-check");
+      list.forEach(item => {
+        item.checked = false
+      })
+      event.target.checked = true
+      childNodes[index].Variate = tableData[i].data2
+    }
     // 打开添加条件弹窗
     function openAddition () {
       let additionPop = document.getElementById('additionPop')
@@ -1577,14 +1583,63 @@
       additionPop.style.display = 'none'
     }
     // 打开弹窗
-    function openPop () {
+    function openPop (index) {
+      tableData = [
+        {
+          data1: '基础采集点',
+          data2: 'channeng1',
+          data3: '产能1',
+          data4: 'KW/h',
+          data5: 'int',
+          data6: '计算累计',
+          data7: '力源',
+          data8: 'Q102',
+          data9: 'SYC20200305',
+        },
+        {
+          data1: '基础采集点1',
+          data2: 'bianliang2',
+          data3: '变量2',
+          data4: 'KW/h',
+          data5: 'float',
+          data6: '计算瞬时',
+          data7: '力源',
+          data8: 'Q102',
+          data9: 'SYC20200305',
+        }
+      ]
       let popup = document.getElementById('popup')
+      let tbody = document.getElementById('popup-tbody')
+      let html = ``
       popup.style.display = 'block'
+      tableData.forEach((item,i) => {
+        html += `<tr>
+          <td rowspan="1" colspan="1"><div><input type="checkbox" name="pop-check" ${childNodes[index].Variate === item.data2 ? 'checked' : ''} onchange="choiceRow(event, ${i}, ${index})" ></div></td>
+          <td rowspan="1" colspan="1"><div>${item.data1}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data2}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data3}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data4}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data5}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data6}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data7}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data8}</div></td>
+          <td rowspan="1" colspan="1"><div>${item.data9}</div></td>
+        </tr>`
+      })
+      tbody.setAttribute('data-index', index)
+      tbody.innerHTML = html
     }
     // 关闭弹窗
     function closePopup (e) {
       let popup = document.getElementById('popup')
       popup.style.display = 'none'
+    }
+    // 提交
+    function confirmPop () {
+      let popup = document.getElementById('popup')
+      let tbody = document.getElementById('popup-tbody') 
+      popup.style.display = 'none'
+      choice('data', tbody.dataset.index)
     }
     function setClass (i) {
       var list = [...document.getElementsByClassName('commonModule')]

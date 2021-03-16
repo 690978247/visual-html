@@ -148,7 +148,7 @@
   color: #909399;
   font-weight: 500;
 }
-.popup-table table td, table th {
+.popup-table table td, .popup-table table th {
   padding: 12px 0;
   min-width: 0;
   box-sizing: border-box;
@@ -167,7 +167,7 @@
   color: #000;
   background: #F2F2F2
 }
-.func-table table td, table th {
+.func-table table td, .func-table table th {
   min-width: 20px;
   border-bottom: 1px solid #404040;
 }
