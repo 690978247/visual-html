@@ -19,8 +19,7 @@
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
     margin-top: 24vh;
-    width: 50%;
-    min-width: 750px;
+    width: 1020px;
 }
 /* 头部样式 */
 .popup-head {
@@ -69,6 +68,30 @@
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
   width: 120px;
   margin-right: 10px;
+}
+.popup-form {
+  text-align: center;
+}
+.form-wrap {
+  width: 50%;
+  margin: 0 auto;
+}
+.form-item {
+  height: 36px;
+  line-height: 36px;
+  display: flex;
+}
+.form-item-label {
+  width: 80px;
+  display: inline-block;
+  text-align: left;
+}
+.form-input {
+  width: calc(100% - 80px);
+}
+.form-color {
+  display: flex;
+  align-items: center;
 }
 
 /* 底部样式 */

@@ -179,13 +179,13 @@
         <div class="popup-body">
           <div class="popup-search" >
             <div>
-              <select class="popup-select">
-                <option value="1">请选择变量来源</option>
-                <option value="2">请选择变量来源1</option>
+              <select class="popup-select" placeholder="请选择" >
+                <option value="1">变量来源1</option>
+                <option value="2">变量来源2</option>
               </select>
-              <select class="popup-select">
-                <option value="1">请选择所属设备</option>
-                <option value="2">请选择所属设备1</option>
+              <select class="popup-select" placeholder="请选择">
+                <option value="1">所属设备1</option>
+                <option value="2">所属设备2</option>
               </select>
               <input class="popup-input" placeholder="变量名" type="text">
               <input class="popup-input" placeholder="描述" type="text">
@@ -235,6 +235,42 @@
         </div>
         <div class="popup-footer">
           <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closePopup(event)" >取 消</button>
+          <button type="button" class="popup-btn popup-confirm">确 认</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup" id="additionPop" >
+      <div class="popup-wrap" style="width: 600px">
+        <div class="popup-head">
+          <span>新增</span>
+          <i class="iconfont iconguanbi popup-close" onclick="closeAddtion(event)" ></i>
+        </div>
+        <div class="popup-body">
+          <form class="popup-form" action="">
+            <div class="form-wrap" >
+              <div class="form-item" >
+                <span class="form-item-label" >条件：</span>
+                <select class="popup-select form-input" placeholder="请选择">
+                  <option value="1">所属设备1</option>
+                  <option value="2">所属设备2</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <span class="form-item-label" >值：</span>
+                <input type="text" class="popup-input form-input">
+              </div>
+              <div class="form-item">
+                <span class="form-item-label" > 颜色：</span>
+                <div class="form-color">
+                  <span class="pos-border-color" style="margin: 0" ></span>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="popup-footer">
+          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closeAddtion(event)" >取 消</button>
           <button type="button" class="popup-btn popup-confirm">确 认</button>
         </div>
       </div>
@@ -1496,7 +1532,7 @@
               <div>
                 <div class="func-condition" >
                   <span>指定条件</span>
-                  <i class="iconfont icontianjiajiahaowubiankuang" ></i>
+                  <i class="iconfont icontianjiajiahaowubiankuang" onclick="openAddition()" ></i>
                 </div>
                 <table class="func-table" >
                   <tbody>
@@ -1520,6 +1556,16 @@
         }
         changeGroup.innerHTML = html
       }
+    }
+    // 打开添加条件弹窗
+    function openAddition () {
+      let additionPop = document.getElementById('additionPop')
+      additionPop.style.display = 'block'
+    }
+    // 关闭添加条件弹窗
+    function closeAddtion () {
+      let additionPop = document.getElementById('additionPop')
+      additionPop.style.display = 'none'
     }
     // 打开弹窗
     function openPop () {
