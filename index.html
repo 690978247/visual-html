@@ -477,7 +477,10 @@
         ZIndex: 10,
       }
     ]
-    var ControlList = [
+    var Controls = {
+      ControlList: []
+    }
+    Controls.ControlList = [
       {
         title: '矩形',
         ControlType: 'solidrectangle',
@@ -526,10 +529,10 @@
     }
     // 数值显示变量表格数据
     var tableData = []
-    // var leg = ControlList.length === 0  ? 0 : ControlList[ControlList.length - 1].PropertyList.id
-    if (ControlList.length !== 0) {
+    // var leg = Controls.ControlList.length === 0  ? 0 : Controls.ControlList[Controls.ControlList.length - 1].PropertyList.id
+    if (Controls.ControlList.length !== 0) {
       let ids = []
-      ControlList.forEach((item, index) => {
+      Controls.ControlList.forEach((item, index) => {
         ids.push(item.PropertyList.id)
       })
       leg = Math.max(...ids)
@@ -596,7 +599,7 @@
         event.dataTransfer.clearData()
           // 需在这边添加增加的样式
         if (item.ControlType === 'line') { //line单独添加样式
-          ControlList.push({
+          Controls.ControlList.push({
             title: item.title,
             ControlType: item.ControlType,
             Name: item.ControlType + leg,
@@ -624,7 +627,7 @@
             pointList: [ 'l', 'r'],
           })
         }else {
-          ControlList.push({
+          Controls.ControlList.push({
             title: item.title,
             ControlType: item.ControlType,
             Name: item.ControlType + leg,
@@ -659,14 +662,14 @@
           let data = {
             Variate: '',
           } 
-          Object.assign(ControlList[ControlList.length - 1],data) 
+          Object.assign(Controls.ControlList[Controls.ControlList.length - 1],data) 
         }
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + leg, ControlList.length - 1)
-        // ControlList.length - 1 从源对象拖放到画布上的生成的元素永远是ControlList数组的最后一位
-        changeCommon(item, ControlList.length - 1)
-        childElement(ControlList.length - 1)
+        rightCommon(item.title, item.ControlType + leg, Controls.ControlList.length - 1)
+        // Controls.ControlList.length - 1 从源对象拖放到画布上的生成的元素永远是Controls.ControlList数组的最后一位
+        changeCommon(item, Controls.ControlList.length - 1)
+        childElement(Controls.ControlList.length - 1)
         }, false)
     }
     function clickWrap (e) {
@@ -681,7 +684,7 @@
       // 抛出事件让父组件设置当前元素选中状态
       downEvent.stopPropagation()
       downEvent.preventDefault() // Let's stop this event.
-      const pos = {...ControlList[index].PropertyList}
+      const pos = {...Controls.ControlList[index].PropertyList}
       let Height = pos.Height
       let Width = pos.Width
       let Top = pos.Top
@@ -719,7 +722,7 @@
         if (type !== 'text') {
           pos.Height = newHeight > 0 ? newHeight : 0
         }
-        if (ControlList[index].ControlType === 'line' && pos.Width < 10 ) {
+        if (Controls.ControlList[index].ControlType === 'line' && pos.Width < 10 ) {
           pos.Width = 10
           return
         } 
@@ -731,7 +734,7 @@
         // this.$emit('resize', pos, index)
       }
       let up = () => {
-        ControlList[index].PropertyList.ZIndex = 10
+        Controls.ControlList[index].PropertyList.ZIndex = 10
         setClass(index)
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
@@ -740,10 +743,10 @@
       document.addEventListener('mouseup', up)
     }
     function resize (pos, index) {
-      if (ControlList[index]) {
-        ControlList[index].PropertyList = pos
+      if (Controls.ControlList[index]) {
+        Controls.ControlList[index].PropertyList = pos
         childElement(index)
-        changeCommon({...pos, ControlType: ControlList[index].ControlType} , index)
+        changeCommon({...pos, ControlType: Controls.ControlList[index].ControlType} , index)
       }
     }
     // 画布禁止鼠标右键点击
@@ -754,8 +757,8 @@
     function childElement (index) {
         let html = ''
         let wrap = document.getElementById('wrap')
-        if (ControlList.length !== 0) {
-          ControlList.forEach((item, index) => {
+        if (Controls.ControlList.length !== 0) {
+          Controls.ControlList.forEach((item, index) => {
             if (item.ControlType === 'solidrectangle') {  //矩形样式
               html += `<div class="commonModule" draggable="false" data-id="${index}"
                 onmousedown="handleDown(event)" onclick="setClass(${index})" oncontextmenu="openRightMenu(event,${index})"
@@ -1501,7 +1504,7 @@
       let changeGroup = document.getElementById('change-group')
       if (type === 'style') {
         if (index !== undefined) { //判断是否为画布， 若为画布则直接initCommon
-          changeCommon({...ControlList[index].PropertyList, ControlType: ControlList[index].ControlType}, index)
+          changeCommon({...Controls.ControlList[index].PropertyList, ControlType: Controls.ControlList[index].ControlType}, index)
           setClass(index)
           style.className += ' active'
           event.classList.remove("active")
@@ -1513,17 +1516,17 @@
         style.classList.remove("active")
         let html = ``
         // changeGroup.innerHTML = ''
-        if (ControlList[index].ControlType === 'datatextblock') {//数值显示
+        if (Controls.ControlList[index].ControlType === 'datatextblock') {//数值显示
             html += `<div class="data" >
             <div class="data-func" >
               <span>功能设置</span>
                   <div class="func-variable">
                     <span class="func-wrap-title" >变量</span>
                     <div class="func-wrap-center">
-                      <input type="text" class="func-wrap-input" disabled value="${ControlList[index].Variate}"  />
+                      <input type="text" class="func-wrap-input" disabled value="${Controls.ControlList[index].Variate}"  />
                       <span class="func-wrap-choice" onclick="openPop(${index})" >选择</span>
                     </div>
-                    <span class="func-wrap-last" >${ControlList[index].Variate ? 1 : 0}/1</span>
+                    <span class="func-wrap-last" >${Controls.ControlList[index].Variate ? 1 : 0}/1</span>
                   </div>
                   <div class="func-others" ><input type="checkbox" id="label1" ><label for="label1">双击时弹出历史曲线窗口</label></div>
                   <div class="func-others" ><input type="checkbox" id="label2" ><label for="label2">数值字体颜色按条件变化</label> </div>
@@ -1571,9 +1574,9 @@
             item.checked = false
           })
           event.target.checked = true
-          ControlList[index].Variate = tableData[i].data2
+          Controls.ControlList[index].Variate = tableData[i].data2
         } else {
-          ControlList[index].Variate = ''
+          Controls.ControlList[index].Variate = ''
         }
     }
     // 打开添加条件弹窗
@@ -1618,7 +1621,7 @@
       popup.style.display = 'block'
       tableData.forEach((item,i) => {
         html += `<tr>
-          <td rowspan="1" colspan="1"><div><input type="checkbox" name="pop-check" ${ControlList[index].Variate === item.data2 ? 'checked' : ''} onchange="choiceRow(event, ${i}, ${index})" ></div></td>
+          <td rowspan="1" colspan="1"><div><input type="checkbox" name="pop-check" ${Controls.ControlList[index].Variate === item.data2 ? 'checked' : ''} onchange="choiceRow(event, ${i}, ${index})" ></div></td>
           <td rowspan="1" colspan="1"><div>${item.data1}</div></td>
           <td rowspan="1" colspan="1"><div>${item.data2}</div></td>
           <td rowspan="1" colspan="1"><div>${item.data3}</div></td>
@@ -1651,8 +1654,8 @@
       list.forEach((item) => {
         if (item.dataset.id == i) { // 注意：此处用== 不用===
           item.className += ' activeItem'
-          if (ControlList[i].pointList && ControlList[i].pointList.length !== 0) {
-            ControlList[i].pointList.forEach((p) => {
+          if (Controls.ControlList[i].pointList && Controls.ControlList[i].pointList.length !== 0) {
+            Controls.ControlList[i].pointList.forEach((p) => {
               // str += `<div class="edit-shape-point"> </div>`
               let style = getPointStyle(p, i)
               str += `<div class="edit-shape-point" onmousedown="handleMouseDownOnPoint('${p}',event, 'div', ${i})" style="left: ${style.left};top: ${style.top};margin-left: ${style.marginLeft};margin-top: ${style.marginTop};
@@ -1674,7 +1677,7 @@
       })
     }
     function getPointStyle (point, index) {
-      return this.convertPointStyle(point, ControlList[index].PropertyList, index)
+      return this.convertPointStyle(point, Controls.ControlList[index].PropertyList, index)
     }
     // 绘制8个小圆点
     function convertPointStyle (point, defaultStyle, index, directionKey = {t: 'n', b: 's', l: 'w', r: 'e'}, ) {
@@ -1688,7 +1691,7 @@
       let hasR = /r/.test(point)
       let newLeft = 0
       let newTop = 0
-      if (ControlList[index].ControlType === 'line') { // 当元素为直线时特殊处理
+      if (Controls.ControlList[index].ControlType === 'line') { // 当元素为直线时特殊处理
         if (point.length === 2) {
           newLeft = hasL ? 0 : width
           newTop = hasT ? 0 : borderWidth * 2
@@ -1719,7 +1722,7 @@
             // }
           }
         }
-      }else if (ControlList[index].ControlType === 'textsearch') {
+      }else if (Controls.ControlList[index].ControlType === 'textsearch') {
         if (point.length === 2) {
           newLeft = hasL ? 0 : width
           newTop = hasT ? 0 : height
@@ -1779,7 +1782,7 @@
     function handleDown (e) {
       // let index = e.target.dataset.id ? e.target.dataset.id : e.target.parentElement.dataset.id
       let index = e.currentTarget.dataset.id
-      let childItem = ControlList[index]
+      let childItem = Controls.ControlList[index]
       rightCommon(childItem.title, childItem.Name, index)
       changeCommon({...childItem.PropertyList, ControlType: childItem.ControlType}, index)
       const { PropertyList: pos } = childItem
@@ -1823,69 +1826,69 @@
       initCommon()
     } 
     function changeText (e, index, prop) {
-      ControlList[index].PropertyList[prop] = e.target.value
+      Controls.ControlList[index].PropertyList[prop] = e.target.value
       childElement()
       setClass(index)
     }
     function handleblur (e, index, prop) {
       // if (prop !== 'Name') {
-      //   ControlList[index].PropertyList[prop] = e.target.value
+      //   Controls.ControlList[index].PropertyList[prop] = e.target.value
       // } else {
-      //   ControlList[index].Name = e.target.value
+      //   Controls.ControlList[index].Name = e.target.value
       // }
       
       if (prop === 'Name') {
-        ControlList[index].Name = e.target.value
+        Controls.ControlList[index].Name = e.target.value
       } else if (prop === 'Text') {
-        ControlList[index].PropertyList[prop] = e.target.innerText
+        Controls.ControlList[index].PropertyList[prop] = e.target.innerText
       } else if (prop === 'BorderWidth') {
-        ControlList[index].PropertyList[prop] = e.target.value
+        Controls.ControlList[index].PropertyList[prop] = e.target.value
         setClass(index)
       } else {
-        ControlList[index].PropertyList[prop] = e.target.value
+        Controls.ControlList[index].PropertyList[prop] = e.target.value
       }
       childElement()
       setClass(index)
     }
     function changeColor (e, index, prop) {
-      if (ControlList[index].PropertyList[prop] === 'solid') {
-        ControlList[index].PropertyList[prop] = 'dashed'
+      if (Controls.ControlList[index].PropertyList[prop] === 'solid') {
+        Controls.ControlList[index].PropertyList[prop] = 'dashed'
       } else {
-        ControlList[index].PropertyList[prop] = 'solid'
+        Controls.ControlList[index].PropertyList[prop] = 'solid'
       }
       childElement()
       setClass(index)
     }
     function changeFont (e, index, prop) {
       if (prop === 'FontWeight') {
-        if (ControlList[index].PropertyList[prop] === 'normal') {
-          ControlList[index].PropertyList[prop] = 'bold'
+        if (Controls.ControlList[index].PropertyList[prop] === 'normal') {
+          Controls.ControlList[index].PropertyList[prop] = 'bold'
         } else {
-          ControlList[index].PropertyList[prop] = 'normal'
+          Controls.ControlList[index].PropertyList[prop] = 'normal'
         }
       } else {
-        if (ControlList[index].PropertyList[prop] === 'none') {
-          ControlList[index].PropertyList[prop] = 'underline'
+        if (Controls.ControlList[index].PropertyList[prop] === 'none') {
+          Controls.ControlList[index].PropertyList[prop] = 'underline'
         } else {
-          ControlList[index].PropertyList[prop] = 'none'
+          Controls.ControlList[index].PropertyList[prop] = 'none'
         }
       }
       childElement()
       setClass(index)
     }
     function changeTextAlign (e, index, align) {
-      ControlList[index].PropertyList.TextAlign = align
+      Controls.ControlList[index].PropertyList.TextAlign = align
       childElement()
-      changeCommon({...ControlList[index].PropertyList,ControlType: ControlList[index].ControlType}, index)
+      changeCommon({...Controls.ControlList[index].PropertyList,ControlType: Controls.ControlList[index].ControlType}, index)
       setClass(index)
     }
     function changeImg (value, index) {
-      ControlList[index].PropertyList.Img = `./imgs/${value}.jpg`
+      Controls.ControlList[index].PropertyList.Img = `./imgs/${value}.jpg`
       childElement()
       setClass(index)
     }
     function changeFamily(value, index) {
-      ControlList[index].PropertyList.FontFamily = value
+      Controls.ControlList[index].PropertyList.FontFamily = value
       childElement()
       setClass(index)
     }
@@ -1903,7 +1906,7 @@
         menu.style.display = 'none'
     }
     function delElement (event) {
-      ControlList.splice(delIndex, 1)
+      Controls.ControlList.splice(delIndex, 1)
       initCommon()
       childElement()
     }
