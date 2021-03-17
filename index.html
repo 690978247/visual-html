@@ -240,17 +240,20 @@
             <div class="form-wrap" >
               <div class="form-item" >
                 <span class="form-item-label" >条件：</span>
-                <select class="popup-select form-input" placeholder="请选择">
-                  <option value="1">所属设备1</option>
-                  <option value="2">所属设备2</option>
+                <select class="popup-select form-input" id="form-select" onchange="getFlag(this[selectedIndex].value)" placeholder="请选择">
+                  <option value=">">></option>
+                  <option value="=">=</option>
+                  <option value="<"><</option>
+                  <option value=">=">>=</option>
+                  <option value="<="><=</option>
                 </select>
               </div>
               <div class="form-item">
                 <span class="form-item-label" >值：</span>
-                <input type="text" class="popup-input form-input">
+                <input type="text" class="popup-input form-input" id="form-input" onblur="getNum(event)" >
               </div>
               <div class="form-item">
-                <span class="form-item-label" > 颜色：</span>
+                <span class="form-item-label" >颜色：</span>
                 <div class="form-color">
                   <span class="pos-border-color" style="margin: 0" ></span>
                 </div>
@@ -260,7 +263,7 @@
         </div>
         <div class="popup-footer">
           <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closeAddtion(event)" >取 消</button>
-          <button type="button" class="popup-btn popup-confirm">确 认</button>
+          <button type="button" class="popup-btn popup-confirm" onclick="confirmAddition(event)" >确 认</button>
         </div>
       </div>
     </div>
@@ -661,8 +664,15 @@
         if (item.ControlType === 'datatextblock') { // 数值显示数据
           let data = {
             Variate: '',
+            DataList: [
+              {
+                flag: '>=',
+                num: '1',
+                backColor: 'red'
+              }
+            ]
           } 
-          Object.assign(Controls.ControlList[Controls.ControlList.length - 1],data) 
+          Object.assign(Controls.ControlList[Controls.ControlList.length - 1], data) 
         }
         item.Left = targetX - fatherX
         item.Top = targetY - fatherY
@@ -1533,25 +1543,11 @@
               <div>
                 <div class="func-condition" >
                   <span>指定条件</span>
-                  <i class="iconfont icontianjiajiahaowubiankuang" onclick="openAddition()" ></i>
+                  <i class="iconfont icontianjiajiahaowubiankuang" onclick="openAddition(${index})" ></i>
                 </div>
                 <div class="func-table">
                   <table  cellspacing="0" cellpadding="0" border="0" >
-                    <tbody>
-                      <tr>
-                        <td rowspan="1" colspan="1"><div>1</div></td>  
-                        <td rowspan="1" colspan="1"><div>tag_1</div></td>  
-                        <td rowspan="1" colspan="1"><div>>=</div></td>  
-                        <td rowspan="1" colspan="1"><div>1</div></td>  
-                        <td rowspan="1" colspan="1"><div class="table-back-color"><span style="background: green" ></span></div></td>  
-                      </tr>
-                      <tr>
-                        <td rowspan="1" colspan="1"><div>1</div></td>  
-                        <td rowspan="1" colspan="1"><div>tag_1</div></td>  
-                        <td rowspan="1" colspan="1"><div>>=</div></td>  
-                        <td rowspan="1" colspan="1"><div>1</div></td>  
-                        <td rowspan="1" colspan="1"><div class="table-back-color"><span></span></div></td>  
-                      </tr>
+                    <tbody id="func-tbody">
                     </tbody>
                   </table>
                 </div> 
@@ -1565,7 +1561,25 @@
           </div>`
         }
         changeGroup.innerHTML = html
+        initCondition(index)
       }
+    }
+    // 指定条件初始化
+    function  initCondition (index) {
+      let pop = document.getElementById('additionPop')
+      let tbody = document.getElementById('func-tbody')
+      let str = ``
+      Controls.ControlList[index].DataList.forEach ((item, i) => {
+        str += `<tr>
+          <td rowspan="1" colspan="1"><div>${i + 1}</div></td>  
+          <td rowspan="1" colspan="1"><div>${Controls.ControlList[index].Variate}</div></td>  
+          <td rowspan="1" colspan="1"><div>${item.flag}</div></td>  
+          <td rowspan="1" colspan="1"><div>${item.num}</div></td>  
+          <td rowspan="1" colspan="1"><div class="table-back-color"><span style="background: ${item.backColor}" ></span></div></td>  
+        </tr>
+        `
+      })
+      tbody.innerHTML = str
     }
     function choiceRow (event, i, index) {
       var list = document.getElementsByName("pop-check");
@@ -1580,14 +1594,68 @@
         }
     }
     // 打开添加条件弹窗
-    function openAddition () {
+    function openAddition (index) {
       let additionPop = document.getElementById('additionPop')
+      let select = document.getElementById('form-select')
+      select.value = ''
+      additionPop.setAttribute('data-index', index)
       additionPop.style.display = 'block'
     }
     // 关闭添加条件弹窗
     function closeAddtion () {
       let additionPop = document.getElementById('additionPop')
+      let input = document.getElementById('form-input')
+      let select = document.getElementById('form-select')
+      select.value = ''
+      input.value = ''
       additionPop.style.display = 'none'
+    }
+    function getFlag (value) {
+      // let pop = document.getElementById('additionPop')
+      // let index = pop.dataset.index
+      // Controls.ControlList[index].DataList.flag = value
+    }
+    function getNum (e) {
+      // let pop = document.getElementById('additionPop')
+      // let index = pop.dataset.index
+      // Controls.ControlList[index].DataList.num = e.target.value
+    }
+    function confirmAddition (e) {
+      let input = document.getElementById('form-input')
+      let select = document.getElementById('form-select')
+      let pop = document.getElementById('additionPop')
+      let index = pop.dataset.index
+      if (input.value && select.value) {
+        Controls.ControlList[index].DataList.push({
+          flag: select.value,
+          num: input.value,
+          backColor: '#000'
+        })
+        closeAddtion()
+        initCondition(index)
+      } else {
+        alert('条件或值不能为空')
+      }
+      // let tbody = document.getElementById('func-tbody')
+      // let pop = document.getElementById('additionPop')
+      // let index = pop.dataset.index
+      // initCondition(index)
+      // let html = `<tr>
+      //     <td rowspan="1" colspan="1"><div>1</div></td>  
+      //     <td rowspan="1" colspan="1"><div>tag_1</div></td>  
+      //     <td rowspan="1" colspan="1"><div>>=</div></td>  
+      //     <td rowspan="1" colspan="1"><div>1</div></td>  
+      //     <td rowspan="1" colspan="1"><div class="table-back-color"><span style="background: green" ></span></div></td>  
+      //   </tr>
+      //   <tr>
+      //     <td rowspan="1" colspan="1"><div>1</div></td>  
+      //     <td rowspan="1" colspan="1"><div>tag_1</div></td>  
+      //     <td rowspan="1" colspan="1"><div>>=</div></td>  
+      //     <td rowspan="1" colspan="1"><div>1</div></td>  
+      //     <td rowspan="1" colspan="1"><div class="table-back-color"><span></span></div></td>  
+      //   </tr>`
+      //   pop.style.display = 'none'
+      //   tbody.innerHTML = html
     }
     // 打开弹窗
     function openPop (index) {
