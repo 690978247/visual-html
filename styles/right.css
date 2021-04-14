@@ -1,0 +1,46 @@
+/* 右侧样式 */
+.r-select {
+  width: 130px;
+  /* position: static; */
+}
+.r-select input{
+  border-radius: 3px;
+}
+.r-select .select-dropdown {
+  position: absolute;
+}
+.r-border-common {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+.r-border-common_item {
+  flex:1;
+  height: 50px;
+  line-height: 50px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  box-sizing: border-box;
+}
+.r-border-common_item> span:first-child {
+  margin-right: 20px;
+}
+.r-border-common_item .r-border-common_input {
+  width: 130px;
+  border-radius: 3px;
+}
+.r-border-shadow{
+  display: flex;
+  align-items: center;
+}
+.r-border-shadow span {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  border: 1px solid #fff;
+  margin-right: 20px;
+  background: #000;
+  cursor: pointer;
+  box-sizing: border-box;
+}

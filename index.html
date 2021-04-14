@@ -1,431 +1,752 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BI系统</title>
+  <link rel="stylesheet" href="./styles/common.css">
   <link rel="stylesheet" href="./styles/index.css" type="text/css">
-  <link rel="stylesheet" href="./styles//data.css">
-  <link rel="stylesheet" href="./styles//popup.css">
+  <link rel="stylesheet" href="./styles/data.css">
+  <link rel="stylesheet" href="./styles/right.css">
+  <link rel="stylesheet" href="./styles/popup.css">
+  <link rel="stylesheet" href="./css/caiyongxiang.css">
   <link rel="stylesheet" href="./styles/iconfont/iconfont.css">
+  <link rel="stylesheet" href="./zTree_v3/css/zTreeStyle/zTreeStyle.css">
+  <script src="./styles/iconfont/iconfont.js"></script>
 </head>
+
 <body>
-  <div class="page" >
-    <div class="page-tools">1</div>
-    <div class="page-wrap">
-      <div class="btn-groups" id="btnGroups" >
-        <!-- 此处遍历生成左侧内容 -->
-        <!-- <div class="l-title" >组件箱</div>     
-        <div class="l-title l-subtitle">标准组件</div>
-        <div class="btn" draggable="true" data-id="${index}">
-          <i class="icon iconfont iconrect" ></i>
-          <span>测试</span>
-        </div> -->
-      </div>
-      <div class="canvas" id="canvas">
-        <div class="wrap-tab" >test</div>
-        <div class="canvas-wrap" id="canvas-wrap"  onclick="clickWrap(event)" oncontextmenu="forbidMouse(event)" >
-          <div class="wrap" id="wrap" >
-        <!-- 此处遍历生成画布元素 -->
-          </div>
+    <div class="page">
+        <div class="page-tools">
+
         </div>
-      </div>
-      <div class="details">
-        <!-- 属性栏固定组 -->
-        <div class="common-group" id="common-group">
-          <!-- <div class="r-item" >检视: <span id="r-item-title">画布</span></div>
-          <input type="text" class="r-input" value="MainCanvas" />
-          <div class="r-btns">
-            <div id="r-btns-style" class="active" onclick="choice('style')" >样 式</div>
-            <div id="r-btns-event" onclick="choice('event')">数 据</div>
-          </div> -->
-          <!-- <div class="data" >
-            <div class="data-func" >
-              <span>功能设置</span>
-                  <div class="func-variable">
-                    <span class="func-wrap-title" >变量</span>
-                    <div class="func-wrap-center">
-                      <input type="text" class="func-wrap-input"  />
-                      <span class="func-wrap-choice" >选择</span>
+        <div class="wrap-tab">
+            <button type="button" class="visual-pagination-button" style="display: none;" disabled='disabled'><i class="iconfont iconzuojiantou"></i></button>
+            <div class="btn-groups" id="btnGroups">
+                <!-- 此处遍历生成组件内容 -->
+            </div>
+            <button type="button" class=" visual-pagination-button" style="display: none;" disabled='disabled'><i class="iconfont iconyoujiantou_huaban"></i></button>
+        </div>
+        <div class="page-wrap">
+            <div class="canvas" id="canvas">
+                <div class="canvas-wrap" id="canvas-wrap" onclick="clickWrap(event)" oncontextmenu="forbidMouse(event)">
+                    <!-- 复用 -->
+                    <div class="reuse" id="reuse">
+                        <div class="reuse-header">
+                            <span>复用仪表盘</span>
+                            <i onclick="closeReuse()" class="iconfont iconguanbi1"></i>
+                        </div>
+                        <div class="reuse-wrap">
+                            <div class="reuse-wrap-search">
+                                <input type="text" class="bi-input" style="margin-right: 10px" placeholder="请输入分组名称"></input>
+                                <button class="bi-btn btn-primary">搜 索</button>
+                            </div>
+                            <div class="bi-tree">
+                                <ul id="reusetree" class="ztree"></ul>
+                            </div>
+                        </div>
                     </div>
-                    <span class="func-wrap-last" >1/1</span>
-                  </div>
-                  <div class="func-others" ><input type="checkbox" id="label1" ><label for="label1">双击时弹出历史曲线窗口</label></div>
-                  <div class="func-others" ><input type="checkbox" id="label2" ><label for="label2">数值字体颜色按条件变化</label> </div>
-              <div class="func-format">
-                <span class="func-format-title" >显示格式</span>
-                <input type="text" class="func-format-input" placeholder="整数位数" />
-                <input type="text" class="func-format-input" placeholder="小数位数" />
+                    <div class="wrap" id="wrap">
+                        <!-- 此处遍历生成画布元素 -->
+                    </div>
+                </div>
             </div>
+            <div class="details">
+
+                <!-- <div style="width:100%;height:500px">
+                  <iframe id="pie" style="width:100%;height:100%" src="./饼图/饼图.html"></iframe>
+                </div> -->
+                <!-- 属性栏固定组 -->
+                <div class="common-group" id="common-group">
+                </div>
+                <!-- 属性栏变化组 -->
+                <div class="change-group" id="change-group">
+                </div>
             </div>
-          </div> -->
-          <!-- <div class="pos-group" >
-            <div class="r-pos aligin-style-span">
-              <span>对齐方式</span>
-              <div class="r-pos r-align-style">
-                <i class="iconfont iconzuoduiqi" title="左对齐"></i>
-                <i class="iconfont iconjuzhongduiqi" title="居中对齐"></i>
-                <i class="iconfont iconyouduiqi" title="右对齐"></i>
-              </div>
+            <!-- 鼠标右键菜单 -->
+            <ul id="rightMenu">
+                <li class="menu" onclick="delElement()">删 除</li>
+            </ul>
+            <!-- 弹窗部分 -->
+            <div class="popup" id="popup">
+                <div class="popup-wrap">
+                    <div class="popup-head">
+                        <span>选择关联变量</span>
+                        <i class="iconfont iconguanbi1 popup-close" onclick="closePopup(event)"></i>
+                    </div>
+                    <div class="popup-body">
+                        <div class="popup-search">
+                            <div>
+                                <select class="popup-select" placeholder="请选择">
+                                    <option value="1">变量来源1</option>
+                                    <option value="2">变量来源2</option>
+                                </select>
+                                <select class="popup-select" placeholder="请选择">
+                                    <option value="1">所属设备1</option>
+                                    <option value="2">所属设备2</option>
+                                </select>
+                                <input class="popup-input" placeholder="变量名" type="text">
+                                <input class="popup-input" placeholder="描述" type="text">
+                            </div>
+                            <div>
+                                <button type="button" class="popup-btn popup-confirm" style="margin-right: 10px">查 询</button>
+                                <button type="button" class="popup-btn popup-cancel">重 置</button>
+                            </div>
+                        </div>
+                        <!-- 弹窗表格部分 -->
+                        <div class="popup-table">
+                            <!-- 表格 -->
+                            <div>
+                                <div class="bi-table">
+                                    <div class="bi-table-header-wrap">
+                                        <table cellspacing="0" cellpadding="0" border="0" class="bi-table__header">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="1" colspan="1" class="table-checkbox "></th>
+                                                    <th rowspan="1" colspan="1"><div>变量来源</div></th>
+                                                    <th rowspan="1" colspan="1"><div>变量名称</div></th>
+                                                    <th rowspan="1" colspan="1"><div>变量描述</div></th>
+                                                    <th rowspan="1" colspan="1"><div>单位</div></th>
+                                                    <th rowspan="1" colspan="1"><div>数据类型</div></th>
+                                                    <th rowspan="1" colspan="1"><div>变量类型</div></th>
+                                                    <th rowspan="1" colspan="1"><div>所属客户</div></th>
+                                                    <th rowspan="1" colspan="1"><div>所属设备</div></th>
+                                                    <th rowspan="1" colspan="1"><div>设备编号</div></th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="bi-table-body-wrap">
+                                        <table cellspacing="0" cellpadding="0" border="0" class="el-table__body">
+                                            <tbody id="popup-tbody">
+                                                <!-- 此处遍历生成tr元素 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 分页 -->
+                        <div class="popup-pagination" id="popup-pagination">
+                            <!-- <div class="visual-pagination">
+                              <span>共 <span id="page-totalCount" ></span> 条</span>
+                              <select class="visual-pagination-select" name="" id="">
+                                <option value="10">10条/页</option>
+                                <option value="30">30条/页</option>
+                                <option value="50">50条/页</option>
+                                <option value="80">80条/页</option>
+                              </select>
+                              <button type="button" class="visual-pagination-button"  disabled='disabled'><i class="iconfont iconzuojiantou"></i></button>
+                              <ul class="visual-pager" >
+                                <li class="activePage" >1</li>
+                              </ul>
+                              <button type="button" class=" visual-pagination-button" disabled='disabled'><i class="iconfont iconyoujiantou_huaban"></i></button>
+                              <span>前往</span>
+                              <input type="text" class="pager-input" value="1" >
+                              <span>页</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="popup-footer">
+                        <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closePopup(event)">取 消</button>
+                        <button type="button" class="popup-btn popup-confirm" onclick="confirmPop(event)">确 认</button>
+                    </div>
+                </div>
             </div>
-          </div> -->
-          <!-- <div class="pos-others">
-            <span class="pos-border">阴影</span>
-            <div class="font-border">
-              <span class="font-border-color" title="内阴影" ></span>
-              <span class="font-border-color" title="内阴影"></span>
+
+            <div class="popup" id="additionPop">
+                <div class="popup-wrap" style="width: 600px">
+                    <div class="popup-head">
+                        <span>新增</span>
+                        <i class="iconfont iconguanbi1 popup-close" onclick="closeAddtion(event)"></i>
+                    </div>
+                    <div class="popup-body">
+                        <form class="popup-form" action="">
+                            <div class="form-wrap">
+                                <div class="form-item">
+                                    <span class="form-item-label">条件：</span>
+                                    <select class="popup-select form-input" id="form-select" onchange="getFlag(this[selectedIndex].value)" placeholder="请选择">
+                                        <option value=">">></option>
+                                        <option value="=">=</option>
+                                        <option value="<"><</option>
+                                        <option value=">=">>=</option>
+                                        <option value="<="><=</option>
+                                    </select>
+                                </div>
+                                <div class="form-item">
+                                    <span class="form-item-label">值：</span>
+                                    <input type="text" class="popup-input form-input" autocomplete="off" id="form-input" onblur="getNum(event)">
+                                </div>
+                                <div class="form-item">
+                                    <span class="form-item-label">颜色：</span>
+                                    <div class="form-color">
+                                        <span class="pos-border-color" id="formColor" style="margin: 0"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="popup-footer">
+                        <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closeAddtion(event)">取 消</button>
+                        <button type="button" class="popup-btn popup-confirm" onclick="confirmAddition(event)">确 认</button>
+                    </div>
+                </div>
             </div>
-          </div> -->
+            <!-- 仪表板弹窗部分 -->
+            <div class="copeConfigureForm" style="display:none;">
+                <div class="copeConfigureForm-search">
+                    <input class="g-search-input" type="text" placeholder="请输入分组、仪表板名称">
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm">搜索</button>
+                </div>
+                <div class="bi-tree dashboardtree treeDemoCopeFromScroll" style="height: 470px;width: 474px;">
+                    <ul id="treeCopeFrom" class="ztree"></ul>
+                </div>
+            </div>
+            <div class="copeConfigureTo1 copeConfigureTo" style="display:none;">
+                <div class="copeConfigureForm-search">
+                    <input class="g-search-input" type="text" placeholder="请输入分组、仪表板名称">
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm">搜索</button>
+                </div>
+                <div class="bi-tree dashboardtree treeDemoCopetoScroll" style="height: 470px;width: 474px;">
+                    <ul id="treeCopeto" class="ztree"></ul>
+                </div>
+            </div>
         </div>
-        <!-- 属性栏变化组 -->
-        <div class="change-group" id="change-group">
-          <!-- <div class="pos-group" >
-            <div class="r-pos">位置，<span>尺寸</span> </div>
-            <div class="r-pos r-pos-detail">
-              <div><span>W：</span><input class="r-pos-input" type="text" ></div>
-              <div><span>H：</span><input class="r-pos-input" type="text" ></div>
-            </div>
-            <div class="r-pos r-pos-detail">
-              <div><span>X：</span><input class="r-pos-input" type="text" ></div>
-              <div><span>Y：</span><input class="r-pos-input" type="text" ></div>
-            </div>
-          </div>
-          <div class="pos-group" >
-            <div class="r-pos r-pos-font">
-              <span>字体</span>
-              <select id="group" class="pos-select" value="1">
-                <option value="1">字体一</option>
-                <option value="2">字体二</option>
-              </select>
-          </div>
-            <div class="r-pos r-font-prop">
-              <span class="f-font-blod">B</span>
-              <span class="f-font-underline">U</span>
-              <span><input class="r-pos-input r-font-input" style="margin-top: -2px;" type="text" onblur="handleblur()" value="0"></span>
-              <span class="r-font-color"></span>
-            </div>
-          </div>
-          <div class="pos-others">
-            <span>填充</span>
-            <span class="pos-back-color"></span>
-          </div>
-          <div class="pos-group" >
-            <div class="r-pos aligin-style-span">
-              <span>对齐方式</span>
-              <div class="r-pos r-align-style">
-                <i class="iconfont iconzuoduiqi" title="左对齐"></i>
-                <i class="iconfont iconjuzhongduiqi" title="居中对齐"></i>
-                <i class="iconfont iconyouduiqi" title="右对齐"></i>
-              </div>
-            </div>
-          </div>
-          <div class="pos-others">
-            <span class="pos-border">边框</span>
-            <div class="font-border">
-              <input type="text" class="r-pos-input" />
-              <span class="font-border-color"></span>
-            </div>
-          </div>
-          <div class="pos-others">
-            <span>圆角</span>
-            <input type="text" class="r-pos-input" />
-          </div>
-          <div class="pos-others">
-            <span class="pos-border">阴影</span>
-            <div class="font-border">
-              <span class="font-border-color" title="内阴影" ></span>
-              <span class="font-border-color" title="内阴影"></span>
-            </div>
-          </div>
-          <div class="pos-others">
-            <span>不透明度(%)</span>
-            <input type="text" class="r-pos-input" value="100" />
-          </div> -->
-          <!-- <div class="pos-others">
-            <span class="pos-border">边框</span>
-            <input type="text" class="r-pos-input" value="2" />
-            <span class="pos-border-color"></span>
-            <span class="pos-border-style"></span>
-          </div> -->
-          <!-- <div class="pos-others">
-            <span>图片</span>
-            <select id="group" class="pos-select" value="1">
-              <option value="1">img1</option>
-              <option value="2">img2</option>
-            </select>
-            <span class="pos-selectImg">...</span>
-          </div> -->
-        </div>
-      </div>
-      <!-- 鼠标右键菜单 -->
-      <ul id="rightMenu">
-        <li class="menu" onclick="delElement()">删 除</li>
-    </ul>
-    <!--拖动容器盒子的小圆点-->
-    <!-- <div class="edit-shape-point"
-      v-for="item in (childItem.index === activeIndex ? childItem.pointList : [])"
-      :key="item"
-      onmousedown="handleMouseDownOnPoint(item, $event)"
-      :style="getPointStyle(item)"
-    /> -->
-    <!-- 弹窗部分 -->
-    <div class="popup" id="popup" >
-      <div class="popup-wrap" >
-        <div class="popup-head">
-          <span>选择关联变量</span>
-          <i class="iconfont iconguanbi popup-close" onclick="closePopup(event)" ></i>
-        </div>
-        <div class="popup-body">
-          <div class="popup-search" >
-            <div>
-              <select class="popup-select" placeholder="请选择" >
-                <option value="1">变量来源1</option>
-                <option value="2">变量来源2</option>
-              </select>
-              <select class="popup-select" placeholder="请选择">
-                <option value="1">所属设备1</option>
-                <option value="2">所属设备2</option>
-              </select>
-              <input class="popup-input" placeholder="变量名" type="text">
-              <input class="popup-input" placeholder="描述" type="text">
-            </div>
-            <div>
-              <button type="button" class="popup-btn popup-confirm" style="margin-right: 10px">查 询</button>
-              <button type="button" class="popup-btn popup-cancel" >重 置</button>
-            </div>
-          </div>
-          <div class="popup-table" >
-            <table cellspacing="0" cellpadding="0" border="0">
-              <thead>
-                <tr>
-                  <th rowspan="1" colspan="1"></th>
-                  <th rowspan="1" colspan="1"><div>变量来源</div></th>
-                  <th rowspan="1" colspan="1"><div>变量名称</div></th>
-                  <th rowspan="1" colspan="1"><div>变量描述</div></th>
-                  <th rowspan="1" colspan="1"><div>单位</div></th>
-                  <th rowspan="1" colspan="1"><div>数据类型</div></th>
-                  <th rowspan="1" colspan="1"><div>变量类型</div></th>
-                  <th rowspan="1" colspan="1"><div>所属客户</div></th>
-                  <th rowspan="1" colspan="1"><div>所属设备</div></th>
-                  <th rowspan="1" colspan="1"><div>设备编号</div></th>
-                </tr>
-              </thead>
-              <tbody id="popup-tbody">
-                <!-- 此处遍历生成tr元素 -->
-              </tbody>
-            </table>
-          </div>
-          <div class="popup-pagination">
-            <div>
-              
-            </div>
-          </div>
-        </div>
-        <div class="popup-footer">
-          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closePopup(event)" >取 消</button>
-          <button type="button" class="popup-btn popup-confirm" onclick="confirmPop(event)" >确 认</button>
-        </div>
-      </div>
     </div>
 
-    <div class="popup" id="additionPop" >
-      <div class="popup-wrap" style="width: 600px">
-        <div class="popup-head">
-          <span>新增</span>
-          <i class="iconfont iconguanbi popup-close" onclick="closeAddtion(event)" ></i>
-        </div>
-        <div class="popup-body">
-          <form class="popup-form" action="">
-            <div class="form-wrap" >
-              <div class="form-item" >
-                <span class="form-item-label" >条件：</span>
-                <select class="popup-select form-input" id="form-select" onchange="getFlag(this[selectedIndex].value)" placeholder="请选择">
-                  <option value=">">></option>
-                  <option value="=">=</option>
-                  <option value="<"><</option>
-                  <option value=">=">>=</option>
-                  <option value="<="><=</option>
-                </select>
-              </div>
-              <div class="form-item">
-                <span class="form-item-label" >值：</span>
-                <input type="text" class="popup-input form-input" id="form-input" onblur="getNum(event)" >
-              </div>
-              <div class="form-item">
-                <span class="form-item-label" >颜色：</span>
-                <div class="form-color">
-                  <span class="pos-border-color" style="margin: 0" ></span>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="popup-footer">
-          <button type="button" class="popup-btn popup-cancel" style="margin-right: 20px" onclick="closeAddtion(event)" >取 消</button>
-          <button type="button" class="popup-btn popup-confirm" onclick="confirmAddition(event)" >确 认</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script type="text/javascript" src="./js/data.js"></script>
-  <script type="text/javascript" src="./js/main.js"></script>
-  <script type="text/javascript" src="./js/rightStyle.js"></script>
-  <script type="text/javascript" src="./js/rightData.js"></script>
-  <script type="text/javascript">
-    if (Controls.ControlList.length !== 0) {
-      let ids = []
-      Controls.ControlList.forEach((item, index) => {
-        ids.push(item.PropertyList.id)
-      })
-      leg = Math.max(...ids)
-    } else {
-      leg = 0
-    }
-    window.addEventListener("load",handler,false);
-    function handler () {
-      // 左侧部分拖拽源对象
-      var btnGroups = document.getElementById('btnGroups')
-      var str = `<div class="l-title" >组件箱</div>     
-        <div class="l-title l-subtitle">标准组件</div>`  //拼接字符串
-      btns.forEach((item, index) => {
-        str += `<div class="btn" draggable="true" data-id="${index}">
-          <i class="icon iconfont ${item.icon}" ></i>
-          <span>${item.title}</span>
-        </div>`
-      })
-      btnGroups.innerHTML = str
-      initCommon()
-      // dragStart事件
-      btnGroups.addEventListener("dragstart",function(e){
-        menu.style.display = 'none'
-        if(e.target.className == "btn"){
-          e.dataTransfer.setData("data", JSON.stringify(e.target.dataset.id));
-          e.dataTransfer.effectAllowed = 'copyMove'
-        }
-      }, false)
-      // drag事件
-      btnGroups.addEventListener("drag",function(e){
-        e.preventDefault()
-      }, false)
-      // 中间画布部分拖拽目标对象
-      var canvasWrap = document.getElementById('canvas-wrap')
-      // 初始化画布，此方法用于差看画布使用
-      childElement ()
-      // dragovers事件
-      canvasWrap.addEventListener('dragover', function (event) {
-        // event.preventDefault()
-        if (event.target.classList.contains('allowed')) {
-          event.dataTransfer.dropEffect = 'move'
-        } else {
-          event.dataTransfer.dropEffect = 'copy'
-        }
-        event.preventDefault()
-      }, false)
-      // drop事件
-      canvasWrap.addEventListener('drop', function (event) {
-        // leg初始化之后没拖动一个元素下来就+1,此值会一直++, 防止元素名称重复
-        leg ++
-        // 父级元素id = canvasWrap的网页可见区域上、左的距离
-        let fatherY = canvasWrap.offsetTop
-        let fatherX = canvasWrap.offsetLeft
-  
-        // 拖动元素距离网页可见区域上、左的距离
-        let targetX =  event.clientX
-        let targetY =  event.clientY
-         // 获取dragstart事件传递的参数 注意：index为左侧属性栏的下标
-        let index = JSON.parse(event.dataTransfer.getData('data'))
-        let item = btns[index]
-        // 清除dragstart事件传递的参数
-        event.dataTransfer.clearData()
-          // 需在这边添加增加的样式
-        if (item.ControlType === 'line') { //line单独添加样式
-          Controls.ControlList.push({
-            title: item.title,
-            ControlType: item.ControlType,
-            Name: item.ControlType + leg,
-            PropertyList: {
-              id: leg,
-              Left: targetX - fatherX,
-              Top: targetY - fatherY,
-              Opacity: item.Opacity,
-              Style: item.Style,
-              Color: item.Color,
-              Width: item.Width,
-              Height: item.Height,
-              BorderWidth: item.BorderWidth,
-              BorderColor: item.BorderColor,
-              BackColor: item.BackColor,
-              FontFamily: item.FontFamily,
-              FontWeight: item.FontWeight,
-              FontSize: item.FontSize,
-              TextDecoration: item.TextDecoration,
-              BorderRadius: item.BorderRadius,
-              Img: item.Img,
-              Text: item.Text,
-              ZIndex: item.ZIndex
-            },
-            pointList: [ 'l', 'r'],
-          })
-        }else {
-          Controls.ControlList.push({
-            title: item.title,
-            ControlType: item.ControlType,
-            Name: item.ControlType + leg,
-            PropertyList: {
-              id: leg,
-              Left: targetX - fatherX,
-              Top: targetY - fatherY,
-              Opacity: item.Opacity,
-              Style: item.Style,
-              Color: item.Color,
-              Width: item.Width,
-              Height: item.Height,
-              BorderWidth: item.BorderWidth,
-              BorderColor: item.BorderColor,
-              BackColor: item.BackColor,
-              FontFamily: item.FontFamily,
-              FontWeight: item.FontWeight,
-              FontSize: item.FontSize,
-              TextDecoration: item.TextDecoration,
-              BorderRadius: item.BorderRadius,
-              Placeholder: item.Placeholder,
-              TextAlign: item.TextAlign,
-              Img: item.Img,
-              Text: item.Text,
-              ZIndex: item.ZIndex
-            },
-            pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
-          })
-        }
-        // 此处添加数据
-        if (item.ControlType === 'datatextblock') { // 数值显示数据
-          let data = {
-            Variate: '',
-            DataList: [
-              {
-                flag: '>=',
-                num: '1',
-                backColor: 'red'
-              }
-            ]
-          } 
-          Object.assign(Controls.ControlList[Controls.ControlList.length - 1], data) 
-        }
-        item.Left = targetX - fatherX
-        item.Top = targetY - fatherY
-        rightCommon(item.title, item.ControlType + leg, Controls.ControlList.length - 1)
-        // Controls.ControlList.length - 1 从源对象拖放到画布上的生成的元素永远是Controls.ControlList数组的最后一位
-        changeCommon(item, Controls.ControlList.length - 1)
-        childElement(Controls.ControlList.length - 1)
-        }, false)
-    }
-    // 此事件暂时没有用到, 是用来设置画布大小的
-    function setCanvasName (e) {
-      commonList.Name = e.target.value
-      initCommon()
-    } 
-  
-  </script>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/html2canvas.js"></script>
+    <script src="./js/color.js"></script>
+    <script type="text/javascript" src="./js/data.js"></script>
+    <script type="text/javascript" src="./js/dropdown.js"></script>
+    <!-- 图表 -->
+
+    <script src="./js/echarts.js"></script>
+    <script src="./js/ecStat.js"></script>
+    <script src="./js/jquery-1.10.2.min.js"></script>
+    <script src="./饼图/饼图Echarts.js"></script>
+    <script src="./仪表盘/仪表盘Echarts.js"></script>
+    <script src="./柱形图/柱形图Echarts.js"></script>
+    <script src="./折线图/折线图Echarts.js"></script>
+    <script src="./js/echartsJson.js"></script>
+
+    <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/rightStyle.js"></script>
+    <script type="text/javascript" src="./js/rightData.js"></script>
+    <script type="text/javascript" src="./js/topNav.js"></script>
+    <script type="text/javascript" src="./components/laydate/laydate.js"></script>  <!-- 引入第三方日期时间组件 -->
+    <script type="text/javascript" src="./layui//layui.all.js"></script>
+    <script type="text/javascript" src="./js//pagination.js"></script>
+    <!-- 引入树组件 -->
+    <script type="text/javascript" src="./zTree_v3/js/jquery.ztree.all.min.js"></script>
+    <!-- <script type="text/javascript" src="./zTree_v3/js/jquery.ztree.core.min.js"></script> -->
+    <!-- <script type="text/javascript" src="./zTree_v3/js/jquery.ztree.all.min.js"></script> -->
+    <!--   <script type="text/javascript" src="./zTree_v3/js/jquery.ztree.exedit.js"></script> -->
+    <!--   <script type="text/javascript" src="./zTree_v3/js/jquery.ztree.excheck.min.js"></script> -->
+
+
+                <script type="text/javascript">
+                    var changecolor = true;
+                    (function ($) {
+                        $.fn.pickerColor = function (option) {
+
+
+                            var opt = {
+                                ck: function () { }
+                            }, _this = this
+                            opt = $.extend(opt, option);
+                            _this.on('click', function (e) {
+
+
+                                var canvasObj = '<canvas id="canvasPickerColor" style="position: fixed;left: 50000px;top: 500px;"></canvas>';
+                                $('body').append(canvasObj);
+                                var cvs = document.getElementById("canvasPickerColor"), ctx = cvs.getContext('2d')
+                                cvs.height = 1; cvs.width = 1
+                                var img = new Image();
+                                html2canvas(document.querySelector("body")).then(canvas => {
+                                    // if(changecolor){
+                                    // 	changecolor = false
+                                    // }
+                                    img.src = canvas.toDataURL();
+                                    setTimeout(() => {
+                                        var osX = e.offsetX, osY = e.offsetY
+                                        ctx.drawImage(img, osX, osY, 1, 1, 0, 0, 1, 1);
+                                        var imgData = ctx.getImageData(0, 0, 1, 1);
+                                        if (opt.ck) opt.ck(imgData.data[0] + ',' + imgData.data[1] + ',' + imgData.data[2]);
+                                    })
+
+                                });
+
+
+                            })
+
+
+
+
+
+                        }
+                    })(jQuery)
+                    let local = localStorage.getItem('saveControls')
+                    let tempLocal = localStorage.getItem('Controls')
+                    let CommonCanvas = JSON.parse(localStorage.getItem('CommonCanvas'))
+                    let canvasWrap = document.getElementById('canvas-wrap')
+                    if (tempLocal) {
+                        Controls = JSON.parse(tempLocal)
+                        localdata = JSON.parse(tempLocal)
+                        if (CommonCanvas.BackSetting === 'color') {
+                            commonList.BackSetting = CommonCanvas.BackSetting
+                            commonList.BackColor = CommonCanvas.BackColor
+                        } else {
+                            canvasWrap.style.backgroundImage = `url(${CommonCanvas.BackImg})`
+                            canvasWrap.style.backgroundRepeat = `norepear`
+                            canvasWrap.style.backgroundSize = `100% 100%`
+                            commonList.BackSetting = CommonCanvas.BackSetting
+                            commonList.BackColor = CommonCanvas.BackColor
+                            commonList.BackImg = CommonCanvas.BackImg
+                        }
+                        localStorage.removeItem('Controls')
+                        localStorage.removeItem('CommonCanvas')
+                    } else if (local) {
+                        Controls = JSON.parse(local)
+                        localdata = JSON.parse(local)
+                    }
+                    // if (local) {
+                    //   Controls = JSON.parse(local)
+                    //   localdata = JSON.parse(local)
+                    // }
+                    if (Controls.ControlList.length !== 0) {
+                        let ids = []
+                        let zindexarr = []
+
+                        Controls.ControlList.forEach((item, index) => {
+                            ids.push(item.PropertyList.id)
+                            zindexarr.push(item.PropertyList.ZIndex)
+                        })
+                        leg = Math.max(...ids)
+                        zindex = Math.max(...zindexarr) + 1
+                    } else {
+                        leg = 0
+                        zindex = 0
+                    }
+                    window.addEventListener("load", handler, false);
+                    function handler() {
+                        // 组件部分拖拽源对象
+
+                        var btnGroups = document.getElementById('btnGroups')
+                        let list = ['jumplink', 'piechart', 'dashboardchart', 'barchart', 'linechart']
+                        var str = ``
+                        btns.forEach((item, index) => {
+                            if (!list.includes(item.ControlType)) {
+                                str += `<div class="btn" draggable="true" title="${item.title}" data-id="${index}">
+                                                              <i class="icon iconfont ${item.icon}" data-id="${index}" ></i>
+                                                            </div>`
+                            } else {
+                                // <i class="icon iconfont ${item.icon}" style="color: #80BCFB"  data-id="${index}" ></i>
+                                str += `<div class="btn" draggable="true" title="${item.title}" data-id="${index}">
+                                                              <img src="${item.icon}" draggable="false" data-id="${index}" ></img>
+                                                            </div>`
+                                // str += `<div class="btn" draggable="true" title="${item.title}" data-id="${index}">
+                                //   <svg class="svgIcon module-svgIcon" aria-hidden="true" data-id="${index}">
+                                //     <title>${item.title}</title>
+                                //     <use xlink:href="#${item.icon}"></use>
+                                //   </svg>
+                                // </div>`
+                            }
+                        })
+                        btnGroups.innerHTML = str
+                        initCommon('init')
+                        // 预览返回初始化图表
+                        setTimeout(()=>{
+                            PieChartDataFun()  //饼图
+                            DashChartDataFun()  //仪表盘
+                            LineChartDataFun()
+                            BarChartDataFun()  //柱形图
+                        },300)
+                            
+                        // dragStart事件
+                        btnGroups.addEventListener("dragstart", function (e) {
+                            menu.style.display = 'none'
+                            if (e.target.className == "btn") {
+                                e.dataTransfer.setData("data", JSON.stringify(e.target.dataset.id));
+                                e.dataTransfer.effectAllowed = 'copyMove'
+                            }
+                        }, false)
+                        //组件mousedown事件
+                        btnGroups.addEventListener('mousedown', function (e) {
+                            // console.log( $(e.path[0]))
+                            buttonid = $(e.path[0]).attr('data-id').toString()
+
+                        })
+                        // drag事件
+                        btnGroups.addEventListener("drag", function (e) {
+                            e.preventDefault()
+                        }, false)
+                        // 中间画布部分拖拽目标对象
+                        var canvasWrap = document.getElementById('canvas-wrap')
+                        // 初始化画布，此方法用于差看画布使用
+
+                        childElement()
+                        //组件mousedown事件
+                        canvasWrap.addEventListener('mouseup', function (event) {
+                            if (buttonid) {
+                                buttonid = parseInt(buttonid)
+                                // leg初始化之后没拖动一个元素下来就+1,此值会一直++, 防止元素名称重复
+                                leg++
+                                if (Controls.ControlList.length !== 0) {
+                                    let zindexarr = []
+                                    Controls.ControlList.forEach((item, index) => {
+                                        zindexarr.push(item.PropertyList.ZIndex)
+                                    })
+                                    zindex = Math.max(...zindexarr) + 1
+                                } else {
+                                    zindex = 0
+                                }
+                                // zindex++;
+                                // 父级元素id = canvasWrap的网页可见区域上、左的距离
+                                let fatherY = canvasWrap.offsetTop
+                                let fatherX = canvasWrap.offsetLeft
+
+                                // 拖动元素距离网页可见区域上、左的距离
+                                let targetX = event.clientX
+                                let targetY = event.clientY
+                                let index;
+                                // 获取dragstart事件传递的参数 注意：index为组件属性栏的下标
+                                index = JSON.parse(JSON.stringify(buttonid))
+                                // if(zindex!==0){
+                                //    index =JSON.parse(JSON.stringify(zindex))
+                                // }else{
+                                //    index = 0
+                                // }
+
+                                let item = btns[index]
+                                // 需在这边添加增加的样式
+                                if (item.ControlType === 'line') { //line单独添加样式
+                                    Controls.ControlList.push({
+                                        title: item.title,
+                                        ControlType: item.ControlType,
+                                        Name: item.ControlType + leg,
+                                        PropertyList: {
+                                            id: leg,
+                                            Left: targetX - fatherX,
+                                            Top: targetY - fatherY,
+                                            Opacity: item.Opacity,
+                                            Style: item.Style,
+                                            Color: item.Color,
+                                            Width: item.Width,
+                                            Height: item.Height,
+                                            BorderWidth: item.BorderWidth,
+                                            BorderColor: item.BorderColor,
+                                            BackColor: item.BackColor,
+                                            FontFamily: item.FontFamily,
+                                            FontWeight: item.FontWeight,
+                                            FontSize: item.FontSize,
+                                            TextDecoration: item.TextDecoration,
+                                            BorderRadius: item.BorderRadius,
+                                            Rotate: item.Rotate,
+                                            BoxShadow: item.BoxShadow,
+                                            Img: item.Img,
+                                            Text: item.Text,
+                                            ZIndex: zindex
+                                        },
+                                        pointList: ['l', 'r'],
+                                    })
+                                } else {
+                                    Controls.ControlList.push({
+                                        title: item.title,
+                                        ControlType: item.ControlType,
+                                        Name: item.ControlType + leg,
+                                        PropertyList: {
+                                            id: leg,
+                                            Left: targetX - fatherX,
+                                            Top: targetY - fatherY,
+                                            Opacity: item.Opacity,
+                                            Style: item.Style,
+                                            Color: item.Color,
+                                            Width: item.Width,
+                                            Height: item.Height,
+                                            BorderWidth: item.BorderWidth,
+                                            BorderColor: item.BorderColor,
+                                            BackColor: item.BackColor,
+                                            FontFamily: item.FontFamily,
+                                            FontWeight: item.FontWeight,
+                                            FontSize: item.FontSize,
+                                            ComName: item.ComName,
+                                            TextDecoration: item.TextDecoration,
+                                            BorderRadius: item.BorderRadius,
+                                            Placeholder: item.Placeholder,
+                                            TextAlign: item.TextAlign,
+                                            Rotate: item.Rotate,
+                                            BoxShadow: item.BoxShadow,
+                                            Img: item.Img,
+                                            Date: item.Date,
+                                            Text: item.Text,
+                                            ZIndex: zindex
+                                        },
+                                        pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+                                    })
+                                }
+                                // 此处添加数据
+                                if (item.ControlType === 'datatextblock') { // 数值显示数据
+                                    let data = {
+                                        Variate: '',
+                                        DataList: [
+                                            {
+                                                flag: '>=',
+                                                num: '1',
+                                                backColor: 'red'
+                                            }
+                                        ]
+                                    }
+                                    Object.assign(Controls.ControlList[Controls.ControlList.length - 1], data)
+                                }
+                                item.Left = targetX - fatherX
+                                item.Top = targetY - fatherY
+
+                                localdata = {
+                                    ControlList: [],
+                                    Data: {
+                                        PieChartItemList: [],
+                                        DashBoardChartItemList: [],
+                                        BarChartItemList: [],
+                                        LineChartItemList: []
+                                    }
+                                }
+
+                                rightCommon(item.title, item.ControlType + leg, Controls.ControlList.length - 1)
+                                // Controls.ControlList.length - 1 从源对象拖放到画布上的生成的元素永远是Controls.ControlList数组的最后一位
+                                changeCommon(item, Controls.ControlList.length - 1)
+                                localdata.ControlList.push(JSON.parse(JSON.stringify(Controls.ControlList[Controls.ControlList.length - 1])))
+                                childElement(Controls.ControlList.length - 1)
+                                //增加饼图数据
+                                if (item.ControlType == 'piechart') {
+                                    let pieData = PieChartData(item.ControlType + leg)
+                                    Controls.Data.PieChartItemList.push(pieData)
+                                    localdata.Data.PieChartItemList.push(pieData)
+                                    PieChartDataFun()  //饼图
+                                } else if (item.ControlType == 'dashboardchart') {
+                                    let DashData = DashBoardChartData(item.ControlType + leg)
+                                    Controls.Data.DashBoardChartItemList.push(DashData)
+                                    localdata.Data.DashBoardChartItemList.push(DashData)
+                                    DashChartDataFun()  //仪表盘
+                                } else if (item.ControlType == 'barchart') {
+                                    let DashData = BarrChartData(item.ControlType + leg)
+                                    Controls.Data.BarChartItemList.push(DashData)
+                                    localdata.Data.BarChartItemList.push(DashData)
+                                    BarChartDataFun()  //柱形图
+                                } else if (item.ControlType == 'linechart') {
+                                    let DashData = LineChartData(item.ControlType + leg)
+                                    Controls.Data.LineChartItemList.push(DashData)
+                                    localdata.Data.LineChartItemList.push(DashData)
+                                    LineChartDataFun()  //折线图
+                                }
+                                //初始化图表右侧数据
+                                setTimeout(() => {
+                                    echartsDataInit(item.ControlType, item.ControlType + leg)
+                                }, 200)
+
+                                if (selectdata <= 1) {
+                                    setClass(zindex)
+                                } else {
+                                    let tmp = []
+                                    selectdata.forEach((item) => {
+                                        tmp.push(item.zindex)
+                                    })
+                                    setClass(tmp)
+                                }
+                                buttonid = ''
+                            }
+                        })
+                        // dragovers事件
+                        canvasWrap.addEventListener('dragover', function (event) {
+
+                            // event.preventDefault()
+                            if (event.target.classList.contains('allowed')) {
+                                event.dataTransfer.dropEffect = 'move'
+                            } else {
+                                event.dataTransfer.dropEffect = 'copy'
+                            }
+                            event.preventDefault()
+                        }, false)
+
+                        // drop事件
+                        canvasWrap.addEventListener('drop', function (event) {
+                            // console.log("sad")
+                            buttonid = ''
+                            // leg初始化之后没拖动一个元素下来就+1,此值会一直++, 防止元素名称重复
+                            leg++
+                            if (Controls.ControlList.length !== 0) {
+                                let zindexarr = []
+                                Controls.ControlList.forEach((item, index) => {
+                                    zindexarr.push(item.PropertyList.ZIndex)
+                                })
+                                zindex = Math.max(...zindexarr) + 1
+                            } else {
+                                zindex = 0
+                            }
+                            // 父级元素id = canvasWrap的网页可见区域上、左的距离
+                            let fatherY = canvasWrap.offsetTop
+                            let fatherX = canvasWrap.offsetLeft
+
+                            // 拖动元素距离网页可见区域上、左的距离
+                            let targetX = event.clientX
+                            let targetY = event.clientY
+                            // 获取dragstart事件传递的参数 注意：index为组件属性栏的下标
+                            var index = ''
+                            if (event.dataTransfer.getData('data')) {
+                                index = JSON.parse(event.dataTransfer.getData('data'))
+                            } else {
+                                index = JSON.parse(event.dataTransfer.getData('index'))
+                            }
+                            let item = btns[index]
+
+                            // 清除dragstart事件传递的参数
+                            event.dataTransfer.clearData()
+                            // 需在这边添加增加的样式
+                            if (item.ControlType === 'line') { //line单独添加样式
+                                Controls.ControlList.push({
+                                    title: item.title,
+                                    ControlType: item.ControlType,
+                                    Name: item.ControlType + leg,
+                                    PropertyList: {
+                                        id: leg,
+                                        Left: targetX - fatherX,
+                                        Top: targetY - fatherY,
+                                        Opacity: item.Opacity,
+                                        Style: item.Style,
+                                        Color: item.Color,
+                                        Width: item.Width,
+                                        Height: item.Height,
+                                        BorderWidth: item.BorderWidth,
+                                        BorderColor: item.BorderColor,
+                                        BackColor: item.BackColor,
+                                        FontFamily: item.FontFamily,
+                                        FontWeight: item.FontWeight,
+                                        FontSize: item.FontSize,
+                                        TextDecoration: item.TextDecoration,
+                                        BorderRadius: item.BorderRadius,
+                                        Rotate: item.Rotate,
+                                        BoxShadow: item.BoxShadow,
+                                        Img: item.Img,
+                                        Text: item.Text,
+                                        ZIndex: zindex
+                                    },
+                                    pointList: ['l', 'r'],
+                                })
+                            } else {
+                                Controls.ControlList.push({
+                                    title: item.title,
+                                    ControlType: item.ControlType,
+                                    Name: item.ControlType + leg,
+                                    Disabled: item.Disabled,
+                                    Date: item.Date,
+                                    PropertyList: {
+                                        id: leg,
+                                        Left: targetX - fatherX,
+                                        Top: targetY - fatherY,
+                                        Opacity: item.Opacity,
+                                        Style: item.Style,
+                                        Color: item.Color,
+                                        Width: item.Width,
+                                        Height: item.Height,
+                                        Value: item.Value,
+                                        Num1: item.Num1,
+                                        Num2: item.Num2,
+                                        ComName: item.ComName,
+                                        CheckedValue: item.CheckedValue,
+                                        BorderWidth: item.BorderWidth,
+                                        BorderColor: item.BorderColor,
+                                        BackColor: item.BackColor,
+                                        FontFamily: item.FontFamily,
+                                        FontWeight: item.FontWeight,
+                                        FontSize: item.FontSize,
+                                        TextDecoration: item.TextDecoration,
+                                        BorderRadius: item.BorderRadius,
+                                        Placeholder: item.Placeholder,
+                                        TextAlign: item.TextAlign,
+                                        Rotate: item.Rotate,
+                                        BoxShadow: item.BoxShadow,
+                                        Img: item.Img,
+                                        Text: item.Text,
+                                        ZIndex: zindex
+                                    },
+                                    pointList: ['lt', 'rt', 'lb', 'rb', 'l', 'r', 't', 'b'],
+                                })
+                            }
+                            // 此处添加数据
+                            if (item.ControlType === 'datatextblock') { // 数值显示数据
+                                let data = {
+                                    Variate: '',
+                                    DataList: [
+                                        {
+                                            flag: '>=',
+                                            num: '1',
+                                            backColor: 'red'
+                                        }
+                                    ]
+                                }
+                                Object.assign(Controls.ControlList[Controls.ControlList.length - 1], data)
+                            } else if (item.ControlType === 'dropsearch') { //下拉查询
+                                let data = {
+                                    ChoiceList: []  // 存储下拉多选选中的值
+                                }
+                                Object.assign(Controls.ControlList[Controls.ControlList.length - 1], data)
+                            }
+                            item.Left = targetX - fatherX
+                            item.Top = targetY - fatherY
+
+
+                            localdata = {
+                                ControlList: [],
+                                Data: {
+                                    PieChartItemList: [],
+                                    DashBoardChartItemList: [],
+                                    BarChartItemList: [],
+                                    LineChartItemList: []
+                                }
+                            }
+
+                            rightCommon(item.title, item.ControlType + leg, Controls.ControlList.length - 1)
+                            // Controls.ControlList.length - 1 从源对象拖放到画布上的生成的元素永远是Controls.ControlList数组的最后一位
+                            changeCommon(item, Controls.ControlList.length - 1)
+                            localdata.ControlList.push(JSON.parse(JSON.stringify(Controls.ControlList[Controls.ControlList.length - 1])))
+                            childElement(Controls.ControlList.length - 1)
+                            // console.log(localData)
+                            //增加饼图数据
+                            if (item.ControlType == 'piechart') {
+                                let pieData = PieChartData(item.ControlType + leg)
+                                Controls.Data.PieChartItemList.push(pieData)
+                                localdata.Data.PieChartItemList.push(pieData)
+                                PieChartDataFun()  //饼图
+                            } else if (item.ControlType == 'dashboardchart') {
+                                let DashData = DashBoardChartData(item.ControlType + leg)
+                                Controls.Data.DashBoardChartItemList.push(DashData)
+                                localdata.Data.DashBoardChartItemList.push(DashData)
+                                DashChartDataFun()  //仪表盘
+                            } else if (item.ControlType == 'barchart') {
+                                let DashData = BarrChartData(item.ControlType + leg)
+                                Controls.Data.BarChartItemList.push(DashData)
+                                localdata.Data.BarChartItemList.push(DashData)
+                                BarChartDataFun()  //柱形图
+                            } else if (item.ControlType == 'linechart') {
+                                let DashData = LineChartData(item.ControlType + leg)
+                                Controls.Data.LineChartItemList.push(DashData)
+                                localdata.Data.LineChartItemList.push(DashData)
+                                LineChartDataFun()  //折线图
+                            }
+                            //初始化图表右侧数据
+                            setTimeout(() => {
+                                echartsDataInit(item.ControlType, item.ControlType + leg)
+                            }, 200)
+
+                            back(selectdata, Controls)
+                        }, false)
+                    }
+
+                </script>
 </body>
+
+<script src="./js/caiyongxiang.js"></script>
+
 </html>

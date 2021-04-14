@@ -11,6 +11,10 @@
   background: rgba(0,0,0,0.6);
   display: none;
 }
+.wrap{
+  position: relative;
+  z-index: 0;
+}
 .popup-wrap {
     position: relative;
     margin: 0 auto 50px;
@@ -18,7 +22,7 @@
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0,0,0,.3);
     box-sizing: border-box;
-    margin-top: 24vh;
+    margin-top: 16vh;
     width: 1020px;
 }
 /* 头部样式 */
@@ -26,6 +30,7 @@
   text-align: center;
   padding: 20px 20px 10px;
   background: #409EFF;
+  font-size: 16px;
 }
 .popup-close {
   position: absolute;
@@ -40,7 +45,7 @@
 }
 /* 中间样式 */
 .popup-body {
-  padding: 20px 20px;
+  padding: 20px 20px 10px 20px;
   color: #606266;
   font-size: 14px;
   word-break: break-all;
@@ -51,21 +56,6 @@
   align-items: center;
 }
 .popup-select, .popup-input {
-  padding-right: 30px;
-  cursor: pointer;
-  background-color: #fff;
-  background-image: none;
-  border-radius: 4px;
-  border: 1px solid #dcdfe6;
-  box-sizing: border-box;
-  color: #606266;
-  display: inline-block;
-  font-size: inherit;
-  height: 30px;
-  line-height: 30px;
-  outline: none;
-  padding: 0 15px;
-  transition: border-color .2s cubic-bezier(.645,.045,.355,1);
   width: 120px;
   margin-right: 10px;
 }
@@ -136,19 +126,45 @@
   color: #fff;
 }
 .popup-table {
-  border: 1px solid #ebeef5;
   margin: 15px 0;
+  /* height: 420px; */
 }
 
+
 /* table */
-.popup-table table{
+.bi-table {
+  border: 1px solid #ebeef5;
+  overflow: auto;
+  position: relative;
+}
+.bi-table-block{
+  border-right: 1px solid #ebeef5;
+}
+.bi-table-body-wrap {
+  position: relative;
   width: 100%;
 }
-.popup-table table thead {
-  color: #909399;
-  font-weight: 500;
+.bi-table table{
+  width: 100%;
 }
-.popup-table table td, .popup-table table th {
+.bi-table table tbody {
+  display: block;
+  height: 400px;
+  overflow-y: scroll;
+}
+.bi-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+.bi-table table thead {
+  color: #909399;
+  display: table;
+  font-weight: 500;
+  width: 100%;
+  table-layout: fixed;
+}
+.bi-table table td, .bi-table table th {
   padding: 12px 0;
   min-width: 0;
   box-sizing: border-box;
@@ -158,8 +174,17 @@
   text-align: left;
   border-bottom: 1px solid #ebeef5;
 }
-.popup-table table tr {
-  background-color: #fff;
+.bi-table table tr:last-child td{
+  border-bottom: none;
+}
+.bi-table table td {
+  padding: 8px 0;
+}
+.bi-table table tr:nth-child(even) {
+  background-color: #F5F7FC;
+}
+.bi-table table tr:hover {
+  background-color: #F2F8FD;
 }
 
 .func-table  table{
@@ -169,7 +194,7 @@
 }
 .func-table table td, .func-table table th {
   min-width: 20px;
-  border-bottom: 1px solid #404040;
+  border-bottom: 1px solid #CFD7E5;
 }
 .table-back-color {
   display: flex;
@@ -180,4 +205,264 @@
   height: 20px;
   line-height: 15px;
   background: red;
+}
+.table-icon-del {
+  width: 20px;
+  cursor: pointer;
+  color: #409eff
+}
+.table-checkbox {
+  width: 40px;
+  padding-left: 5px !important;
+}
+.table-checkbox input {
+  width: 15px;
+}
+
+/* 分页部分 */
+.popup-pagination {
+  height: 35px;
+  line-height: 35px;
+}
+.activePage {
+  color: #409EFF;
+}
+.popup-pagination button:disabled {
+  color: #c0c4cc;
+  background-color: #fff;
+  cursor: not-allowed
+}
+.visual-pagination {
+  display: flex;
+  align-items: center;
+}
+.visual-pagination span:nth-of-type(2) {
+  margin-left: 20px;
+}
+.visual-pagination-button {
+  cursor: pointer;
+  height: 35px;
+  line-height: 35px;
+  color: #909399;
+  background: #fff;
+  font-weight: 700;
+}
+.visual-pagination-button i{
+  font-size: 12px;
+}
+.visual-pagination-button:hover i, .visual-pager li:hover {
+  color: #409eff;
+}
+.visual-pager {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  user-select: none;
+}
+.visual-pager li {
+  padding: 0 4px;
+  background: #fff;
+  vertical-align: top;
+  display: inline-block;
+  font-size: 13px;
+  min-width: 35.5px;
+  height: 28px;
+  line-height: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+  margin: 0;
+}
+.visual-pagination-select {
+  width: 105px;
+  border-radius: 4px;
+  margin: 0 20px;
+}
+.pager-input {
+  width: 50px;
+  border-radius: 4px;
+  margin: 0 4px
+}
+/* 仪表板设置 */
+.copeConfigureForm-search{
+  padding-top: 10px;
+  text-align: center;
+}
+.copeConfigureForm-search input{
+  width: 398px;
+  height: 32px;
+  background: #FFFFFF;
+  border: 1px solid #DCDFE6;
+  border-radius: 4px;
+}
+.copeConfigureForm-search button{
+  width: 50px;
+  height: 32px;
+  background: #409EFF;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #FFFFFF;
+  position: relative;
+  top: -1px;
+  margin-left: 6px;
+}
+.dashboardtree {
+  margin-left: 60px;
+}
+.bi-tree .ztree li a:hover{
+  text-decoration: none;
+  background-color: #F5F7FB;
+  color: #409EFF!important;
+}
+.bi-tree .ztree li a{
+  height: 30px;
+  padding-top: 7px;
+}
+.bi-tree .ztree li span.button.noline_open{
+  width: 16px;
+  height: 16px;
+  background: url('./iconTool/icon_open.png');
+  position: relative;
+  top: 6px;
+  left: 3px;
+}
+.bi-tree .ztree li span.button.noline_close{
+  width: 16px;
+  height: 16px;
+  background: url('./iconTool/icon_close.png');
+  position: relative;
+  top: 6px;
+  left: 3px;
+}
+.bi-tree .ztree li span.button.ico_open,.bi-tree .ztree li span.button.ico_close{
+  width: 16px;
+  height: 16px;
+  background: url('./iconTool/icon_file.png');
+  position: relative;
+  top: -1px;
+  margin: 0 6px 0 10px;
+}
+.bi-tree .ztree li a:hover span.button.ico_open,.bi-tree .ztree li a:hover span.button.ico_close{
+  width: 16px;
+  height: 16px;
+  background: url('./iconTool/icon_file2.png');
+  position: relative;
+  top: -1px;
+  margin: 0 6px 0 10px;
+}
+.bi-tree .ztree li span.button.ico_docu {
+  width: 16px;
+  height: 16px;
+  background: url('./iconTool/icon_monitor_nor.png');
+  position: relative;
+  top: -1px;
+  margin: 0 6px 0 10px;
+}
+/* .bi-tree .ztree li a:hover span.button.ico_docu {
+  background: url('./iconTool/icon_sel');
+} */
+.bi-tree .ztree li a.curSelectedNode {
+  background-color: #F9FAFD;
+  color: #409EFF!important;
+  border: none;
+  opacity: 1;
+  height: 30px;
+  padding-top: 7px;
+}
+
+.copeConfigureTo .ztree li span.button.chk.checkbox_true_part,.copeConfigureTo .ztree li span.button.chk.checkbox_true_part_focus {
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_pre2.png);
+  width: 14px;
+  height: 14px;
+}
+.copeConfigureTo .ztree li span.button.chk.checkbox_false_part,.copeConfigureTo .ztree li span.button.chk.checkbox_false_part_focus {
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_nor2.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.copeConfigureTo .ztree li span.button.chk.checkbox_true_full,.copeConfigureTo .ztree li span.button.chk.checkbox_true_full_focus{
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_pre2.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.copeConfigureTo .ztree li span.button.chk.checkbox_false_full,.copeConfigureTo .ztree li span.button.chk.checkbox_false_full_focus{
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_nor2.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
+.copeConfigureForm .ztree li span.button.chk.radio_true_part,.copeConfigureForm .ztree li span.button.chk.radio_true_part_focus {
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_pre.png);
+  width: 14px;
+  height: 14px;
+}
+.copeConfigureForm .ztree li span.button.chk.radio_false_part,.copeConfigureForm .ztree li span.button.chk.radio_false_part_focus {
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_nor.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.copeConfigureForm .ztree li span.button.chk.radio_true_full,.copeConfigureForm .ztree li span.button.chk.radio_true_full_focus{
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_pre.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+.copeConfigureForm .ztree li span.button.chk.radio_false_full,.copeConfigureForm .ztree li span.button.chk.radio_false_full_focus{
+  background-position: 0 0;
+  background: url(./iconTool/icon_sel_nor.png);
+  width: 14px;
+  height: 14px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
+/* .bi-tree .ztree li .curSelectedNode span.button.ico_open,.bi-tree .ztree li .curSelectedNode span.button.ico_close {
+  background: url('./iconTool/icon_file2.png');
+}
+.bi-tree .ztree li .curSelectedNode span.button.ico_docu{
+  background: url('./iconTool/icon_monitor_nor.png');
+} */
+.layui-layer-page .layui-layer-btn {
+  display: flex;
+  justify-content: center;
+}
+
+.layui-layer-page .layui-layer-btn a:first-child {
+  border: 1px solid #409EFF;
+  border-radius: 4px;
+  color: #409EFF;
+  background: #ECF5FF;
+  margin-right: 20px;
+}
+.layui-layer-page .layui-layer-btn a:last-child {
+  border: 1px solid #409EFF;
+  border-radius: 4px;
+  color: #fff;
+  background: #409EFF;
 }

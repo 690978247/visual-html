@@ -1,7 +1,7 @@
 /* index 右侧数据部分样式 */
 .data-func {
   padding: 0 10px;
-  border-bottom: 1px solid #404040;
+  border-bottom: 1px solid #CFD7E5;
 }
 .func-variable  {
   display: flex;
@@ -19,12 +19,10 @@
 .func-wrap-input, .func-format-input {
   width: 80px;
   height: 28px;
-  background: #434343;
   box-sizing: border-box;
   outline: none;
-  color: #fff;
   padding: 0 5px;
-  border: none;
+  border: 1px solid #DCDFE6;
 }
 .func-wrap-choice {
   width: 40px;
@@ -32,7 +30,8 @@
   line-height: 28px;
   display: inline-block;
   box-sizing: border-box;
-  border: 1px solid #404040;
+  border: 1px solid #DCDFE6;
+  margin-left: -1px;
   cursor: pointer;
   text-align: center;
 }
